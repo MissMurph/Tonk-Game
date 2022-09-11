@@ -12,6 +12,6 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Select (InputAction.CallbackContext context) {
-		Debug.Log("cum");
+		
 	}
 }
