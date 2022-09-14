@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Fire",
+                    "name": "Left Click",
                     "type": "Button",
                     "id": "b8f80afc-2ef2-42cf-b210-f8a2082d447f",
                     "expectedControlType": "Button",
@@ -33,9 +33,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select",
+                    "name": "Right Click",
                     "type": "Button",
-                    "id": "f3118d35-2970-4683-ab1f-202aa65cf115",
+                    "id": "317b5d12-9318-47b9-a669-e60b3e478dff",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -215,7 +215,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",
-                    "action": "Fire",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -226,7 +226,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Fire",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -237,7 +237,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch",
-                    "action": "Fire",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -248,7 +248,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Fire",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -259,18 +259,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "XR",
-                    "action": "Fire",
+                    "action": "Left Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "f671416e-9566-4c3c-9c85-cafab64552cd",
-                    "path": "<Mouse>/leftButton",
+                    "id": "131882d8-3f0d-4c04-9abd-8c1682a528f5",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Select",
+                    "action": "Right Click",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -7,11 +7,17 @@ public class Player : MonoBehaviour {
 
 	private List<ISelectable> selectables = new List<ISelectable>();
 
-	public void Start() {
+	public Grid grid;
+
+	public void Fire (InputAction.CallbackContext context) {
+
+	}
+
+	public void RightClick (InputAction.CallbackContext context) {
 		
 	}
 
-	public void Select (InputAction.CallbackContext context) {
+	public void Move (InputAction.CallbackContext context) {
 		
 	}
 }

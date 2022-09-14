@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Grid : MonoBehaviour {
 
-    [SerializeField]
     public Vector2Int GridSize;
+
+    public bool displayGizmos;
+
+    public TerrainType[] walkableRegions;
 
     [SerializeField]
     private float nodeSize = 1;
@@ -15,10 +19,14 @@ public class Grid : MonoBehaviour {
 
     private Node[,] grid;
 
-    public List<Node> path;
-
     [SerializeField]
     private Pathfinding pathfinding;
+
+    public int MaxGridSize {
+        get {
+            return GridSize.x * GridSize.y;
+		}
+	}
 
     private Vector3 BottomLeft {
         get {
@@ -28,16 +36,8 @@ public class Grid : MonoBehaviour {
 
 	private void Awake() {
         pathfinding = GetComponent<Pathfinding>();
-	}
-
-	private void Start() {
         CreateGrid();
-
     }
-
-	private void Update() {
-        pathfinding.FindPath(agent.transform.position, target.transform.position);
-	}
 
 	private void CreateGrid () {
         grid = new Node[GridSize.x, GridSize.y];
@@ -73,36 +73,39 @@ public class Grid : MonoBehaviour {
 	}
 
 	public Node GetNodeFromWorldPos (Vector3 worldPos) {
+        //Debug.Log("GetNode called");
         float percentX = (worldPos.x - BottomLeft.x) / (GridSize.x * nodeSize);
         float percentY = (worldPos.y - BottomLeft.y) / (GridSize.y * nodeSize);
-
+        //Debug.Log("Percent values calculated");
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
-
+        //Debug.Log("Percent values clamped");
         int x = Mathf.RoundToInt((GridSize.x - 1) * percentX);
         int y = Mathf.RoundToInt((GridSize.y - 1) * percentY);
-
+        //Debug.Log("Values rounded to int");
         return grid[x, y];
     }
 
 	private void OnDrawGizmos() {
-        Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * nodeSize, GridSize.y * nodeSize, 1));
+        if (displayGizmos) {
+            Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * nodeSize, GridSize.y * nodeSize, 1));
 
-        if (grid != null) {
-            Node playerNode = GetNodeFromWorldPos(agent.transform.position);
+            if (grid != null) {
 
-            foreach (Node n in grid) {
-                if (n.Modifier == 0) Gizmos.color = Color.red;
-                else Gizmos.color = Color.white;
+                foreach (Node n in grid) {
+                    Gizmos.color = Color.white;
 
-                if (path != null) {
-                    if (path.Contains(n)) Gizmos.color = Color.black;
-				}
+                    if (!n.Walkable) Gizmos.color = Color.red;
 
-                if (playerNode == n) Gizmos.color = Color.cyan;
-
-                Gizmos.DrawCube(n.Position, Vector3.one * 0.1f);
+                    Gizmos.DrawWireCube(n.Position, Vector3.one * nodeSize);
+                }
             }
         }
+	}
+
+	[System.Serializable]
+    public class TerrainType {
+        public LayerMask terrainMask;
+        public int terrainPenalty;
 	}
 }

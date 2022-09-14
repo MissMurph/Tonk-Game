@@ -4,13 +4,4 @@ using UnityEngine;
 
 public class PlayerCharacter : Character {
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }

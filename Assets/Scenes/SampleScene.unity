@@ -370,7 +370,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b066b063cdc54e24286bd19fcabcf6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grid: {fileID: 1968719342}
 --- !u!114 &1039500153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,22 +459,10 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e2e78c9f-436b-4e4b-8ca1-c840587cd91d
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9cfd944a-8f3b-40da-8390-39991988d360
-    m_ActionName: Player/Look[/Mouse/delta]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b8f80afc-2ef2-42cf-b210-f8a2082d447f
-    m_ActionName: Player/Fire[/Mouse/leftButton]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1039500152}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: Select
+        m_MethodName: Move
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -483,8 +472,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: f3118d35-2970-4683-ab1f-202aa65cf115
-    m_ActionName: Player/Select[/Mouse/leftButton]
+    m_ActionId: e2e78c9f-436b-4e4b-8ca1-c840587cd91d
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9cfd944a-8f3b-40da-8390-39991988d360
+    m_ActionName: Player/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1039500152}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b8f80afc-2ef2-42cf-b210-f8a2082d447f
+    m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 4de8b7ed-60fa-4175-8a63-f033741e8fea
@@ -525,6 +534,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 077d44c2-c5da-44e9-a17a-52dc10ccc73d
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 317b5d12-9318-47b9-a669-e60b3e478dff
+    m_ActionName: Player/Right Click[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -953,7 +966,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1564242491}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.125, y: -0.017, z: 0.69}
+  m_LocalPosition: {x: 6.57, y: -4.23, z: 0.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -972,6 +985,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67df804c04d85144b9e7a3c1c98a2f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 1863663545}
+  speed: 5
 --- !u!1 &1863663544
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,6 +996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1863663545}
+  - component: {fileID: 1863663546}
   m_Layer: 0
   m_Name: Test
   m_TagString: Untagged
@@ -996,13 +1012,65 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863663544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -7.13, y: 2.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1863663546
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863663544}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 0.2, y: 0.2}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &1968719341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,9 +1082,10 @@ GameObject:
   - component: {fileID: 1968719343}
   - component: {fileID: 1968719342}
   - component: {fileID: 1968719344}
+  - component: {fileID: 1968719345}
   m_Layer: 0
   m_Name: World
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1033,8 +1102,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b982609a3f2144e8482d1e2f84a689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GridSize: {x: 100, y: 100}
-  nodeSize: 0.25
+  GridSize: {x: 200, y: 200}
+  displayGizmos: 0
+  walkableRegions:
+  - terrainMask:
+      serializedVersion: 2
+      m_Bits: 1024
+    terrainPenalty: 20
+  - terrainMask:
+      serializedVersion: 2
+      m_Bits: 2048
+    terrainPenalty: 50
+  - terrainMask:
+      serializedVersion: 2
+      m_Bits: 4096
+    terrainPenalty: 80
+  nodeSize: 0.5
   agent: {fileID: 1564242491}
   target: {fileID: 1863663544}
   pathfinding: {fileID: 0}
@@ -1063,6 +1146,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6723e7b99b16ec54d863b7d07e10e43c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requestManager: {fileID: 1968719345}
+  grid: {fileID: 1968719342}
+--- !u!114 &1968719345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968719341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d4345cd1fe59a4ab329b793c90629e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2115257445
