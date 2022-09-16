@@ -39,9 +39,9 @@ public class Pathfinding : MonoBehaviour {
 				}
 
 				foreach (Node neighbour in grid.GetNeighbours(currentNode)) {
-					if (neighbour.Modifier == 0 || closedSet.Contains(neighbour)) continue;
+					if (!neighbour.Walkable || closedSet.Contains(neighbour)) continue;
 
-					int newMoveCost = currentNode.GCost + GetDistance(currentNode, neighbour);
+					int newMoveCost = currentNode.GCost + GetDistance(currentNode, neighbour) + neighbour.MovePenalty;
 
 					if (newMoveCost < neighbour.GCost || !openSet.Contains(neighbour)) {
 						neighbour.GCost = newMoveCost;
