@@ -1556,11 +1556,11 @@ MonoBehaviour:
   - terrainMask:
       serializedVersion: 2
       m_Bits: 2048
-    terrainPenalty: 10
+    terrainPenalty: 20
   - terrainMask:
       serializedVersion: 2
       m_Bits: 4096
-    terrainPenalty: 20
+    terrainPenalty: 40
   nodeSize: 0.5
   agent: {fileID: 1564242491}
   target: {fileID: 1863663544}

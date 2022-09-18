@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, ISelectable {
 
+	const float minPathUpdateTime = .2f;
+	const float pathUpdateMoveThreshold = .5f;
+
 	public Transform target;
 	public float speed = 20f;
 	Vector3[] path;
 	int targetIndex;
 
 	private void Start () {
-		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+		StartCoroutine(UpdatePath());
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
@@ -18,6 +21,24 @@ public class Character : MonoBehaviour, ISelectable {
 			path = newPath;
 			StopCoroutine(FollowPath());
 			StartCoroutine(FollowPath());
+		}
+	}
+
+	IEnumerator UpdatePath () {
+		if (Time.timeSinceLevelLoad < .3f) {
+			yield return new WaitForSeconds(.3f);
+		}
+		PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+
+		float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+		Vector3 targetPosOld = target.position;
+
+		while (true) {
+			yield return new WaitForSeconds(minPathUpdateTime);
+			if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold) {
+				PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+				targetPosOld = target.position;
+			}
 		}
 	}
 

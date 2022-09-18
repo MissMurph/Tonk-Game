@@ -5,24 +5,18 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour {
 
-	public PathRequestManager requestManager;
 	public Grid grid;
 
 	private void Awake() {
-		//requestManager = GetComponent<PathRequestManager>();
 		//grid = GetComponent<Grid>();
 	}
 
-	public void StartFindPath (Vector3 startPos, Vector3 targetPos) {
-		StartCoroutine(FindPath(startPos, targetPos));
-	}
-
-	IEnumerator FindPath (Vector3 originPos, Vector3 targetPos) {
+	public void FindPath (PathRequest request, Action<PathResult> callback) {
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 
-		Node originNode = grid.GetNodeFromWorldPos(originPos);
-		Node targetNode = grid.GetNodeFromWorldPos(targetPos);
+		Node originNode = grid.GetNodeFromWorldPos(request.pathStart);
+		Node targetNode = grid.GetNodeFromWorldPos(request.pathEnd);
 
 		if (originNode.Walkable && targetNode.Walkable) {
 			Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
@@ -54,13 +48,12 @@ public class Pathfinding : MonoBehaviour {
 				}
 			}
 
-			yield return null;
-
 			if (pathSuccess) {
 				waypoints = RetracePath(originNode, targetNode);
+				pathSuccess = waypoints.Length > 0;
 			}
 
-			requestManager.FinishedProcessingPath(waypoints, pathSuccess);
+			callback(new PathResult(waypoints, pathSuccess, request.callback));
 		}
 	}
 
