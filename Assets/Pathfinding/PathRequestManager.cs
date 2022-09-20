@@ -29,9 +29,9 @@ public class PathRequestManager : MonoBehaviour {
 		}
 	}
 
-	public static void RequestPath (PathRequest pathRequest) {
+	public static void RequestPath (Vector3 startPos, Vector3 targetPos, Action<Vector3[], bool> callback) {
 		ThreadStart threadStart = delegate {
-			instance.pathFinding.FindPath(pathRequest, instance.FinishedProcessingPath);
+			instance.pathFinding.FindPath(new PathRequest(startPos, targetPos, callback), instance.FinishedProcessingPath);
 		};
 
 		threadStart.Invoke();

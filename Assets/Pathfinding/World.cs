@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Grid : MonoBehaviour {
+public class World : MonoBehaviour {
 
     public Vector2Int GridSize;
 
@@ -22,7 +22,7 @@ public class Grid : MonoBehaviour {
     [SerializeField]
     private Pathfinding pathfinding;
 
-    private LayerMask walkableMask;
+    public LayerMask walkableMask;
 
     public LayerMask unwalkableMask;
 

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public interface IInteractable {
     void Interact (Character character);
 
-    List<Command> Commands();
+    //List<Command> Commands();
 
-    Command GetInteraction();
+    //Command GetInteraction();
 }

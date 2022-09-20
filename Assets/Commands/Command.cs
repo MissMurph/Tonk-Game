@@ -4,17 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public class Command {
+[Serializable]
+public abstract class Command<T> : Command {
 
-	[SerializeField]
-	private string name;
+	private T target;
 
-	//[SerializeField]
-	//private Action handler;
+	protected Command (T _target) : base(typeof(T)) {
+		target = _target;
+	}
 
-	//private delegate void Action();
+	public T Target() {
+		return target;
+	}
+}
 
-	[SerializeField]
-	private UnityEvent action;
+[Serializable]
+public abstract class Command {
+
+	public string name;
+	public Type type;
+
+	internal Command(Type _type) {
+		type = _type;
+	}
+
+	public Command<T> GetAsType<T>() {
+		if (typeof(T) == type) {
+			return (Command<T>)this;
+		}
+
+		else return null;
+	}
+
+	public Type TargetType() {
+		return type;
+	}
 }

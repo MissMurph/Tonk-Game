@@ -5,21 +5,18 @@ using UnityEngine;
 
 public class Pathfinding : MonoBehaviour {
 
-	public Grid grid;
-
-	private void Awake() {
-		//grid = GetComponent<Grid>();
-	}
+	[SerializeField]
+	private World world;
 
 	public void FindPath (PathRequest request, Action<PathResult> callback) {
 		Vector3[] waypoints = new Vector3[0];
 		bool pathSuccess = false;
 
-		Node originNode = grid.GetNodeFromWorldPos(request.pathStart);
-		Node targetNode = grid.GetNodeFromWorldPos(request.pathEnd);
+		Node originNode = world.GetNodeFromWorldPos(request.pathStart);
+		Node targetNode = world.GetNodeFromWorldPos(request.pathEnd);
 
 		if (originNode.Walkable && targetNode.Walkable) {
-			Heap<Node> openSet = new Heap<Node>(grid.MaxGridSize);
+			Heap<Node> openSet = new Heap<Node>(world.MaxGridSize);
 			HashSet<Node> closedSet = new HashSet<Node>();
 			openSet.Add(originNode);
 
@@ -32,7 +29,7 @@ public class Pathfinding : MonoBehaviour {
 					break;
 				}
 
-				foreach (Node neighbour in grid.GetNeighbours(currentNode)) {
+				foreach (Node neighbour in world.GetNeighbours(currentNode)) {
 					if (!neighbour.Walkable || closedSet.Contains(neighbour)) continue;
 
 					int newMoveCost = currentNode.GCost + GetDistance(currentNode, neighbour) + neighbour.MovePenalty;
