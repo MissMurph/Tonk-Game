@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Character : MonoBehaviour, ISelectable {
 
@@ -14,40 +16,38 @@ public class Character : MonoBehaviour, ISelectable {
 
 	public bool executingCommand = false;
 
-	private Queue<Command> commandQueue = new Queue<Command>();
+	private CommandManager commandManager;
 
-	//private CommandManager commandManager;
+	float commandUpdateTime = 0.5f;
+	float currentCommandTime = 0.5f;
+
+	private void Awake() {
+		commandManager = GetComponent<CommandManager>();
+	}
 
 	private void Start () {
-		StartCoroutine(ExecuteCommands());
+
+	}
+
+	private void Update() {
+		
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
-		if (pathSuccessful) {
-			path = newPath;
-			targetIndex = 0;
-			StopCoroutine(FollowPath());
-			Debug.Log("new path");
-			StartCoroutine(FollowPath());
-		}
+		
 	}
 
-	IEnumerator ExecuteCommands () {
-		if (Time.timeSinceLevelLoad < .3f) {
-			yield return new WaitForSeconds(.3f);
-		}
+	public void Command_Move (Command command, Action<bool> callback) {
+		Vector2 target = command.GetAsType<MoveCommand>().Target();
 
-		while (true) {
-			yield return new WaitForSeconds(minPathUpdateTime);
-
-			if (commandQueue.TryDequeue(out Command command) && !executingCommand) {
-				executingCommand = true;
-
-				Vector2 target = command.GetAsType<Vector2>().Target();
-
-				PathRequestManager.RequestPath(transform.position, target, OnPathFound);
+		PathRequestManager.RequestPath(transform.position, target, (newPath, pathSuccessful) => {
+			if (pathSuccessful) {
+				path = newPath;
+				targetIndex = 0;
+				StopCoroutine(FollowPath());
+				StartCoroutine(FollowPath());
 			}
-		}
+		});
 	}
 
 	IEnumerator UpdatePath () {
@@ -108,7 +108,12 @@ public class Character : MonoBehaviour, ISelectable {
 	/*	INTERFACE FUNCTIONS	*/
 
 	public void EnqueueCommand (Command command) {
-		if (!commandQueue.Contains(command)) commandQueue.Enqueue(command);
+		commandManager.EnqueueCommand(command);
+	}
+
+	public void ExecuteCommand(Command command) {
+		if (command != null) commandManager.ExecuteCommand(command);
+		else Debug.Log("Null Command");
 	}
 
 	public GameObject GetObject() {

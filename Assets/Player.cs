@@ -44,7 +44,6 @@ public class Player : MonoBehaviour {
 	private void Select (ISelectable selectable) {
 		if (selected.Contains(selectable)) selected.Remove(selectable);
 		else {
-			//Debug.Log(selectable.GetObject().name);
 			selected.Add(selectable);
 		}
 	}
@@ -71,11 +70,9 @@ public class Player : MonoBehaviour {
 		if (context.started) {
 			RaycastHit2D hit = Physics2D.Raycast(mainCam.ScreenToWorldPoint(mousePos), Vector2.zero, 100f, world.walkableMask);
 
-			Debug.Log("yeet");
 			if (hit.collider != null) {
 				foreach (ISelectable s in selected) {
-					//Debug.Log(hit.point);
-					s.EnqueueCommand(Commands.Construct<MoveCommand, Vector2>(Commands.MoveCommand, hit.point));
+					s.ExecuteCommand(Commands.Construct<MoveCommand, Vector2>(Commands.MoveCommand, hit.point));
 				}
 			}
 		}

@@ -156,8 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 20
-  yeet: 0
-  followingPath: 0
+  executingCommand: 0
 --- !u!212 &40166236
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -385,8 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 20
-  yeet: 0
-  followingPath: 0
+  executingCommand: 0
 --- !u!212 &588774932
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1685,8 +1683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   speed: 5
-  yeet: 0
-  followingPath: 0
+  executingCommand: 0
 --- !u!58 &1564242495
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1716,7 +1713,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commands:
-  - move
+  - name: name
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1564242494}
+          m_TargetAssemblyTypeName: Character, Assembly-CSharp
+          m_MethodName: Command_Move
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  executingCommand: 0
 --- !u!1 &1968719341
 GameObject:
   m_ObjectHideFlags: 0
