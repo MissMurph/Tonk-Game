@@ -22,10 +22,6 @@ public class World : MonoBehaviour {
     [SerializeField]
     private Pathfinding pathfinding;
 
-    public LayerMask walkableMask;
-
-    public LayerMask unwalkableMask;
-
     private Dictionary<int, int> walkableRegionsDic = new Dictionary<int, int>();
 
     public int obstaclePenalty = 10;
@@ -49,7 +45,7 @@ public class World : MonoBehaviour {
         pathfinding = GetComponent<Pathfinding>();
 
         foreach (TerrainType region in walkableRegions) {
-            walkableMask.value |= region.terrainMask.value;
+            //LayerMasks.AddLayerToMask(region.terrainMask.value, LayerMasks.WalkableMask);
             walkableRegionsDic.Add(Mathf.RoundToInt(Mathf.Log(region.terrainMask.value, 2)), region.terrainPenalty);
 		}
 
@@ -63,7 +59,7 @@ public class World : MonoBehaviour {
             for (int y = 0; y < GridSize.y; y++) {
                 Vector3 worldPos = BottomLeft + new Vector3(x * nodeSize + (nodeSize/2), y * nodeSize + (nodeSize / 2), 0);
 
-				bool walkable = !(Physics2D.BoxCast(worldPos, Vector2.one * (nodeSize / 2), 0, Vector2.zero, 0, unwalkableMask));
+				bool walkable = !(Physics2D.BoxCast(worldPos, Vector2.one * (nodeSize / 2), 0, Vector2.zero, 0, LayerMasks.UnwalkableMask));
 
 				int penalty = 0;
 
@@ -72,7 +68,7 @@ public class World : MonoBehaviour {
 					
                     if (obj != null) walkableRegionsDic.TryGetValue(obj.layer, out penalty);*/
 
-                    RaycastHit2D hit = Physics2D.Raycast(worldPos + Vector3.back * 50, Vector3.forward, 100, walkableMask);
+                    RaycastHit2D hit = Physics2D.Raycast(worldPos + Vector3.back * 50, Vector3.forward, 100, LayerMasks.WalkableMask);
 
                     if (hit.collider != null) walkableRegionsDic.TryGetValue(hit.collider.gameObject.layer, out penalty);
                 }
@@ -163,6 +159,8 @@ public class World : MonoBehaviour {
         
         return grid[x, y];
     }
+
+    
 
 	private void OnDrawGizmos() {
         if (displayGizmos) {

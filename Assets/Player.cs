@@ -3,84 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class Player : MonoBehaviour {
 
-	private List<ISelectable> selected = new List<ISelectable>();
+	[SerializeField]
+	private PlayerController playerController;
 
 	public World world;
 
-	[SerializeField]
-	private Camera mainCam;
+	public IControllable currentControl;
 
-	[SerializeField]
-	private float camMoveSpeed;
-
-	public Vector2 MousePos {
-		get {
-			return mousePos;
-		}
-	}
-
-	private Vector2 mousePos;
-
-	public Vector2 Moving {
-		get {
-			return movingDir;
-		}
-	}
-	
-	private Vector2 movingDir;
-
-	[SerializeField]
-	private LayerMask selectableLayer;
-
-	/*	UNITY FUNCTIONS	*/
-	private void Update () {
-		transform.position += new Vector3(movingDir.x * camMoveSpeed, movingDir.y * camMoveSpeed, 0) * Time.deltaTime;
-	}
-
-
-	/*	REGULAR FUNCTIONS	*/
-	private void Select (ISelectable selectable) {
-		if (selected.Contains(selectable)) selected.Remove(selectable);
-		else {
-			selected.Add(selectable);
-		}
-	}
-
-
-	/*	INPUT FUNCTIONS	*/
-	public void Fire (InputAction.CallbackContext context) {
-		RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mousePos), Vector2.zero, 100f, selectableLayer);
-
-		if (hit.collider != null) {
-			ISelectable selectable = hit.collider.gameObject.GetComponent<ISelectable>();
+	public void SwitchControl (IControllable controllable) {
+		//Debug.Log("Old: " + currentControl.GetObject().name + "   New: " + controllable.GetObject().name);
+		if (currentControl.GetObject().name != controllable.GetObject().name) {
+			currentControl.GetInput().enabled = false;
 			
-			Select(selectable);
+			currentControl = controllable;
+
+			controllable.GetInput().enabled = true;
+			controllable.GetInput().ActivateInput();
 		}
 	}
 
-	public void Look (InputAction.CallbackContext context) {
-		Vector2 input = context.ReadValue<Vector2>();
-
-		mousePos = input;
-	}
-
-	public void RightClick (InputAction.CallbackContext context) {
-		if (context.started) {
-			RaycastHit2D hit = Physics2D.Raycast(mainCam.ScreenToWorldPoint(mousePos), Vector2.zero, 100f, world.walkableMask);
-
-			if (hit.collider != null) {
-				foreach (ISelectable s in selected) {
-					s.ExecuteCommand(Commands.Construct<MoveCommand, Vector2>(Commands.MoveCommand, hit.point));
-				}
-			}
+	public void ResetControl () {
+		if (currentControl.GetType().Equals(playerController.GetType())) {
+			SwitchControl(playerController);
 		}
 	}
 
-	public void Move (InputAction.CallbackContext context) {
-		Vector2 input = context.ReadValue<Vector2>();
+	private void Awake () {
+		playerController = GetComponent<PlayerController>();
+		currentControl = playerController;
+	}
 
-		movingDir = input;
+	private void Update () {
+		if (currentControl != null && currentControl.GetObject() != this.gameObject) {
+			GameObject target = currentControl.GetObject();
+			transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+		}
 	}
 }

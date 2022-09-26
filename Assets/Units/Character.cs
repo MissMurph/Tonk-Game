@@ -10,23 +10,29 @@ public class Character : MonoBehaviour, ISelectable {
 	const float pathUpdateMoveThreshold = .5f;
 
 	public Transform target;
+	public Vector3 targetOldPos;
 	public float speed = 20f;
-	Vector3[] path;
-	int targetIndex;
+	public Vector3[] path;
+	public int targetIndex;
 
 	public bool executingCommand = false;
 
 	private CommandManager commandManager;
 
-	float commandUpdateTime = 0.5f;
-	float currentCommandTime = 0.5f;
+	private Coroutine movementCoroutine;
+
+	private Command currentCommand;
+
+	public bool embarked;
+
+	private Tank embarkedTank;
 
 	private void Awake() {
 		commandManager = GetComponent<CommandManager>();
 	}
 
 	private void Start () {
-
+		StartCoroutine(UpdatePath());
 	}
 
 	private void Update() {
@@ -34,41 +40,74 @@ public class Character : MonoBehaviour, ISelectable {
 	}
 
 	public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
-		
+		if (pathSuccessful) {
+			path = newPath;
+			if (movementCoroutine != null) StopCoroutine(movementCoroutine);
+			movementCoroutine = StartCoroutine(FollowPath());
+		}
 	}
 
 	public void Command_Move (Command command, Action<bool> callback) {
-		Vector2 target = command.GetAsType<MoveCommand>().Target();
+		MoveCommand move = command.GetAsType<MoveCommand>();
+		Vector2 target = move.Target();
 
-		PathRequestManager.RequestPath(transform.position, target, (newPath, pathSuccessful) => {
-			if (pathSuccessful) {
-				path = newPath;
-				targetIndex = 0;
-				StopCoroutine(FollowPath());
-				StartCoroutine(FollowPath());
-			}
-		});
+		PathRequestManager.RequestPath(transform.position, target, OnPathFound);
+
+		callback(true);
+	}
+
+	public void Command_Interact (Command command, Action<bool> callback) {
+		IInteractable interactable = command.GetAsType<InteractCommand>().Target();
+
+		target = interactable.GetObject().transform;
+		targetOldPos = target.position;
+
+		//Debug.Log(interactable.GetObject().name);
+
+		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
+		currentCommand = command;
+
+		callback(true);
+	}
+
+	//interaction trigger
+	private void OnTriggerEnter2D (Collider2D collision) {
+		//Debug.Log(currentCommand.GetType());
+
+		if (currentCommand == null) return;
+
+		bool isInteract = currentCommand.GetType() == typeof(InteractCommand);
+		bool isInLayer = LayerMasks.IsInLayerMask(collision.gameObject.layer, LayerMasks.InteractableMask);
+
+		//Debug.Log("Is Interaction: " + isInteract + "  |  Is Interactable Layer: " + isInLayer);
+
+		if (isInteract && isInLayer) {
+			collision.GetComponentInParent<IInteractable>().Interact(this);
+			currentCommand = null;
+			target = null;
+		}
 	}
 
 	IEnumerator UpdatePath () {
-		if (Time.timeSinceLevelLoad < .3f || target == null) {
+		if (Time.timeSinceLevelLoad < .3f) {
 			yield return new WaitForSeconds(.3f);
 		}
-		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
 
 		float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
-		Vector3 targetPosOld = target.position;
 
 		while (true) {
 			yield return new WaitForSeconds(minPathUpdateTime);
-			if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold) {
+
+			if (target != null && (target.position - targetOldPos).sqrMagnitude > sqrMoveThreshold) {
 				PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-				targetPosOld = target.position;
+				targetOldPos = target.position;
 			}
 		}
 	}
 
 	IEnumerator FollowPath() {
+		targetIndex = 0;
 		Vector3 currentWaypoint = path[0];
 
 		while (true) {
@@ -76,17 +115,34 @@ public class Character : MonoBehaviour, ISelectable {
 				targetIndex++;
 
 				if (targetIndex >= path.Length) {
-					executingCommand = false;
+					// if (target != null) ;
 					yield break;
 				}
 
 				currentWaypoint = path[targetIndex];
 			}
 
+			//Debug.Log(currentWaypoint);
+
 			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
-			
+
 			yield return null;
 		}
+	}
+
+	public virtual void Embark (Tank tank) {
+		Debug.Log(name + " embarking...");
+
+		transform.SetParent(this.transform, true);
+		transform.localPosition = Vector3.zero;
+
+		embarkedTank = tank;
+	}
+
+	public virtual void Disembark () {
+		Debug.Log(name + " disembarking...");
+		embarkedTank.Disembark(this);
+		embarkedTank = null;
 	}
 
 	public void OnDrawGizmos() {

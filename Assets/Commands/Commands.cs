@@ -8,6 +8,7 @@ public class Commands : MonoBehaviour {
 	private static Dictionary<string, CommandFactory> commands = new Dictionary<string, CommandFactory>();
 
 	public static readonly CommandFactory MoveCommand = RegisterCommand<MoveCommand, Vector2>("move", (target) => new MoveCommand(target));
+	public static readonly CommandFactory InteractCommand = RegisterCommand<InteractCommand, IInteractable>("interact", (target) => new InteractCommand(target));
 
 	private void Start() {
 		

@@ -10,7 +10,7 @@ public abstract class Command<T> : Command {
 
 	private T target;
 	
-	protected Command (T _target) : base(typeof(T)) {
+	protected Command (T _target, string _name) : base(typeof(T), _name) {
 		target = _target;
 	}
 
@@ -24,11 +24,12 @@ public abstract class Command<T> : Command {
 [Serializable]
 public abstract class Command {
 
-	public string name;
-	public Type type;
+	public string Name { get; private set; }
+	public Type TargetType { get; private set; }
 
-	internal Command(Type _type) {
-		type = _type;
+	internal Command(Type _type, string _name) {
+		TargetType = _type;
+		Name = _name;
 	}
 
 	public T GetAsType<T>() where T : Command {
@@ -37,9 +38,5 @@ public abstract class Command {
 		}
 
 		else return null;
-	}
-
-	public Type TargetType() {
-		return type;
 	}
 }

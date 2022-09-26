@@ -17,9 +17,16 @@ public class CommandManager : MonoBehaviour {
 
 	public bool executingCommand = false;
 
-	private void Awake() {
-		for (int i = 0; i < commands.Length; i++) {
+	private Coroutine currentCoroutine;
 
+	[SerializeField]
+	Character character;
+
+	private void Awake() {
+		character = GetComponent<Character>();
+
+		for (int i = 0; i < commands.Length; i++) {
+			boundCommands.Add(commands[i].name, commands[i].action);
 		}
 	}
 
@@ -37,29 +44,34 @@ public class CommandManager : MonoBehaviour {
 			yield return new WaitForSeconds(commandUpdateTime);
 
 			if (!executingCommand && commandQueue.TryDequeue(out Command command)) {
+				StopCoroutine(currentCoroutine);
 				PerformCommand(command);
 			}
 		}
 	}
 
 	private void PerformCommand(Command command) {
-		if (boundCommands.TryGetValue(command.name, out CommandUnityEvent boundFunction)) {
+		//Debug.Log(command.Name);
+		if (boundCommands.TryGetValue(command.Name, out CommandUnityEvent boundFunction)) {
+			executingCommand = true;
 			boundFunction.Invoke(command, CommandComplete);
-
 		}
 	}
 
 	//Successful if fully completed, if not then it's been interrupted
 	private void CommandComplete (bool successful) {
-
+		executingCommand = false;
 	}
 
 	public void EnqueueCommand(Command command) {
-		if (!commandQueue.Contains(command)) commandQueue.Enqueue(command);
+		if (!commandQueue.Contains(command) && !character.embarked) commandQueue.Enqueue(command);
 	}
 
 	public void ExecuteCommand(Command command) {
 		commandQueue.Clear();
+
+		if (character.embarked) character.Disembark();
+
 		PerformCommand(command);
 	}
 }
