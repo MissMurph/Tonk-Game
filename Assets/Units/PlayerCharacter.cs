@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCharacter : Character, IControllable {
+public class PlayerCharacter : Character {
 
 	public PlayerInput input;
 	public Player player;
@@ -12,10 +12,10 @@ public class PlayerCharacter : Character, IControllable {
 		return input;
 	}
 
-	public override void Embark (Tank tank) {
-		base.Embark(tank);
+	public override void Embark (IControllable seat) {
+		base.Embark(seat);
 
-		player.SwitchControl(tank);
+		player.SwitchControl(seat);
 	}
 
 	public override void Disembark () {

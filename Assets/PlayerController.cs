@@ -101,11 +101,15 @@ public class PlayerController : MonoBehaviour, IControllable {
 		movingDir = input;
 	}
 
-	public PlayerInput GetInput () {
-		return input;
+	public void Input (InputAction.CallbackContext context) {
+		return;
 	}
 
 	public GameObject GetObject () {
 		return this.gameObject;
+	}
+
+	public bool Occupied() {
+		return false;
 	}
 }

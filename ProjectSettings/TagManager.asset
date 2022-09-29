@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Terrain
+    uniqueID: 3467290093
+    locked: 0
+  - name: InteractableObjects
+    uniqueID: 702865781
+    locked: 0
+  - name: WorldObjects
+    uniqueID: 70035973
+    locked: 0
+  - name: Vehicles
+    uniqueID: 585796913
+    locked: 0
+  - name: Characters
+    uniqueID: 519124561
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

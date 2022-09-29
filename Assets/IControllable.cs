@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public interface IControllable {
-	PlayerInput GetInput ();
+	//PlayerInput GetInput ();
+	void Input(InputAction.CallbackContext context);
 	GameObject GetObject ();
 }

@@ -13,8 +13,6 @@ public class CommandManager : MonoBehaviour {
 
 	private Queue<Command> commandQueue = new Queue<Command>();
 
-	private List<Command> activeCommand = new List<Command>();
-
 	public bool executingCommand = false;
 
 	private Coroutine currentCoroutine;
@@ -30,9 +28,8 @@ public class CommandManager : MonoBehaviour {
 		}
 	}
 
-	private void Start() {
+	protected virtual void Start() {
 		StartCoroutine(UpdateCommands());
-
 	}
 
 	IEnumerator UpdateCommands() {
@@ -50,8 +47,7 @@ public class CommandManager : MonoBehaviour {
 		}
 	}
 
-	private void PerformCommand(Command command) {
-		//Debug.Log(command.Name);
+	protected void PerformCommand(Command command) {
 		if (boundCommands.TryGetValue(command.Name, out CommandUnityEvent boundFunction)) {
 			executingCommand = true;
 			boundFunction.Invoke(command, CommandComplete);
@@ -63,11 +59,11 @@ public class CommandManager : MonoBehaviour {
 		executingCommand = false;
 	}
 
-	public void EnqueueCommand(Command command) {
+	public virtual void EnqueueCommand(Command command) {
 		if (!commandQueue.Contains(command) && !character.embarked) commandQueue.Enqueue(command);
 	}
 
-	public void ExecuteCommand(Command command) {
+	public virtual void ExecuteCommand(Command command) {
 		commandQueue.Clear();
 
 		if (character.embarked) character.Disembark();

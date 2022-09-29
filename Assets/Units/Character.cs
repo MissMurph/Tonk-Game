@@ -6,6 +6,10 @@ using UnityEngine.Events;
 
 public class Character : MonoBehaviour, ISelectable {
 
+	public int Health {
+		get; private set;
+	}
+
 	const float minPathUpdateTime = .2f;
 	const float pathUpdateMoveThreshold = .5f;
 
@@ -25,10 +29,13 @@ public class Character : MonoBehaviour, ISelectable {
 
 	public bool embarked;
 
-	private Tank embarkedTank;
+	private IControllable embarkedSeat;
+
+	GameObject[] children;
 
 	private void Awake() {
 		commandManager = GetComponent<CommandManager>();
+		Health = 100;
 	}
 
 	private void Start () {
@@ -130,19 +137,16 @@ public class Character : MonoBehaviour, ISelectable {
 		}
 	}
 
-	public virtual void Embark (Tank tank) {
-		Debug.Log(name + " embarking...");
-
-		transform.SetParent(this.transform, true);
+	public virtual void Embark (IControllable seat) {
+		transform.SetParent(seat.GetObject().transform, true);
 		transform.localPosition = Vector3.zero;
 
-		embarkedTank = tank;
+		embarkedSeat = seat;
 	}
 
 	public virtual void Disembark () {
-		Debug.Log(name + " disembarking...");
-		embarkedTank.Disembark(this);
-		embarkedTank = null;
+		embarkedSeat.GetObject().GetComponentInParent<Tank>().Disembark(this);
+		embarkedSeat = null;
 	}
 
 	public void OnDrawGizmos() {
