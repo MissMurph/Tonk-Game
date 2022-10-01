@@ -1132,6 +1132,7 @@ GameObject:
   - component: {fileID: 940622322}
   - component: {fileID: 940622324}
   - component: {fileID: 940622323}
+  - component: {fileID: 940622325}
   m_Layer: 5
   m_Name: CharacterPage
   m_TagString: Untagged
@@ -1199,6 +1200,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940622321}
   m_CullTransparentMesh: 1
+--- !u!114 &940622325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940622321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 147d493a3f653754e8b8f28a22bb2988, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1320,7 +1334,7 @@ MonoBehaviour:
   - {fileID: 1564242494}
   - {fileID: 40166235}
   - {fileID: 588774931}
-  action: {fileID: -7332931603196855327, guid: 73cea23aa2c0eca48b57dda084f9fa15, type: 3}
+  characters: []
   isImplicit: 0
 --- !u!114 &1039500153
 MonoBehaviour:
@@ -1456,15 +1470,51 @@ MonoBehaviour:
     m_ActionId: ea87db16-ae9f-4a46-a3cf-5867f71db4ed
     m_ActionName: Player/Alt[/Keyboard/shift]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1039500152}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Input
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 74412ac9-0f83-40a7-afaf-18a59fa06cb6
     m_ActionName: Tank/Look[/Mouse/position]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1039500152}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Input
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 029efb6f-4ab6-4e2d-a053-786a76b9c2ad
     m_ActionName: Tank/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1039500152}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: Input
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 504e1c7f-21ac-440c-af43-67173ada0f67
     m_ActionName: Tank/Zoom[/Mouse/rightButton]
   - m_PersistentCalls:
@@ -2117,9 +2167,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   input: {fileID: 0}
-  moveSpeed: 500
-  rotationSpeed: 20
-  movingDirection: {x: 0, y: 0}
   moveAction:
     m_Name: Move
     m_Type: 0
@@ -2130,7 +2177,6 @@ MonoBehaviour:
     m_SingletonActionBindings: []
     m_Flags: 0
   yeetDirection: {x: 0, y: 0}
-  windUpTime: 1.6
 --- !u!50 &1446016331
 Rigidbody2D:
   serializedVersion: 4
@@ -2241,7 +2287,6 @@ GameObject:
   - component: {fileID: 1564242492}
   - component: {fileID: 1564242494}
   - component: {fileID: 1564242496}
-  - component: {fileID: 1564242495}
   - component: {fileID: 1564242497}
   m_Layer: 6
   m_Name: PlayerCharacter
@@ -2338,22 +2383,6 @@ MonoBehaviour:
   embarked: 0
   input: {fileID: 0}
   player: {fileID: 1039500152}
---- !u!58 &1564242495
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.1
 --- !u!114 &1564242496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2416,7 +2445,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.1
 --- !u!1 &1824005488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2511,7 +2540,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1824005488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2943732eb757296419716585041f9c68, type: 3}
+  m_Script: {fileID: 11500000, guid: 04b890586ed79cf4ba30cbee396100b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1852387732
@@ -2523,6 +2552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1852387733}
+  - component: {fileID: 1852387737}
   - component: {fileID: 1852387735}
   - component: {fileID: 1852387734}
   m_Layer: 7
@@ -2608,9 +2638,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1852387732}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2943732eb757296419716585041f9c68, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a54adcbcfbd024458a079265daf6cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputEntries:
+  - inputAction: {fileID: -1923091668265918437, guid: 73cea23aa2c0eca48b57dda084f9fa15, type: 3}
+    function:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1852387737}
+          m_TargetAssemblyTypeName: DriverStation, Assembly-CSharp
+          m_MethodName: Move
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1852387737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852387732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0487c786d828d8b468bcf3f4c07d5244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movingDirection: {x: 0, y: 0}
+  moveSpeed: 2000
+  rotationSpeed: 20
+  windUpTime: 1.6
 --- !u!1 &1968719341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,9 +2859,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2115257446}
   - component: {fileID: 2115257448}
-  - component: {fileID: 2115257447}
   - component: {fileID: 2115257450}
-  - component: {fileID: 2115257451}
+  - component: {fileID: 2115257447}
   m_Layer: 7
   m_Name: CommandStation
   m_TagString: Untagged
@@ -2897,37 +2959,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a54adcbcfbd024458a079265daf6cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputEntries:
-  - inputAction: {fileID: -1923091668265918437, guid: 73cea23aa2c0eca48b57dda084f9fa15, type: 3}
-    commandName: explicit_move
---- !u!114 &2115257451
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2115257445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172551880b03f7d49af0194f3e122ae8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commands:
-  - name: explicit_move
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1446016329}
-          m_TargetAssemblyTypeName: Tank, Assembly-CSharp
-          m_MethodName: Move
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  executingCommand: 0
-  character: {fileID: 0}
+  inputEntries: []

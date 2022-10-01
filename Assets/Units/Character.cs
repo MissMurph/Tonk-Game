@@ -138,8 +138,13 @@ public class Character : MonoBehaviour, ISelectable {
 	}
 
 	public virtual void Embark (IControllable seat) {
+		StopCoroutine(movementCoroutine);
+
 		transform.SetParent(seat.GetObject().transform, true);
+
 		transform.localPosition = Vector3.zero;
+
+		//Debug.Log(transform.);
 
 		embarkedSeat = seat;
 	}

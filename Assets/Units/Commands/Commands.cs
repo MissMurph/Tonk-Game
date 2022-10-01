@@ -11,19 +11,8 @@ public class Commands : MonoBehaviour {
 	public static readonly CommandFactory MoveCommand = RegisterCommand<MoveCommand, Vector2>("move", (target) => new MoveCommand(target));
 	public static readonly CommandFactory InteractCommand = RegisterCommand<InteractCommand, IInteractable>("interact", (target) => new InteractCommand(target));
 
-	public static readonly CommandFactory ExplicitMove = RegisterExplicit("explicit_move", (target) => new ExplicitMoveCommand(target));
-
 	private void Start() {
 		
-	}
-
-	public static Command ConstructFromInput (string name, InputAction.CallbackContext context) {
-		if (commands.TryGetValue(name, out CommandFactory factory)) {
-			CommandFactory<ExplicitCommand, InputAction.CallbackContext> commandFactory = factory.GetAsType<ExplicitCommand, InputAction.CallbackContext>();
-			return commandFactory.Construct(context);
-		}
-
-		return null;
 	}
 
 	public static C Construct<C, T>(CommandFactory factory, T value) where C : Command<T> {
@@ -48,11 +37,6 @@ public class Commands : MonoBehaviour {
 		CommandFactory factory = new CommandFactory<C, T>(name, constructor);
 		commands.Add(name, factory);
 		return factory;
-	}
-
-	private static CommandFactory RegisterExplicit (string name, CommandFactory<ExplicitCommand, InputAction.CallbackContext>.CommConstructor constructor) {
-
-		return RegisterCommand(name, constructor);
 	}
 	
 	public class CommandFactory<C, T> : CommandFactory  {

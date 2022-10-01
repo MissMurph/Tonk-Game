@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour {
 
+	public static Player Instance { get; private set; }
+
 	[SerializeField]
 	private PlayerController playerController;
 
@@ -18,14 +20,9 @@ public class Player : MonoBehaviour {
 
 	public Character[] sceneCharacters;
 
-	private List<Character> characters;
+	public List<Character> characters;
+
 	private PlayerCharacter playerCharacter;
-
-	public InputActionReference action;
-
-	public delegate void InputDelegate(InputAction.CallbackContext context);
-
-	private Dictionary<string, InputDelegate> InputMap = new Dictionary<string, InputDelegate>();
 
 	private PlayerInput input;
 
@@ -46,6 +43,8 @@ public class Player : MonoBehaviour {
 				break;
 			}
 		}
+
+		Instance = this;
 	}
 
 	private void Update() {
@@ -56,7 +55,6 @@ public class Player : MonoBehaviour {
 	}
 
 	public void Input (InputAction.CallbackContext context) {
-		Debug.Log(context.action.name);
 		currentControl.Input(context);
 	}
 
@@ -97,5 +95,9 @@ public class Player : MonoBehaviour {
 		if (currentControl.GetType().Equals(playerController.GetType())) {
 			SwitchControl(playerController);
 		}
+	}
+
+	public List<Character> GetCharacters () {
+		return characters;
 	}
 }

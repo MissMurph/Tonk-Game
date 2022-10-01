@@ -11,7 +11,7 @@
                     "id": "e2e78c9f-436b-4e4b-8ca1-c840587cd91d",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
@@ -359,7 +359,7 @@
                 {
                     "name": "WASD",
                     "id": "1430301a-6246-46bf-8b46-87cce3c303df",
-                    "path": "Dpad",
+                    "path": "Dpad(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
