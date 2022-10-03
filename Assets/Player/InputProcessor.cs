@@ -25,7 +25,6 @@ public class InputProcessor : MonoBehaviour, IControllable {
 	}
 
 	public void Input (InputAction.CallbackContext context) {
-		Debug.Log(context.action.name);
 		if (inputDictionary.TryGetValue(context.action.name, out UnityEvent<InputAction.CallbackContext> function)) {
 			//Debug.Log("Dictionary contained");
 			function.Invoke(context);

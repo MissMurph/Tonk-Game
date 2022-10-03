@@ -40,16 +40,13 @@ public class DriverStation : TankStation {
     }
 
     public void Move(InputAction.CallbackContext context) {
-        Debug.Log("DriverStation.Move");
         if (context.performed) {
-            Debug.Log("Context was performed");
             Vector2 result = context.ReadValue<Vector2>();
 
             movingDirection = result;
         }
         else if (context.canceled) {
             movingDirection = Vector2.zero;
-            Debug.Log("Context was cancelled");
         }
     }
 }
