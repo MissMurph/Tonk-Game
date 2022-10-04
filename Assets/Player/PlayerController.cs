@@ -49,10 +49,14 @@ public class PlayerController : MonoBehaviour, IControllable {
 	}
 
 	/*	REGULAR FUNCTIONS	*/
-	public void Select (ISelectable selectable) {
-		if (selected.Contains(selectable)) selected.Remove(selectable);
+	public bool Select (ISelectable selectable) {
+		if (selected.Contains(selectable)) {
+			selected.Remove(selectable);
+			return false;
+		}
 		else {
 			selected.Add(selectable);
+			return true;
 		}
 	}
 
@@ -111,5 +115,9 @@ public class PlayerController : MonoBehaviour, IControllable {
 
 	public bool Occupied() {
 		return false;
+	}
+
+	public List<ISelectable> GetSelected () {
+		return selected;
 	}
 }

@@ -38,8 +38,9 @@ public class InputProcessor : MonoBehaviour, IControllable {
 	public void AddInput (InputEntry entry) {
 		//Debug.Log(inputDictionary.Count);
 
-		Debug.Log("Trying to add Input: " + entry.inputAction.action.name + "   " + inputDictionary.TryAdd(entry.inputAction.action.name, entry.function));
+		//Debug.Log("Trying to add Input: " + entry.inputAction.action.name + "   " + inputDictionary.TryAdd(entry.inputAction.action.name, entry.function));
 		//inputDictionary.Add(entry.inputAction.action.name, entry.function);
+		inputDictionary.TryAdd(entry.inputAction.action.name, entry.function);
 	}
 
 	public List<InputEntry> GetInputs () {

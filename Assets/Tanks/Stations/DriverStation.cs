@@ -23,6 +23,8 @@ public class DriverStation : TankStation {
     }
 
     private void FixedUpdate() {
+        if (!Occupied) return;
+
         //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + (rotationSpeed * movingDirection.x * Time.deltaTime));
         //transform.position += transform.up * movingDirection.y * moveSpeed * Time.deltaTime;
         if (movingDirection != Vector2.zero) {

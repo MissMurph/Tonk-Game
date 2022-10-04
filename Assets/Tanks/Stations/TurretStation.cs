@@ -11,20 +11,27 @@ public class TurretStation : TankStation {
 	[SerializeField]
 	private float rotateSpeed;
 
+	private float rotateStep {
+		get {
+			return rotateSpeed * Time.fixedDeltaTime;
+		}
+	}
+	
+	private float currentAngle {
+		get {
+			return turretRigidBody.rotation;
+		}
+	}
+
 	[SerializeField]
 	private Rigidbody2D turretRigidBody;
 
-	private Vector3 lookDirection;
-
 	private float lookAngle;
 
-	Vector3 mousePos;
-
-	private float currentAngle {
-		get {
-			return turretRigidBody.gameObject.transform.up.z;
-		}
-	}
+	float totalMinDiff;
+	float totalMaxDiff;
+	int posOrNeg;
+	Vector3 lookDirection;
 
 	protected override void Awake () {
 		base.Awake();
@@ -33,28 +40,73 @@ public class TurretStation : TankStation {
 	}
 
 	private void FixedUpdate () {
-		int posOrNeg = currentAngle - lookAngle > 0 ? 1 : -1;
+		if (!Occupied) return;
 
-		Quaternion newRot = Quaternion.LookRotation(lookDirection);
+		
 
-		turretRigidBody.MoveRotation(lookAngle);
+		//Debug.Log("currentAngle: " + currentAngle);
+
+		//Quaternion newRot = Quaternion.LookRotation(lookDirection);
+
+		float distToMin = Mathf.Abs(lookAngle);
+		float distToMax = 180f - distToMin;
+
+		float currentDistToMin = Mathf.Abs(currentAngle);
+		float currentDistToMax = 180f - currentDistToMin;
+
+		totalMinDiff = distToMin + currentDistToMin;
+		totalMaxDiff = distToMax + currentDistToMax;
+
+		int sameSide = (int) (Mathf.Sign(lookAngle) * Mathf.Sign(currentAngle));
+
+
+
+		//Quaternion.Slerp(turretRigidBody.transform.rotation, newRot, rotateSpeed * Time.fixedDeltaTime);
+
+		posOrNeg = 1;
+
+		float finalDist = totalMinDiff;
+
+		if (totalMaxDiff < totalMinDiff) {
+			posOrNeg *= -1;
+			finalDist = totalMaxDiff;
+		}
+
+		float gigaAngle = Mathf.MoveTowardsAngle(currentAngle, lookAngle, rotateSpeed * Time.fixedDeltaTime);
+
+		if (currentAngle > 0) posOrNeg *= -1;
+
+		//float finalAngle = finalDist > rotateStep ? currentAngle + (posOrNeg * rotateSpeed * Time.fixedDeltaTime) : lookAngle;
+
+		//Debug.Log("finalAngle: " + finalAngle);
+
+		//turretRigidBody.SetRotation(finalAngle);
+
+		turretRigidBody.MoveRotation(gigaAngle);
 	}
 
 	public void Look (InputAction.CallbackContext context) {
-		mousePos = context.ReadValue<Vector2>();
-
-		Debug.Log(mousePos);
+		Vector3 mousePos = context.ReadValue<Vector2>();
 
 		lookDirection = (Camera.main.ScreenToWorldPoint(mousePos) - turretRigidBody.gameObject.transform.position);
 
-		//lookAngle = Mathf.Atan(lookDirection.x / lookDirection.y) * Mathf.Rad2Deg;
-
-		//Debug.Log(lookAngle);
+		lookAngle = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90;
 	}
 
-	private void OnDrawGizmos () {
-		Gizmos.color = Color.cyan;
+	public void ReadAlgorithm (InputAction.CallbackContext context) {
+		if (context.started) {
+			/*Debug.Log("lookDirection: " + lookDirection);
+			Debug.Log("currentAngle: " + currentAngle);
+			Debug.Log("lookAngle: " + lookAngle);
+			Debug.Log("totalMinDiff: " + totalMinDiff);
+			Debug.Log("totalMaxDiff: " + totalMaxDiff);
+			Debug.Log("Direction: " + posOrNeg);*/
 
-		Gizmos.DrawLine(transform.position, mousePos);
+			Debug.Log("Firing...");
+		}
 	}
+
+	//Both of these are used to move back and forth between border values on the angle so turret smoothing will always take the shortest path
+	//Unity measures its rotational values as two 180 degree sides (positive and negative).
+	//In order to cross over the boundaries between both sides we need to measure the difference between the value and the relative border.
 }

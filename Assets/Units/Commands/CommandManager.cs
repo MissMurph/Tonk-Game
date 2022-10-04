@@ -60,13 +60,13 @@ public class CommandManager : MonoBehaviour {
 	}
 
 	public virtual void EnqueueCommand(Command command) {
-		if (!commandQueue.Contains(command) && !character.embarked) commandQueue.Enqueue(command);
+		if (!commandQueue.Contains(command) && !character.Embarked) commandQueue.Enqueue(command);
 	}
 
 	public virtual void ExecuteCommand(Command command) {
 		commandQueue.Clear();
 
-		if (character.embarked) character.Disembark();
+		if (character.Embarked) character.Disembark();
 
 		PerformCommand(command);
 	}

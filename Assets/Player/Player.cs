@@ -97,7 +97,16 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public List<Character> GetCharacters () {
-		return characters;
+	public static List<Character> GetCharacters () {
+		return Instance.characters;
+	}
+
+	public static List<ISelectable> GetSelected() {
+		return Instance.playerController.GetSelected();
+	}
+
+	//False represents deselection, true represents selections
+	public static bool Select (ISelectable selectable) {
+		return Instance.playerController.Select(selectable);
 	}
 }

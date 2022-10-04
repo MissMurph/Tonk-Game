@@ -23,7 +23,18 @@ public class TankStation : MonoBehaviour {
 		return inputReceiver;
 	}
 
-	public void Disembark () {
+	public bool Embark (Character character) {
+		if (Occupied) return false;
 
+		occupant = character;
+
+		return true;
+	}
+
+	public void Disembark () {
+		if (occupant == null) return;
+
+		occupant = null;
+		parentTank.Disembark(occupant);
 	}
 }

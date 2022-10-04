@@ -25,9 +25,7 @@ public class Tank : MonoBehaviour, IInteractable {
     }
 
     public void Disembark (Character character) {
-        if (character.gameObject.transform.parent == this.transform) {
-            character.transform.SetParent(null);
-            character.transform.position = transform.position + (Vector3.left * 2f);
+        if (embarkedCharacters.Contains(character)) {
             embarkedCharacters.Remove(character);
         }
     }
@@ -57,16 +55,22 @@ public class Tank : MonoBehaviour, IInteractable {
     }
 
     public void Interact (Character character) {
+        Debug.Log("Interact");
         if (character.GetType().Equals(typeof(PlayerCharacter)) && stations.TryGetValue("CommandStation", out TankStation station)) {
             character.Embark(station.GetController());
             return;
 		}
 
+        Debug.Log("Interact Not Player");
         foreach (TankStation seat in stations.Values) {
-            if (seat.Occupied && seat.name != "CommandStation") continue;
+            if (seat.Occupied || seat.name == "CommandStation") continue;
 
+            Debug.Log("Seat " + seat.name + " is not occupied");
             character.Embark(seat.GetController());
             embarkedCharacters.Add(character);
+            break;
         }
+
+
     }
 }

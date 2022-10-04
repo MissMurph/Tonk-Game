@@ -27,7 +27,11 @@ public class Character : MonoBehaviour, ISelectable {
 
 	private Command currentCommand;
 
-	public bool embarked;
+	public bool Embarked {
+		get {
+			return embarkedSeat != null;
+		}
+	}
 
 	private IControllable embarkedSeat;
 
@@ -64,6 +68,7 @@ public class Character : MonoBehaviour, ISelectable {
 	}
 
 	public void Command_Interact (Command command, Action<bool> callback) {
+		Debug.Log("Interact Commanded");
 		IInteractable interactable = command.GetAsType<InteractCommand>().Target();
 
 		target = interactable.GetObject().transform;
@@ -138,9 +143,13 @@ public class Character : MonoBehaviour, ISelectable {
 	}
 
 	public virtual void Embark (IControllable seat) {
+		TankStation station = seat.GetObject().GetComponent<TankStation>();
+
+		if (!station.Embark(this)) return;
+
 		StopCoroutine(movementCoroutine);
 
-		transform.SetParent(seat.GetObject().transform, true);
+		transform.SetParent(station.transform, true);
 
 		transform.localPosition = Vector3.zero;
 
@@ -150,8 +159,10 @@ public class Character : MonoBehaviour, ISelectable {
 	}
 
 	public virtual void Disembark () {
-		embarkedSeat.GetObject().GetComponentInParent<Tank>().Disembark(this);
+		embarkedSeat.GetObject().GetComponent<TankStation>().Disembark();
 		embarkedSeat = null;
+		transform.position = transform.position + (Vector3.left * 2f);
+		transform.SetParent(null);
 	}
 
 	public void OnDrawGizmos() {
