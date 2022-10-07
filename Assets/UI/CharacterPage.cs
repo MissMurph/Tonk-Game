@@ -8,7 +8,7 @@ public class CharacterPage : MonoBehaviour {
 
 	[SerializeField]
 	private Text nameText;
-	private Character boundCharacter;
+	public Character BoundCharacter { get; private set; }
 	private Image background;
 
 	private void Awake() {
@@ -17,13 +17,17 @@ public class CharacterPage : MonoBehaviour {
 	}
 
 	public void LoadCharacter(Character character) {
-		boundCharacter = character;
-		nameText.text = boundCharacter.name;
+		BoundCharacter = character;
+		nameText.text = BoundCharacter.name;
 	}
 
 	public void OnClick () {
-		bool status = Player.Select(boundCharacter);
+		bool status = Player.Select(BoundCharacter);
 
 		background.color = status ? Color.cyan : Color.white;
+	}
+
+	public void OnSelect() {
+
 	}
 }

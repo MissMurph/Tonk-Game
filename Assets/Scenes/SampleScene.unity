@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 1564242492}
   - component: {fileID: 1564242497}
   m_Layer: 6
-  m_Name: PlayerCharacter
+  m_Name: (P)Jessie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2099,7 +2099,6 @@ MonoBehaviour:
   path: []
   targetIndex: 0
   executingCommand: 0
-  embarked: 0
   input: {fileID: 0}
   player: {fileID: 1039500152}
 --- !u!114 &1564242496
@@ -2164,7 +2163,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.15
 --- !u!1 &1852387732
 GameObject:
   m_ObjectHideFlags: 0

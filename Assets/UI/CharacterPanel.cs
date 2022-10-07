@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterPanel : MonoBehaviour {
+public class CharacterPanel : MonoBehaviour, ISelection {
 
 	public GameObject pagePrefab;
 
@@ -27,5 +27,18 @@ public class CharacterPanel : MonoBehaviour {
 		page.LoadCharacter(character);
 
 		return page;
+	}
+
+	public void OnSelect(ISelectable selectable) {
+		if (selectable.GetType() != typeof(Character)) return;
+
+		Character character = (Character)selectable;
+
+		foreach (CharacterPage page in pages) {
+			if (page.BoundCharacter.Equals(character)) {
+				page.OnSelect();
+				return;
+			}
+		}
 	}
 }
