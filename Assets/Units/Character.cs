@@ -3,200 +3,248 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TankGame.Units.Commands;
+using TankGame.Players.Input;
+using TankGame.Tanks.Stations;
+using TankGame.Units.Pathfinding;
+using TankGame.Items;
 
-public class Character : MonoBehaviour, ISelectable {
+namespace TankGame.Units {
 
-	public int Health {
-		get; private set;
-	}
+	public class Character : Unit, ISelectable {
 
-	const float minPathUpdateTime = .2f;
-	const float pathUpdateMoveThreshold = .5f;
-
-	public Transform target;
-	public Vector3 targetOldPos;
-	public float speed = 20f;
-	public Vector3[] path;
-	public int targetIndex;
-
-	public bool executingCommand = false;
-
-	private CommandManager commandManager;
-
-	private Coroutine movementCoroutine;
-
-	private Command currentCommand;
-
-	public bool Embarked {
-		get {
-			return embarkedSeat != null;
+		public int Health {
+			get; private set;
 		}
-	}
 
-	private IControllable embarkedSeat;
+		const float minPathUpdateTime = .2f;
+		const float pathUpdateMoveThreshold = .5f;
 
-	GameObject[] children;
+		public Transform target;
+		public Vector3 targetOldPos;
+		public float speed = 20f;
+		public Vector3[] path;
+		public int targetIndex;
 
-	private void Awake() {
-		commandManager = GetComponent<CommandManager>();
-		Health = 100;
-	}
+		public bool executingCommand = false;
 
-	private void Start () {
-		StartCoroutine(UpdatePath());
-	}
+		private CommandManager commandManager;
 
-	private void Update() {
-		
-	}
+		private Coroutine movementCoroutine;
 
-	public void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
-		if (pathSuccessful) {
-			path = newPath;
+		private Command currentCommand;
+
+		public delegate void PathComplete(bool success);
+
+		private PathComplete pathCompleteCallback;
+
+		public bool Embarked {
+			get {
+				return embarkedSeat != null;
+			}
+		}
+
+		private IControllable embarkedSeat;
+
+		GameObject[] children;
+
+		private delegate void TriggerReaction(Collider2D collision);
+
+		private TriggerReaction reaction;
+
+		private void Awake() {
+			commandManager = GetComponent<CommandManager>();
+			Health = 100;
+		}
+
+		private void Start() {
+			StartCoroutine(UpdatePath());
+		}
+
+		private void Update() {
+
+		}
+
+		private void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
+			if (pathSuccessful) {
+				path = newPath;
+				if (movementCoroutine != null) StopCoroutine(movementCoroutine);
+				movementCoroutine = StartCoroutine(FollowPath());
+			}
+		}
+
+		public void SubmitTarget(Vector2 _target, PathComplete callback) {
+			PathRequestManager.RequestPath(transform.position, _target, OnPathFound);
+			pathCompleteCallback = callback;
+		}
+
+		public void SubmitTarget(Transform _target, PathComplete callback) {
+			SubmitTarget(_target.position, callback);
+
+			target = _target;
+		}
+
+		public void Stop () {
 			if (movementCoroutine != null) StopCoroutine(movementCoroutine);
-			movementCoroutine = StartCoroutine(FollowPath());
-		}
-	}
-
-	public void Command_Move (Command command, Action<bool> callback) {
-		MoveCommand move = command.GetAsType<MoveCommand>();
-		Vector2 target = move.Target();
-
-		PathRequestManager.RequestPath(transform.position, target, OnPathFound);
-
-		callback(true);
-	}
-
-	public void Command_Interact (Command command, Action<bool> callback) {
-		Debug.Log("Interact Commanded");
-		IInteractable interactable = command.GetAsType<InteractCommand>().Target();
-
-		target = interactable.GetObject().transform;
-		targetOldPos = target.position;
-
-		//Debug.Log(interactable.GetObject().name);
-
-		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-
-		currentCommand = command;
-
-		callback(true);
-	}
-
-	//interaction trigger
-	private void OnTriggerEnter2D (Collider2D collision) {
-		//Debug.Log(currentCommand.GetType());
-
-		if (currentCommand == null) return;
-
-		bool isInteract = currentCommand.GetType() == typeof(InteractCommand);
-		bool isInLayer = LayerMasks.IsInLayerMask(collision.gameObject.layer, LayerMasks.InteractableMask);
-
-		//Debug.Log("Is Interaction: " + isInteract + "  |  Is Interactable Layer: " + isInLayer);
-
-		if (isInteract && isInLayer) {
-			collision.GetComponentInParent<IInteractable>().Interact(this);
-			currentCommand = null;
+			//movementCoroutine = StartCoroutine(FollowPath());
+			path = null;
 			target = null;
 		}
-	}
 
-	IEnumerator UpdatePath () {
-		if (Time.timeSinceLevelLoad < .3f) {
-			yield return new WaitForSeconds(.3f);
+		/*	Command Functions	*/
+
+		public void Command_Move(Command command, Action<bool> callback) {
+			Move move = command.GetAsType<Move>();
+			Vector2 target = move.Target();
+
+			PathRequestManager.RequestPath(transform.position, target, OnPathFound);
+
+			callback(true);
 		}
 
-		float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+		public void Command_Interact(Command command, Action<bool> callback) {
+			//Debug.Log("Interact Commanded");
+			IInteractable interactable = command.GetAsType<Interact>().Target();
 
-		while (true) {
-			yield return new WaitForSeconds(minPathUpdateTime);
+			target = interactable.GetObject().transform;
+			targetOldPos = target.position;
 
-			if (target != null && (target.position - targetOldPos).sqrMagnitude > sqrMoveThreshold) {
-				PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-				targetOldPos = target.position;
+			//Debug.Log(interactable.GetObject().name);
+
+			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
+			currentCommand = command;
+
+			reaction = (collision) => {
+				collision.GetComponentInParent<IInteractable>().Interact(this);
+				currentCommand = null;
+				target = null;
+			};
+
+			callback(true);
+		}
+
+		public void Command_TransferItem(Command command, Action<bool> callback) {
+			IInventory inventory = command.GetAsType<TransferItem>().Target();
+
+			target = inventory.GetObject().transform;
+			targetOldPos = target.position;
+
+			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+
+			currentCommand = command;
+
+			reaction = (collision) => {
+				//collision.GetComponentInParent<IInventory>().Interact(this);
+				currentCommand = null;
+				target = null;
+			};
+
+			callback(true);
+		}
+
+		IEnumerator UpdatePath() {
+			if (Time.timeSinceLevelLoad < .3f) {
+				yield return new WaitForSeconds(.3f);
 			}
-		}
-	}
 
-	IEnumerator FollowPath() {
-		targetIndex = 0;
-		Vector3 currentWaypoint = path[0];
+			float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
 
-		while (true) {
-			if (transform.position == currentWaypoint) {
-				targetIndex++;
+			while (true) {
+				yield return new WaitForSeconds(minPathUpdateTime);
 
-				if (targetIndex >= path.Length) {
-					// if (target != null) ;
-					yield break;
-				}
-
-				currentWaypoint = path[targetIndex];
-			}
-
-			//Debug.Log(currentWaypoint);
-
-			transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
-
-			yield return null;
-		}
-	}
-
-	public virtual void Embark (IControllable seat) {
-		TankStation station = seat.GetObject().GetComponent<TankStation>();
-
-		if (!station.Embark(this)) return;
-
-		StopCoroutine(movementCoroutine);
-
-		transform.SetParent(station.transform, true);
-
-		transform.localPosition = Vector3.zero;
-
-		//Debug.Log(transform.);
-
-		embarkedSeat = seat;
-	}
-
-	public virtual void Disembark () {
-		embarkedSeat.GetObject().GetComponent<TankStation>().Disembark();
-		embarkedSeat = null;
-		transform.position = transform.position + (Vector3.left * 2f);
-		transform.SetParent(null);
-	}
-
-	public void OnDrawGizmos() {
-		if (path != null) {
-			for (int i = targetIndex; i < path.Length; i++) {
-				Gizmos.color = Color.black;
-				Gizmos.DrawCube(path[i], Vector3.one/2);
-
-				if (i == targetIndex) {
-					Gizmos.DrawLine(transform.position, path[i]);
-				}
-				else {
-					Gizmos.DrawLine(path[i - 1], path[i]);
+				if (target != null && (target.position - targetOldPos).sqrMagnitude > sqrMoveThreshold) {
+					PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+					targetOldPos = target.position;
 				}
 			}
 		}
-	}
 
-	/*	INTERFACE FUNCTIONS	*/
+		IEnumerator FollowPath() {
+			targetIndex = 0;
+			Vector3 currentWaypoint = path[0];
 
-	public void EnqueueCommand (Command command) {
-		commandManager.EnqueueCommand(command);
-	}
+			while (true) {
+				if (commandManager.ActiveCommand != null && commandManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
 
-	public void ExecuteCommand(Command command) {
-		if (command != null) commandManager.ExecuteCommand(command);
-		else Debug.Log("Null Command");
-	}
+				if (transform.position == currentWaypoint) {
+					targetIndex++;
 
-	public GameObject GetObject() {
-		return this.gameObject;
-	}
+					if (targetIndex >= path.Length) {
+						// if (target != null) ;
+						yield break;
+					}
 
-	public ISelectable Select () {
-		return this;
+					currentWaypoint = path[targetIndex];
+				}
+
+				//Debug.Log(currentWaypoint);
+
+				transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+
+				yield return null;
+			}
+		}
+
+		
+
+
+		public virtual void Embark(IControllable seat) {
+			TankStation station = seat.GetObject().GetComponent<TankStation>();
+
+			if (!station.Embark(this)) return;
+
+			StopCoroutine(movementCoroutine);
+
+			transform.SetParent(station.transform, true);
+
+			transform.localPosition = Vector3.zero;
+
+			//Debug.Log(transform.);
+
+			embarkedSeat = seat;
+		}
+
+		public virtual void Disembark() {
+			embarkedSeat.GetObject().GetComponent<TankStation>().Disembark();
+			embarkedSeat = null;
+			transform.position = transform.position + (Vector3.left * 2f);
+			transform.SetParent(null);
+		}
+
+		public void OnDrawGizmos() {
+			if (path != null) {
+				for (int i = targetIndex; i < path.Length; i++) {
+					Gizmos.color = Color.black;
+					Gizmos.DrawCube(path[i], Vector3.one / 2);
+
+					if (i == targetIndex) {
+						Gizmos.DrawLine(transform.position, path[i]);
+					}
+					else {
+						Gizmos.DrawLine(path[i - 1], path[i]);
+					}
+				}
+			}
+		}
+
+		/*	INTERFACE FUNCTIONS	*/
+
+		public void EnqueueCommand(Command command) {
+			commandManager.EnqueueCommand(command);
+		}
+
+		public void ExecuteCommand(Command command) {
+			if (command != null) commandManager.ExecuteCommand(command);
+			else Debug.Log("Null Command");
+		}
+
+		public GameObject GetObject() {
+			return this.gameObject;
+		}
+
+		public ISelectable Select() {
+			return this;
+		}
 	}
 }

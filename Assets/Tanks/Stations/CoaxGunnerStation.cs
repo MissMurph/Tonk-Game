@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoaxGunnerStation : MonoBehaviour {
 
-	void Start() {
-		
-	}
+namespace TankGame.Tanks.Stations {
 
-	void Update() {
-		
+	public class CoaxGunnerStation : MonoBehaviour {
+
+		void Start() {
+
+		}
+
+		void Update() {
+
+		}
 	}
 }

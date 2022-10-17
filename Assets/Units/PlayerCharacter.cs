@@ -1,26 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Players;
+using TankGame.Players.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCharacter : Character {
+namespace TankGame.Units {
 
-	public PlayerInput input;
-	public Player player;
+	public class PlayerCharacter : Character {
 
-	public PlayerInput GetInput () {
-		return input;
-	}
+		public PlayerInput input;
+		public Player player;
 
-	public override void Embark (IControllable seat) {
-		base.Embark(seat);
+		public PlayerInput GetInput() {
+			return input;
+		}
 
-		player.SwitchControl(seat);
-	}
+		public override void Embark(IControllable seat) {
+			base.Embark(seat);
 
-	public override void Disembark () {
-		base.Disembark();
+			player.SwitchControl(seat);
+		}
 
-		player.ResetControl();
+		public override void Disembark() {
+			base.Disembark();
+
+			player.ResetControl();
+		}
 	}
 }

@@ -1,44 +1,81 @@
-using System.Collections;
 using System.Collections.Generic;
+using TankGame.Events;
+using TankGame.Players;
+using TankGame.Units;
 using UnityEngine;
 
-public class CharacterPanel : MonoBehaviour, ISelection {
+namespace TankGame.UI {
 
-	public GameObject pagePrefab;
+	public class CharacterPanel : MonoBehaviour {
 
-	private List<CharacterPage> pages = new List<CharacterPage>();
+		public GameObject pagePrefab;
 
-	private void Start() {
-		List<Character> characters = Player.GetCharacters();
+		private List<CharacterPage> pages = new List<CharacterPage>();
 
-		for (int i = 0; i < characters.Count; i++) {
-			pages.Add(CreatePage(characters[i]));
-		}
-	}
+		private void Start() {
+			List<Character> characters = Player.GetCharacters();
 
-	private CharacterPage CreatePage (Character character) {
-		GameObject obj = Instantiate(pagePrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
-		RectTransform rectTransform = obj.GetComponent<RectTransform>();
-		rectTransform.SetParent(transform);
-		rectTransform.anchorMin = new Vector2(0.5f, 0.15f + (0.3f * pages.Count));
-		rectTransform.anchorMax = new Vector2(0.5f, 0.15f + (0.3f * pages.Count));
-		rectTransform.anchoredPosition = Vector2.zero;
-		CharacterPage page = obj.GetComponent<CharacterPage>();
-		page.LoadCharacter(character);
-
-		return page;
-	}
-
-	public void OnSelect(ISelectable selectable) {
-		if (selectable.GetType() != typeof(Character)) return;
-
-		Character character = (Character)selectable;
-
-		foreach (CharacterPage page in pages) {
-			if (page.BoundCharacter.Equals(character)) {
-				page.OnSelect();
-				return;
+			for (int i = 0; i < characters.Count; i++) {
+				pages.Add(CreatePage(characters[i]));
 			}
+
+			EventBus.AddListener<PlayerEvent.Selection>(OnSelect);
+			EventBus.AddListener<InventoryEvent.ItemTransfered>(OnItemTransfered);
+		}
+
+		private CharacterPage CreatePage(Character character) {
+			GameObject obj = Instantiate(pagePrefab, Vector3.zero, Quaternion.Euler(Vector3.zero));
+			RectTransform rectTransform = obj.GetComponent<RectTransform>();
+			rectTransform.SetParent(transform);
+			rectTransform.anchorMin = new Vector2(0.5f, 0.2f + (0.4f * pages.Count));
+			rectTransform.anchorMax = new Vector2(0.5f, 0.2f + (0.4f * pages.Count));
+			rectTransform.anchoredPosition = Vector2.zero;
+			CharacterPage page = obj.GetComponent<CharacterPage>();
+			page.LoadCharacter(character);
+
+			return page;
+		}
+
+		private void OnSelect(PlayerEvent.Selection _event) {
+
+			Character character = _event.Selectable as Character;
+
+			if (character != null) {
+				foreach (CharacterPage page in pages) {
+					if (page.BoundCharacter.Equals(character)) {
+						page.OnSelect(_event.SelectStatus);
+						return;
+					}
+				}
+			}
+		}
+
+		private void OnItemTransfered(InventoryEvent.ItemTransfered _event) {
+			if (_event.Inventory.GetObject().TryGetComponent(out Character character)) {
+				CharacterPage page = GetPage(character);
+
+				ItemIcon icon = page.GetItemIcon(_event.Item);
+
+				if (icon != null) {
+					CharacterPage targetPage = GetPage(_event.Target.GetObject().GetComponent<Character>());
+
+					for (int i = 0; i < targetPage.slotIcons.Length; i++) {
+						if (!targetPage.slotIcons[i].Occupied) {
+							icon.ParentSlot.RemoveItem();
+							targetPage.slotIcons[i].FillSlot(icon);
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		private CharacterPage GetPage (Character character) {
+			foreach (CharacterPage page in pages) {
+				if (page.BoundCharacter.Equals(character)) return page;
+			}
+
+			return null;
 		}
 	}
 }

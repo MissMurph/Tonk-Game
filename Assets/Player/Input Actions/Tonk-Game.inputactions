@@ -523,7 +523,7 @@
                 },
                 {
                     "name": "Point",
-                    "type": "PassThrough",
+                    "type": "Value",
                     "id": "b99d6254-893c-4ec9-a34c-9a01303e3e3e",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -532,7 +532,7 @@
                 },
                 {
                     "name": "Click",
-                    "type": "PassThrough",
+                    "type": "Button",
                     "id": "7ece2f90-386a-4f0a-9326-caeafc934784",
                     "expectedControlType": "Button",
                     "processors": "",
@@ -875,7 +875,7 @@
                 {
                     "name": "",
                     "id": "c52c8e0b-8179-41d3-b8a1-d149033bbe86",
-                    "path": "<Mouse>/position",
+                    "path": "<Pointer>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",

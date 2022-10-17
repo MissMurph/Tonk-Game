@@ -4,51 +4,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DriverStation : TankStation {
+namespace TankGame.Tanks.Stations {
 
-    public Vector2 movingDirection;
+    public class DriverStation : TankStation {
 
-    private Rigidbody2D rigidBody;
+        public Vector2 movingDirection;
 
-    private float currentWindUp = 0f;
+        private Rigidbody2D rigidBody;
 
-    public float moveSpeed;
-    public float rotationSpeed;
-    public float windUpTime;    //in seconds
+        private float currentWindUp = 0f;
 
-    protected override void Awake () {
-        base.Awake();
+        public float moveSpeed;
+        public float rotationSpeed;
+        public float windUpTime;    //in seconds
 
-        rigidBody = GetComponentInParent<Rigidbody2D>();
-    }
+        protected override void Awake() {
+            base.Awake();
 
-    private void FixedUpdate() {
-        if (!Occupied) return;
-
-        //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + (rotationSpeed * movingDirection.x * Time.deltaTime));
-        //transform.position += transform.up * movingDirection.y * moveSpeed * Time.deltaTime;
-        if (movingDirection != Vector2.zero) {
-            currentWindUp += Time.deltaTime;
-            currentWindUp = Mathf.Clamp(currentWindUp, 0, windUpTime);
+            rigidBody = GetComponentInParent<Rigidbody2D>();
         }
 
-        else currentWindUp = 0f;
+        private void FixedUpdate() {
+            if (!Occupied) return;
 
-        rigidBody.AddForce(transform.up * (movingDirection.y * moveSpeed * (currentWindUp / windUpTime)));
+            //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + (rotationSpeed * movingDirection.x * Time.deltaTime));
+            //transform.position += transform.up * movingDirection.y * moveSpeed * Time.deltaTime;
+            if (movingDirection != Vector2.zero) {
+                currentWindUp += Time.deltaTime;
+                currentWindUp = Mathf.Clamp(currentWindUp, 0, windUpTime);
+            }
 
-        float impulse = (movingDirection.x * rotationSpeed * Mathf.Deg2Rad) * rigidBody.inertia;
+            else currentWindUp = 0f;
 
-        rigidBody.AddTorque(-impulse * (currentWindUp / windUpTime), ForceMode2D.Impulse);
-    }
+            rigidBody.AddForce(transform.up * (movingDirection.y * moveSpeed * (currentWindUp / windUpTime)));
 
-    public void Move(InputAction.CallbackContext context) {
-        if (context.performed) {
-            Vector2 result = context.ReadValue<Vector2>();
+            float impulse = (movingDirection.x * rotationSpeed * Mathf.Deg2Rad) * rigidBody.inertia;
 
-            movingDirection = result;
+            rigidBody.AddTorque(-impulse * (currentWindUp / windUpTime), ForceMode2D.Impulse);
         }
-        else if (context.canceled) {
-            movingDirection = Vector2.zero;
+
+        public void Move(InputAction.CallbackContext context) {
+            if (context.performed) {
+                Vector2 result = context.ReadValue<Vector2>();
+
+                movingDirection = result;
+            }
+            else if (context.canceled) {
+                movingDirection = Vector2.zero;
+            }
         }
     }
 }

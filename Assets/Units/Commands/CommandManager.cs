@@ -4,82 +4,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CommandManager : MonoBehaviour {
+namespace TankGame.Units.Commands {
 
-	const float commandUpdateTime = 0.5f;
+	public class CommandManager : MonoBehaviour {
 
-	public CommandBinding[] commands;
-	private Dictionary<string, CommandUnityEvent> boundCommands = new Dictionary<string, CommandUnityEvent> ();
+		const float commandUpdateTime = 0.5f;
 
-	private Queue<Command> commandQueue = new Queue<Command>();
+		public CommandBinding[] commands;
+		private Dictionary<string, CommandUnityEvent> boundCommands = new Dictionary<string, CommandUnityEvent>();
 
-	public bool executingCommand = false;
+		private Queue<Command> commandQueue = new Queue<Command>();
 
-	private Coroutine currentCoroutine;
+		public bool executingCommand = false;
 
-	[SerializeField]
-	Character character;
+		private Coroutine currentCoroutine;
 
-	private void Awake() {
-		character = GetComponent<Character>();
+		public Command ActiveCommand { get; private set; }
 
-		for (int i = 0; i < commands.Length; i++) {
-			boundCommands.Add(commands[i].name, commands[i].action);
-		}
-	}
+		[SerializeField]
+		Character character;
 
-	protected virtual void Start() {
-		StartCoroutine(UpdateCommands());
-	}
+		private void Awake() {
+			character = GetComponent<Character>();
 
-	IEnumerator UpdateCommands() {
-		if (Time.timeSinceLevelLoad < .3f) {
-			yield return new WaitForSeconds(.3f);
+			for (int i = 0; i < commands.Length; i++) {
+				boundCommands.Add(commands[i].name, commands[i].action);
+			}
 		}
 
-		while (true) {
-			yield return new WaitForSeconds(commandUpdateTime);
+		protected virtual void Start() {
+			StartCoroutine(UpdateCommands());
+		}
 
-			if (!executingCommand && commandQueue.TryDequeue(out Command command)) {
-				StopCoroutine(currentCoroutine);
-				PerformCommand(command);
+		IEnumerator UpdateCommands() {
+			if (Time.timeSinceLevelLoad < .3f) {
+				yield return new WaitForSeconds(.3f);
+			}
+
+			while (true) {
+				yield return new WaitForSeconds(commandUpdateTime);
+
+				if (!executingCommand && commandQueue.TryDequeue(out Command command)) {
+					StopCoroutine(currentCoroutine);
+					PerformCommand(command);
+				}
+			}
+		}
+
+		protected void PerformCommand(Command command) {
+			/*if (boundCommands.TryGetValue(command.Name, out CommandUnityEvent boundFunction)) {
+				executingCommand = true;
+				boundFunction.Invoke(command, CommandComplete);
+			}*/
+
+			if (character.Embarked) character.Disembark();
+
+			ActiveCommand = command;
+			ActiveCommand.Start(character, CommandComplete);
+		}
+
+		//Callback function for commands to let the manager know when they're done.
+		private void CommandComplete(Command.CommandContext context) {
+			executingCommand = false;
+			ActiveCommand = null;
+			character.target = null;
+		}
+
+		public virtual void EnqueueCommand(Command command) {
+			if (!commandQueue.Contains(command) && !character.Embarked) commandQueue.Enqueue(command);
+		}
+
+		public virtual void ExecuteCommand(Command command) {
+			if (ActiveCommand != null) ActiveCommand.Cancel();
+
+			commandQueue.Clear();
+
+			//if (character.Embarked) character.Disembark();
+
+			PerformCommand(command);
+		}
+
+
+		//interaction trigger
+		private void OnTriggerEnter2D(Collider2D collision) {
+			Transform parentTransform = collision.transform.root;
+
+			if (ActiveCommand != null && ActiveCommand.TargetTransform != null && ActiveCommand.TargetTransform == parentTransform) {
+				ActiveCommand.OnTriggerEnter(collision);
 			}
 		}
 	}
 
-	protected void PerformCommand(Command command) {
-		if (boundCommands.TryGetValue(command.Name, out CommandUnityEvent boundFunction)) {
-			executingCommand = true;
-			boundFunction.Invoke(command, CommandComplete);
-		}
+	[Serializable]
+	public class CommandBinding {
+		public string name;
+		public CommandUnityEvent action;
 	}
 
-	//Successful if fully completed, if not then it's been interrupted
-	private void CommandComplete (bool successful) {
-		executingCommand = false;
+	//This is a dummy because again, can't have generics in inspector, but can construct UnityEvents with a Generic type
+	[Serializable]
+	public class CommandUnityEvent : UnityEvent<Command, Action<bool>> {
+
 	}
-
-	public virtual void EnqueueCommand(Command command) {
-		if (!commandQueue.Contains(command) && !character.Embarked) commandQueue.Enqueue(command);
-	}
-
-	public virtual void ExecuteCommand(Command command) {
-		commandQueue.Clear();
-
-		if (character.Embarked) character.Disembark();
-
-		PerformCommand(command);
-	}
-}
-
-[Serializable]
-public class CommandBinding {
-	public string name;
-	public CommandUnityEvent action;
-}
-
-//This is a dummy because again, can't have generics in inspector, but can construct UnityEvents with a Generic type
-[Serializable]
-public class CommandUnityEvent : UnityEvent<Command, Action<bool>> {
-
 }

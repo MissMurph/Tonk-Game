@@ -3,13 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using TankGame.Units;
 
-public interface IInteractable {
-    void Interact (Character character);
+namespace TankGame {
 
-    GameObject GetObject ();
+    public interface IInteractable {
+        void Interact(Character character);
 
-    //List<Command> Commands();
+        GameObject GetObject();
 
-    //Command GetInteraction();
+        //List<Command> Commands();
+
+        //Command GetInteraction();
+    }
 }

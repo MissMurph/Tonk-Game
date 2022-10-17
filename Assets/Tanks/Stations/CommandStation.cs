@@ -1,24 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Players.Input;
 using UnityEngine;
-using UnityEngine.InputSystem;
+//using UnityEngine.InputSystem;
 
-public class CommandStation : TankStation {
+namespace TankGame.Tanks.Stations {
 
-	List<TankStation> stations;
+	public class CommandStation : TankStation {
 
-	protected override void Awake() {
-		base.Awake();
+		List<TankStation> stations;
 
-		stations = parentTank.GetStations();
+		protected override void Awake() {
+			base.Awake();
 
-		foreach (TankStation station in stations) {
-			InputProcessor input = (InputProcessor) station.GetController();
-			InputProcessor receiver = (InputProcessor) GetController();
+			stations = parentTank.GetStations();
 
-			foreach (InputEntry iEntry in input.GetInputs()) {
-				receiver.AddInput(iEntry);
+			foreach (TankStation station in stations) {
+				InputProcessor input = (InputProcessor)station.GetController();
+				InputProcessor receiver = (InputProcessor)GetController();
+
+				foreach (InputEntry iEntry in input.GetInputs()) {
+					receiver.AddInput(iEntry);
+				}
 			}
 		}
 	}

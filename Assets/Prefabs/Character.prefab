@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 980698760530667079}
   - component: {fileID: 980698760530667073}
+  - component: {fileID: 7544830311115477026}
   - component: {fileID: 4357324035483122276}
   - component: {fileID: 980698760530667078}
   - component: {fileID: 980698760530667076}
+  - component: {fileID: -6929218160477850403}
   m_Layer: 6
   m_Name: Character
   m_TagString: Untagged
@@ -53,6 +55,20 @@ MonoBehaviour:
   path: []
   targetIndex: 0
   executingCommand: 0
+--- !u!114 &7544830311115477026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980698760530667072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06d755e1ae5e56842927ba5d2fcbab84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slotCount: 4
+  startingItems: []
 --- !u!114 &4357324035483122276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +105,22 @@ MonoBehaviour:
         - m_Target: {fileID: 980698760530667073}
           m_TargetAssemblyTypeName: Character, Assembly-CSharp
           m_MethodName: Command_Interact
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - name: transfer_item
+    action:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 980698760530667073}
+          m_TargetAssemblyTypeName: Character, Assembly-CSharp
+          m_MethodName: Command_TransferItem
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -167,4 +199,25 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.3
+--- !u!50 &-6929218160477850403
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980698760530667072}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

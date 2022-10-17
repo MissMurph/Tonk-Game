@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public interface IControllable {
-	//PlayerInput GetInput ();
-	void Input(InputAction.CallbackContext context);
-	GameObject GetObject ();
+namespace TankGame.Players.Input {
+
+	public interface IControllable {
+		//PlayerInput GetInput ();
+		void Input(InputAction.CallbackContext context);
+		GameObject GetObject();
+	}
 }

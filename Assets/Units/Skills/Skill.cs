@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skill : MonoBehaviour {
+namespace TankGame.Units.Skills {
 
-	void Start() {
-		
-	}
+	public class Skill : MonoBehaviour {
 
-	void Update() {
-		
+		void Start() {
+
+		}
+
+		void Update() {
+
+		}
 	}
 }

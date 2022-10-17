@@ -4,53 +4,56 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class InputProcessor : MonoBehaviour, IControllable {
+namespace TankGame.Players.Input {
 
-	[SerializeField]
-	private InputEntry[] inputEntries;
+	public class InputProcessor : MonoBehaviour, IControllable {
 
-	private Dictionary<string, UnityEvent<InputAction.CallbackContext>> inputDictionary = new Dictionary<string, UnityEvent<InputAction.CallbackContext>>();
+		[SerializeField]
+		private InputEntry[] inputEntries;
 
-	private void Awake() {
-		//commandManager = GetComponent<CommandManager>();
+		private Dictionary<string, UnityEvent<InputAction.CallbackContext>> inputDictionary = new Dictionary<string, UnityEvent<InputAction.CallbackContext>>();
 
-		if (inputEntries.Length == 0) return;
+		private void Awake() {
+			//commandManager = GetComponent<CommandManager>();
 
-		//Debug.Log("input entries:  " + inputEntries.Length);
+			if (inputEntries.Length == 0) return;
 
-		foreach (InputEntry entry in inputEntries) {
-			//Debug.Log("Converting InputEntry to input: " + entry.inputAction.action.name);
-			inputDictionary.Add(entry.inputAction.action.name, entry.function);
+			//Debug.Log("input entries:  " + inputEntries.Length);
+
+			foreach (InputEntry entry in inputEntries) {
+				//Debug.Log("Converting InputEntry to input: " + entry.inputAction.action.name);
+				inputDictionary.Add(entry.inputAction.action.name, entry.function);
+			}
+		}
+
+		public void Input(InputAction.CallbackContext context) {
+			if (inputDictionary.TryGetValue(context.action.name, out UnityEvent<InputAction.CallbackContext> function)) {
+				//Debug.Log("Dictionary contained");
+				function.Invoke(context);
+			}
+		}
+
+		public GameObject GetObject() {
+			return gameObject;
+		}
+
+		public void AddInput(InputEntry entry) {
+			//Debug.Log(inputDictionary.Count);
+
+			//Debug.Log("Trying to add Input: " + entry.inputAction.action.name + "   " + inputDictionary.TryAdd(entry.inputAction.action.name, entry.function));
+			//inputDictionary.Add(entry.inputAction.action.name, entry.function);
+			inputDictionary.TryAdd(entry.inputAction.action.name, entry.function);
+		}
+
+		public List<InputEntry> GetInputs() {
+			return new List<InputEntry>(inputEntries);
 		}
 	}
 
-	public void Input (InputAction.CallbackContext context) {
-		if (inputDictionary.TryGetValue(context.action.name, out UnityEvent<InputAction.CallbackContext> function)) {
-			//Debug.Log("Dictionary contained");
-			function.Invoke(context);
-		}
+	[System.Serializable]
+	public class InputEntry {
+
+		public InputActionReference inputAction;
+		public UnityEvent<InputAction.CallbackContext> function;
 	}
-
-	public GameObject GetObject() {
-		return gameObject;
-	}
-
-	public void AddInput (InputEntry entry) {
-		//Debug.Log(inputDictionary.Count);
-
-		//Debug.Log("Trying to add Input: " + entry.inputAction.action.name + "   " + inputDictionary.TryAdd(entry.inputAction.action.name, entry.function));
-		//inputDictionary.Add(entry.inputAction.action.name, entry.function);
-		inputDictionary.TryAdd(entry.inputAction.action.name, entry.function);
-	}
-
-	public List<InputEntry> GetInputs () {
-		return new List<InputEntry>(inputEntries);
-	}
-}
-
-[System.Serializable]
-public class InputEntry {
-
-	public InputActionReference inputAction;
-	public UnityEvent<InputAction.CallbackContext> function;
 }
