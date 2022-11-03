@@ -7,10 +7,15 @@ namespace TankGame.UI {
 
 	public class InventorySlot : MonoBehaviour {
 
-		public ItemIcon occupyingItem;
+		protected ItemIcon occupyingItem;
 
-		public PersonalInventory ParentInventory { get; private set; }
-		private int index;
+		public IInventory ParentInventory { get; private set; }
+
+		public ItemIcon OccupyingItem {
+			get { 
+				return occupyingItem; 
+			}
+		}
 
 		public bool Occupied {
 			get {
@@ -26,18 +31,16 @@ namespace TankGame.UI {
 
 		}
 
-		public void Initialize(PersonalInventory parentInventory, int _index) {
+		public virtual void Initialize(IInventory parentInventory) {
 			ParentInventory = parentInventory;
-			index = _index;
 		}
 
-		public void Initialize(PersonalInventory parentInventory, int _index, ItemIcon _occupyingItem) {
+		public virtual void Initialize(IInventory parentInventory, ItemIcon _occupyingItem) {
 			ParentInventory = parentInventory;
-			index = _index;
 			occupyingItem = _occupyingItem;
 		}
 
-		public bool FillSlot(ItemIcon item) {
+		public virtual bool FillSlot(ItemIcon item) {
 			if (Occupied) return false;
 
 			occupyingItem = item;

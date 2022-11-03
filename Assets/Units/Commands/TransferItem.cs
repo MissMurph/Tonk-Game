@@ -16,24 +16,33 @@ namespace TankGame.Units.Commands {
 			Item = item;
 		}
 
-		public override void Start(Character character, Action<CommandContext> callback) {
-			base.Start(character, callback);
+		public override void Start(Character character) {
+			base.Start(character);
 
 			TargetTransform = Target().GetObject().transform;
 			transferFrom = character.GetComponent<IInventory>();
 
+			if (character.CommManager.IsInRange(TargetTransform)) {
+				Perform();
+				return;
+			}
+
 			character.SubmitTarget(TargetTransform, OnPathComplete);
+		}
+
+		public override void Perform() {
+			base.Perform();
+
+			if (transferFrom.TransferItem(Target(), Item)) {
+				Complete();
+			}
+			else Cancel();
 		}
 
 		public override void OnTriggerEnter(Collider2D collision) {
 			base.OnTriggerEnter(collision);
 
 			Perform();
-
-			if (transferFrom.TransferItem(Target(), Item)) {
-				Complete();
-			}
-			else Cancel();
 		}
 
 		public override void Cancel() {

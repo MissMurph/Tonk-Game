@@ -22,6 +22,15 @@ namespace TankGame.Players {
 			}
 		}
 
+		public static Transform Canvas {
+			get {
+				return Instance.canvasTransform;
+			}
+		}
+
+		[SerializeField]
+		private Transform canvasTransform;
+
 		private PlayerController playerController;
 
 		public World world;

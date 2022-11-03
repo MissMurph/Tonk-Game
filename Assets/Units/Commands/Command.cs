@@ -29,44 +29,57 @@ namespace TankGame.Units.Commands {
 		public CommandPhase Phase { get; private set; }
 		public Transform TargetTransform { get; protected set; }
 
-		private Action<CommandContext> completeCallback;
-
 		protected Character Character { get; private set; }
 
-		public virtual void Start(Character character, Action<CommandContext> callback) {
+		public delegate void CommandCallback(CommandContext context);
+
+		public event CommandCallback OnStart;
+		public event CommandCallback OnPerform;
+		public event CommandCallback OnCancel;
+		public event CommandCallback OnComplete;
+
+		public virtual void Start(Character character) {
 			Character = character;
 			Phase = CommandPhase.Started;
-			PostCommandEvent(character);
-			completeCallback = callback;
+
+			CommandContext context = Context();
+
+			//PostCommandEvent(context);
+			OnStart.Invoke(context);
 		}
 
-		public virtual void Perform() {
+		public virtual void Perform () {
 			Phase = CommandPhase.Performed;
-			PostCommandEvent(Character);
+
+			CommandContext context = Context();
+
+			//PostCommandEvent(context);
+			OnPerform.Invoke(context);
 		}
 
-		public virtual void Cancel() {
+		public virtual void Cancel () {
 			Phase = CommandPhase.Cancelled;
 
-			CommandContext context = new CommandContext(Character, this, Phase);
+			CommandContext context = Context();
 
-			PostCommandEvent(context);
-			completeCallback(context);
+			//PostCommandEvent(context);
+			OnCancel.Invoke(context);
 		}
 
 		protected virtual void Complete () {
 			Phase = CommandPhase.Complete;
 
-			CommandContext context = new CommandContext(Character, this, Phase);
-			PostCommandEvent(context);
-			completeCallback(context);
+			CommandContext context = Context();
+
+			//PostCommandEvent(context);
+			OnComplete.Invoke(context);
+		}
+
+		private CommandContext Context () {
+			return new CommandContext(Character, this, Phase);
 		}
 
 		public virtual void OnTriggerEnter(Collider2D collision) { }
-
-		private CharacterEvent.CommandEvent PostCommandEvent(Character character) {
-			return EventBus.Post(new CharacterEvent.CommandEvent(new CommandContext(character, this, Phase)));
-		}
 
 		private CharacterEvent.CommandEvent PostCommandEvent(CommandContext context) {
 			return EventBus.Post(new CharacterEvent.CommandEvent(context));

@@ -15,8 +15,8 @@ namespace TankGame.Units.Commands {
 			return "MoveCommand";
 		}*/
 
-		public override void Start(Character character, Action<CommandContext> callback) {
-			base.Start(character, callback);
+		public override void Start(Character character) {
+			base.Start(character);
 
 			character.SubmitTarget(Target(), OnPathComplete);
 		}

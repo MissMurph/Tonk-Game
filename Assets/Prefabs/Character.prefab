@@ -49,12 +49,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10b0cbc6294254c9f5e294233673b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yeetList:
+    _list: []
+    _weights: []
+    _sumWeight: 0
   target: {fileID: 0}
   targetOldPos: {x: 0, y: 0, z: 0}
   speed: 5
   path: []
   targetIndex: 0
   executingCommand: 0
+  commandManager: {fileID: 4357324035483122276}
 --- !u!114 &7544830311115477026
 MonoBehaviour:
   m_ObjectHideFlags: 0

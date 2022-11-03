@@ -8,6 +8,8 @@ using TankGame.Players.Input;
 using TankGame.Tanks.Stations;
 using TankGame.Units.Pathfinding;
 using TankGame.Items;
+using Lachee.Utilities;
+using Lachee.Attributes;
 
 namespace TankGame.Units {
 
@@ -16,6 +18,8 @@ namespace TankGame.Units {
 		public int Health {
 			get; private set;
 		}
+
+		public RandomList<GameObject> yeetList = new RandomList<GameObject>();
 
 		const float minPathUpdateTime = .2f;
 		const float pathUpdateMoveThreshold = .5f;
@@ -28,7 +32,7 @@ namespace TankGame.Units {
 
 		public bool executingCommand = false;
 
-		private CommandManager commandManager;
+		public CommandManager CommManager { get; private set; } 
 
 		private Coroutine movementCoroutine;
 
@@ -53,7 +57,7 @@ namespace TankGame.Units {
 		private TriggerReaction reaction;
 
 		private void Awake() {
-			commandManager = GetComponent<CommandManager>();
+			CommManager = GetComponent<CommandManager>();
 			Health = 100;
 		}
 
@@ -165,7 +169,7 @@ namespace TankGame.Units {
 			Vector3 currentWaypoint = path[0];
 
 			while (true) {
-				if (commandManager.ActiveCommand != null && commandManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
+				if (CommManager.ActiveCommand != null && CommManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
 
 				if (transform.position == currentWaypoint) {
 					targetIndex++;
@@ -231,11 +235,11 @@ namespace TankGame.Units {
 		/*	INTERFACE FUNCTIONS	*/
 
 		public void EnqueueCommand(Command command) {
-			commandManager.EnqueueCommand(command);
+			CommManager.EnqueueCommand(command);
 		}
 
 		public void ExecuteCommand(Command command) {
-			if (command != null) commandManager.ExecuteCommand(command);
+			if (command != null) CommManager.ExecuteCommand(command);
 			else Debug.Log("Null Command");
 		}
 

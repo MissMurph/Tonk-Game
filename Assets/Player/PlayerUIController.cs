@@ -74,6 +74,9 @@ namespace TankGame.Players.Input {
 				List<RaycastResult> results = GetClickedObjects();
 				//Debug.Log("Releasing Grabbed Item");
 
+				grabbedItem.transform.SetParent(grabbedFrom.transform);
+				grabbedItem.transform.localPosition = Vector3.zero;
+
 				foreach (RaycastResult result in results) {
 					if (result.gameObject.TryGetComponent<InventorySlot>(out InventorySlot slot)
 						&& !slot.ParentInventory.Equals(grabbedFrom.ParentInventory)
@@ -81,14 +84,12 @@ namespace TankGame.Players.Input {
 						//grabbedFrom.RemoveItem();
 						//slot.FillSlot(grabbedItem);
 
-						if (grabbedFrom.ParentInventory.TryGetComponent(out Character character)) {
+						if (grabbedFrom.ParentInventory.GetObject().TryGetComponent(out Character character)) {
 							character.ExecuteCommand(new TransferItem(slot.ParentInventory, grabbedItem.Item));
 						}
 					}
 				}
-
-				grabbedItem.transform.SetParent(grabbedFrom.transform);
-				grabbedItem.transform.localPosition = Vector3.zero;
+				
 				grabbedItem = null;
 				grabbedFrom = null;
 			}

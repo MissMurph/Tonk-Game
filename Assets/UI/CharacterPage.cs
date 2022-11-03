@@ -72,9 +72,9 @@ namespace TankGame.UI {
 						//RectTransform iconRect = obj.GetComponent<RectTransform>();
 						//iconRect.position = Vector2.zero;
 						itemIconObj.Initialize(occupyingItem);
-						slotComp.Initialize(pInv, i, itemIconObj);
+						slotComp.Initialize(pInv, itemIconObj);
 					}
-					else slotComp.Initialize(pInv, i);
+					else slotComp.Initialize(pInv);
 
 					slotIcons[i] = slotComp;
 				}
@@ -103,8 +103,8 @@ namespace TankGame.UI {
 
 		public ItemIcon GetItemIcon (ItemObject item) {
 			for (int i = 0; i < slotIcons.Length; i++) {
-				if (slotIcons[i].occupyingItem != null && slotIcons[i].occupyingItem.Item.Equals(item)) {
-					return slotIcons[i].occupyingItem;
+				if (slotIcons[i].OccupyingItem != null && slotIcons[i].OccupyingItem.Item.Equals(item)) {
+					return slotIcons[i].OccupyingItem;
 				}
 			}
 

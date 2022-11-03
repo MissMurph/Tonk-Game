@@ -21,6 +21,8 @@ namespace TankGame.Units.Commands {
 
 		public Command ActiveCommand { get; private set; }
 
+		private List<Transform> inRangeTransforms = new List<Transform>();
+
 		[SerializeField]
 		Character character;
 
@@ -60,7 +62,8 @@ namespace TankGame.Units.Commands {
 			if (character.Embarked) character.Disembark();
 
 			ActiveCommand = command;
-			ActiveCommand.Start(character, CommandComplete);
+			ActiveCommand.Start(character);
+			ActiveCommand.OnComplete += CommandComplete;
 		}
 
 		//Callback function for commands to let the manager know when they're done.
@@ -92,6 +95,22 @@ namespace TankGame.Units.Commands {
 			if (ActiveCommand != null && ActiveCommand.TargetTransform != null && ActiveCommand.TargetTransform == parentTransform) {
 				ActiveCommand.OnTriggerEnter(collision);
 			}
+
+			inRangeTransforms.Add(collision.transform);
+		}
+
+		private void OnTriggerExit2D(Collider2D collision) {
+			if (inRangeTransforms.Contains(collision.transform)) {
+				inRangeTransforms.Remove(collision.transform);
+			}
+		}
+
+		public bool IsInRange (Transform transform) {
+			return inRangeTransforms.Contains(transform);
+		}
+
+		public List<Transform> TransformsInRange () {
+			return new List<Transform>(inRangeTransforms);
 		}
 	}
 

@@ -61,7 +61,7 @@ namespace TankGame.UI {
 
 					for (int i = 0; i < targetPage.slotIcons.Length; i++) {
 						if (!targetPage.slotIcons[i].Occupied) {
-							icon.ParentSlot.RemoveItem();
+							if (icon.ParentSlot != null) icon.ParentSlot.RemoveItem();
 							targetPage.slotIcons[i].FillSlot(icon);
 							break;
 						}
