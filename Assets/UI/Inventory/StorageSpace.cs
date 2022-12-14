@@ -9,7 +9,9 @@ namespace TankGame.UI {
 
 		private TankInventory castedParentInv;
 
-		private void Awake() {
+		public Vector2Int Position;
+
+		/*private void Awake() {
 			castedParentInv = (TankInventory) ParentInventory;
 		}
 
@@ -23,6 +25,6 @@ namespace TankGame.UI {
 			}
 
 			return false;
-		}
+		}*/
 	}
 }

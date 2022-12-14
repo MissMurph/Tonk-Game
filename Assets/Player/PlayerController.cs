@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TankGame.Events;
+using TankGame.Units;
 using TankGame.Units.Commands;
+using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -96,7 +98,14 @@ namespace TankGame.Players.Input {
 				if (interactableRay.collider != null) {
 					foreach (ISelectable s in selected) {
 						//s.ExecuteCommand(Commands.Construct<Interact, IInteractable>(Commands.Interact, interactableRay.collider.gameObject.GetComponentInParent<IInteractable>()));
-						s.ExecuteCommand(new Interact(interactableRay.collider.gameObject.GetComponentInParent<IInteractable>()));
+						//s.ExecuteCommand(new Interact(interactableRay.collider.gameObject.GetComponentInParent<IInteractable>()));
+
+						Character c = s.GetObject().GetComponent<Character>();
+						AbstractInteraction interaction = interactableRay.transform.GetComponent<InteractionManager>().RequestInteraction(c);
+
+						if (interaction != null) {
+							c.ExecuteCommand(new Interact(interaction));
+						}
 					}
 				}
 				else if (walkableRay.collider != null) {

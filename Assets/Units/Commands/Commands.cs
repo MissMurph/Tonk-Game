@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,10 @@ namespace TankGame.Units.Commands {
 		private static Dictionary<string, CommandFactory> commands = new Dictionary<string, CommandFactory>();
 
 		public static readonly CommandFactory Move = RegisterCommand<Move, Vector2>("move", (target) => new Move(target));
-		public static readonly CommandFactory Interact = RegisterCommand<Interact, IInteractable>("interact", (target) => new Interact(target));
+		public static readonly CommandFactory Interact = RegisterCommand<Interact, AbstractInteraction>("interact", (target) => new Interact(target));
 		//public static readonly CommandFactory TransferItem = RegisterCommand<TransferItemCommand, IInventory>("transfer_item", (target) => new TransferItemCommand(target));
+
+		public Command<Vector2> yeet;
 
 		private void Start() {
 
@@ -47,6 +50,8 @@ namespace TankGame.Units.Commands {
 			public delegate C CommConstructor(T target);
 
 			private CommConstructor constructor;
+
+			public C yeet;
 
 			public CommandFactory(string name, CommConstructor constructor) : base(name, typeof(C)) {
 				this.constructor = constructor;

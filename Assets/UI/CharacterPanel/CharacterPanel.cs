@@ -20,7 +20,7 @@ namespace TankGame.UI {
 			}
 
 			EventBus.AddListener<PlayerEvent.Selection>(OnSelect);
-			EventBus.AddListener<InventoryEvent.ItemTransfered>(OnItemTransfered);
+			//EventBus.AddListener<InventoryEvent.ItemTransfered>(OnItemTransfered);
 		}
 
 		private CharacterPage CreatePage(Character character) {
@@ -50,7 +50,7 @@ namespace TankGame.UI {
 			}
 		}
 
-		private void OnItemTransfered(InventoryEvent.ItemTransfered _event) {
+		/*private void OnItemTransfered(InventoryEvent.ItemTransfered _event) {
 			if (_event.Inventory.GetObject().TryGetComponent(out Character character)) {
 				CharacterPage page = GetPage(character);
 
@@ -68,7 +68,7 @@ namespace TankGame.UI {
 					}
 				}
 			}
-		}
+		}*/
 
 		private CharacterPage GetPage (Character character) {
 			foreach (CharacterPage page in pages) {

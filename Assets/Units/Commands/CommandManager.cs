@@ -15,7 +15,13 @@ namespace TankGame.Units.Commands {
 
 		private Queue<Command> commandQueue = new Queue<Command>();
 
-		public bool executingCommand = false;
+		public bool ExecutingCommand {
+			get
+			{
+				return ActiveCommand != null;
+			}
+		}
+
 
 		private Coroutine currentCoroutine;
 
@@ -46,9 +52,12 @@ namespace TankGame.Units.Commands {
 			while (true) {
 				yield return new WaitForSeconds(commandUpdateTime);
 
-				if (!executingCommand && commandQueue.TryDequeue(out Command command)) {
+				if (!ExecutingCommand && commandQueue.TryDequeue(out Command command)) {
 					StopCoroutine(currentCoroutine);
 					PerformCommand(command);
+				}
+				else if (ActiveCommand != null) {
+					ActiveCommand.Perform();
 				}
 			}
 		}
@@ -68,7 +77,6 @@ namespace TankGame.Units.Commands {
 
 		//Callback function for commands to let the manager know when they're done.
 		private void CommandComplete(Command.CommandContext context) {
-			executingCommand = false;
 			ActiveCommand = null;
 			character.target = null;
 		}
@@ -89,10 +97,10 @@ namespace TankGame.Units.Commands {
 
 
 		//interaction trigger
-		private void OnTriggerEnter2D(Collider2D collision) {
+		private void OnTriggerEnter2D (Collider2D collision) {
 			Transform parentTransform = collision.transform.root;
 
-			if (ActiveCommand != null && ActiveCommand.TargetTransform != null && ActiveCommand.TargetTransform == parentTransform) {
+			if (ActiveCommand != null && ActiveCommand.TargetTransform != null && (ActiveCommand.TargetTransform == parentTransform || ActiveCommand.TargetTransform.IsChildOf(parentTransform))) {
 				ActiveCommand.OnTriggerEnter(collision);
 			}
 

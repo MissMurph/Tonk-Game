@@ -22,7 +22,6 @@ namespace TankGame.Events {
 			if (instance.map.TryGetValue(type, out UnityEventBase value)) {
 				UnityEvent<T> superType = (UnityEvent<T>)value;
 				superType.Invoke(postedEvent);
-				return postedEvent;
 			}
 
 			return postedEvent;

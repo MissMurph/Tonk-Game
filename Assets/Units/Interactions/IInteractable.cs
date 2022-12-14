@@ -5,12 +5,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using TankGame.Units;
 
-namespace TankGame {
+namespace TankGame.Units.Interactions {
 
     public interface IInteractable {
-        void Interact(Character character);
-
         GameObject GetObject();
+
+        //void Interact (AbstractInteraction interaction);
+
+        List<AbstractInteractionFactory> GetInteractions ();
 
         //List<Command> Commands();
 

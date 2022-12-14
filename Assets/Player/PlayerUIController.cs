@@ -15,6 +15,12 @@ namespace TankGame.Players.Input {
 
 	public class PlayerUIController : MonoBehaviour {
 
+		public GraphicRaycaster GRaycaster {
+			get {
+				return gr;
+			}
+		}
+
 		[SerializeField]
 		private InputSystemUIInputModule uiInput;
 
@@ -52,12 +58,11 @@ namespace TankGame.Players.Input {
 				List<RaycastResult> results = GetClickedObjects();
 
 				foreach (RaycastResult result in results) {
-					Debug.Log(result.gameObject.name);
+					//Debug.Log(result.gameObject.name);
 					if (result.gameObject.TryGetComponent<ItemIcon>(out ItemIcon icon)) {
 						grabbedItem = icon;
 						grabbedFrom = icon.ParentSlot;
-						icon.transform.SetParent(gr.transform);
-						icon.transform.SetAsLastSibling();
+						
 						break;
 					}
 				}
@@ -74,20 +79,11 @@ namespace TankGame.Players.Input {
 				List<RaycastResult> results = GetClickedObjects();
 				//Debug.Log("Releasing Grabbed Item");
 
-				grabbedItem.transform.SetParent(grabbedFrom.transform);
-				grabbedItem.transform.localPosition = Vector3.zero;
+				//grabbedItem.transform.SetParent(grabbedFrom.transform);
+				//grabbedItem.transform.localPosition = Vector3.zero;
 
 				foreach (RaycastResult result in results) {
-					if (result.gameObject.TryGetComponent<InventorySlot>(out InventorySlot slot)
-						&& !slot.ParentInventory.Equals(grabbedFrom.ParentInventory)
-							&& !slot.Occupied) {
-						//grabbedFrom.RemoveItem();
-						//slot.FillSlot(grabbedItem);
-
-						if (grabbedFrom.ParentInventory.GetObject().TryGetComponent(out Character character)) {
-							character.ExecuteCommand(new TransferItem(slot.ParentInventory, grabbedItem.Item));
-						}
-					}
+					
 				}
 				
 				grabbedItem = null;
@@ -101,7 +97,7 @@ namespace TankGame.Players.Input {
 			mousePos = input;
 		}
 
-		private List<RaycastResult> GetClickedObjects() {
+		public List<RaycastResult> GetClickedObjects() {
 			Vector2 mousePos = uiInput.point.action.ReadValue<Vector2>();
 
 			PointerEventData pointData = new PointerEventData(null);

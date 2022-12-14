@@ -18,7 +18,7 @@ namespace TankGame.Units.Commands {
 		public override void Start(Character character) {
 			base.Start(character);
 
-			character.SubmitTarget(Target(), OnPathComplete);
+			character.SubmitTarget(Target, OnPathComplete);
 		}
 
 		public override void Cancel() {

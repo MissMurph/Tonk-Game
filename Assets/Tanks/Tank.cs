@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TankGame.Tanks.Stations;
 using TankGame.Units;
+using TankGame.Units.Interactions;
 
 namespace TankGame.Tanks {
 
     public class Tank : MonoBehaviour, IInteractable {
 
-        private Dictionary<string, TankStation> stations = new Dictionary<string, TankStation>();
+        private Dictionary<Station, TankStation> stations = new Dictionary<Station, TankStation>();
 
         public PlayerInput input;
 
@@ -24,7 +25,7 @@ namespace TankGame.Tanks {
             input = GetComponent<PlayerInput>();
 
             foreach (TankStation station in GetComponentsInChildren<TankStation>()) {
-                stations.Add(station.gameObject.name, station);
+                stations.Add((Station)Enum.Parse(typeof(Station), station.gameObject.name), station);
             }
         }
 
@@ -55,10 +56,59 @@ namespace TankGame.Tanks {
         /*  INTERFACE FUNCTIONS */
 
         public GameObject GetObject() {
-            return this.gameObject;
+            return gameObject;
         }
 
-        public void Interact(Character character) {
+        public List<AbstractInteractionFactory> GetInteractions () {
+            List<AbstractInteractionFactory> output = new List<AbstractInteractionFactory>();
+
+            output.Add(new InteractionFactory<Station>("embark", TryEmbark, () => { return new List<Station>(stations.Keys); }, EvaluateSeat));
+
+            return output;
+        }
+
+        private InteractionContext<Embark> IEmbark (Embark interaction) {
+            if (!interaction.Seat.Occupied) {
+                interaction.ActingCharacter.Embark(interaction.Seat.GetController());
+                return new InteractionContext<Embark>(interaction, IPhase.Post, IResult.Success);
+            }
+
+            Debug.LogWarning(name + " could not embark seat " + interaction.Seat.name);
+            return new InteractionContext<Embark>(interaction, IPhase.Post, IResult.Fail);
+        }
+
+        private AbstractInteraction TryEmbark (Station seat, Character character, string name) {
+            if (stations.TryGetValue(seat, out TankStation station) && !station.Occupied) {
+                return new Embark(station, character, name, this, IEmbark);
+            }
+
+            Debug.LogWarning("No free station available! Null value provided");
+            return null;
+        }
+
+        private Station EvaluateSeat (Character character) {
+            if (character.GetType().Equals(typeof(PlayerCharacter))) return Station.Commander;
+
+            foreach (KeyValuePair<Station, TankStation> entry in stations) {
+                if (!entry.Key.Equals(Station.Commander) && !entry.Value.Occupied) {
+                    return entry.Key;
+                }
+            }
+
+            Debug.LogWarning("No free station available! Null value provided");
+            return Station.Driver;
+        }
+
+        protected class Embark : AbstractInteraction<Embark> {
+
+            internal TankStation Seat { get; private set; }
+
+            internal Embark (TankStation seat, Character character, string name, IInteractable parent, InteractionFunction destination) : base(destination, character, name, parent) {
+                Seat = seat;
+            }
+        }
+
+        /*public void Interact(Character character) {
             Debug.Log("Interact");
             if (character.GetType().Equals(typeof(PlayerCharacter)) && stations.TryGetValue("CommandStation", out TankStation station)) {
                 character.Embark(station.GetController());
@@ -74,8 +124,15 @@ namespace TankGame.Tanks {
                 embarkedCharacters.Add(character);
                 break;
             }
+        }*/
 
-
+        public enum Station {
+            Driver,
+            Gunner,
+            Loader,
+            Commander,
+            Coax,
+            Auxillary
         }
     }
 }

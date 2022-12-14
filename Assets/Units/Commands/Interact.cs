@@ -1,30 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace TankGame.Units.Commands {
 
-	public class Interact : Command<IInteractable> {
+	public class Interact : Command<AbstractInteraction> {
 
-		public Interact(IInteractable target) : base(target, "interact") {
-		
+		private InteractionManager localManager;
+
+		public Interact(AbstractInteraction target) : base(target, "interact") {
+			
 		}
 
 		public override void Start(Character character) {
 			base.Start(character);
 
-			TargetTransform = Target().GetObject().transform;
+			TargetTransform = Target.Parent.GetObject().transform;
+
+			localManager = character.GetComponent<InteractionManager>();
+
+			if (character.CommManager.IsInRange(TargetTransform)) {
+				Perform();
+				return;
+			}
 
 			character.SubmitTarget(TargetTransform, OnPathComplete);
 		}
 
 		public override void Perform() {
+			if (!Character.CommManager.IsInRange(TargetTransform) || Phase.Equals(CommandPhase.Performed)) {
+				return;
+			}
+
 			base.Perform();
 
-			Target().Interact(Character);
-			Complete();
+			InteractionContext result = localManager.Interact(Target);
+
+			if (result.Result.Equals(IResult.Success)) { Complete(); return; }
+			if (result.Result.Equals(IResult.Fail) || result.Result.Equals(IResult.Cancel)) { Cancel(); return; }
 		}
 
 		public override void OnTriggerEnter(Collider2D collision) {

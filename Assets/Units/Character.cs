@@ -8,8 +8,7 @@ using TankGame.Players.Input;
 using TankGame.Tanks.Stations;
 using TankGame.Units.Pathfinding;
 using TankGame.Items;
-using Lachee.Utilities;
-using Lachee.Attributes;
+using TankGame.Units.Interactions;
 
 namespace TankGame.Units {
 
@@ -18,8 +17,6 @@ namespace TankGame.Units {
 		public int Health {
 			get; private set;
 		}
-
-		public RandomList<GameObject> yeetList = new RandomList<GameObject>();
 
 		const float minPathUpdateTime = .2f;
 		const float pathUpdateMoveThreshold = .5f;
@@ -33,6 +30,8 @@ namespace TankGame.Units {
 		public bool executingCommand = false;
 
 		public CommandManager CommManager { get; private set; } 
+
+		public InteractionManager IntManager { get; private set; }
 
 		private Coroutine movementCoroutine;
 
@@ -58,6 +57,7 @@ namespace TankGame.Units {
 
 		private void Awake() {
 			CommManager = GetComponent<CommandManager>();
+			IntManager = GetComponent<InteractionManager>();
 			Health = 100;
 		}
 
@@ -93,58 +93,6 @@ namespace TankGame.Units {
 			//movementCoroutine = StartCoroutine(FollowPath());
 			path = null;
 			target = null;
-		}
-
-		/*	Command Functions	*/
-
-		public void Command_Move(Command command, Action<bool> callback) {
-			Move move = command.GetAsType<Move>();
-			Vector2 target = move.Target();
-
-			PathRequestManager.RequestPath(transform.position, target, OnPathFound);
-
-			callback(true);
-		}
-
-		public void Command_Interact(Command command, Action<bool> callback) {
-			//Debug.Log("Interact Commanded");
-			IInteractable interactable = command.GetAsType<Interact>().Target();
-
-			target = interactable.GetObject().transform;
-			targetOldPos = target.position;
-
-			//Debug.Log(interactable.GetObject().name);
-
-			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-
-			currentCommand = command;
-
-			reaction = (collision) => {
-				collision.GetComponentInParent<IInteractable>().Interact(this);
-				currentCommand = null;
-				target = null;
-			};
-
-			callback(true);
-		}
-
-		public void Command_TransferItem(Command command, Action<bool> callback) {
-			IInventory inventory = command.GetAsType<TransferItem>().Target();
-
-			target = inventory.GetObject().transform;
-			targetOldPos = target.position;
-
-			PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-
-			currentCommand = command;
-
-			reaction = (collision) => {
-				//collision.GetComponentInParent<IInventory>().Interact(this);
-				currentCommand = null;
-				target = null;
-			};
-
-			callback(true);
 		}
 
 		IEnumerator UpdatePath() {

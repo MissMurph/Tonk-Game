@@ -22,6 +22,12 @@ namespace TankGame.Players {
 			}
 		}
 
+		public static PlayerUIController UI {
+			get {
+				return Instance.uiController;
+			}
+		}
+
 		public static Transform Canvas {
 			get {
 				return Instance.canvasTransform;
@@ -30,6 +36,9 @@ namespace TankGame.Players {
 
 		[SerializeField]
 		private Transform canvasTransform;
+
+		[SerializeField]
+		private PlayerUIController uiController;
 
 		private PlayerController playerController;
 
@@ -126,6 +135,10 @@ namespace TankGame.Players {
 
 		public static List<ISelectable> GetSelected() {
 			return Instance.playerController.GetSelected();
+		}
+
+		private void OnDestroy () {
+			Instance = null;
 		}
 	}
 }

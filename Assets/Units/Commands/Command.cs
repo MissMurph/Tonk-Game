@@ -11,14 +11,11 @@ namespace TankGame.Units.Commands {
 	[Serializable]
 	public abstract class Command<T> : Command {
 
-		private T target;
+		public T Target { get; private set; }
 
 		protected Command(T _target, string _name) : base(typeof(T), _name) {
-			target = _target;
-		}
-
-		public T Target() {
-			return target;
+			Target = _target;
+			if (cntxt == null) cntxt = () => new CommandContext(Character, this, Phase);
 		}
 	}
 
@@ -35,52 +32,58 @@ namespace TankGame.Units.Commands {
 
 		public event CommandCallback OnStart;
 		public event CommandCallback OnPerform;
-		public event CommandCallback OnCancel;
 		public event CommandCallback OnComplete;
 
+		public delegate CommandContext ContextConstructor ();
+
+		protected ContextConstructor cntxt;
+
 		public virtual void Start(Character character) {
+			//These IF checks exist in case timing causes either Start or Perform to be called as the completion is triggering, potentially reversing the completion and soft-locking the manager
+			if (Phase.Equals(CommandPhase.Cancelled) || Phase.Equals(CommandPhase.Complete)) return;
+
 			Character = character;
 			Phase = CommandPhase.Started;
 
-			CommandContext context = Context();
+			CommandContext context = cntxt.Invoke();
 
 			//PostCommandEvent(context);
-			OnStart.Invoke(context);
+			if (OnStart != null) OnStart.Invoke(context);
 		}
 
 		public virtual void Perform () {
+			if (Phase.Equals(CommandPhase.Cancelled) || Phase.Equals(CommandPhase.Complete) || Phase.Equals(CommandPhase.Performed)) return;
+
 			Phase = CommandPhase.Performed;
 
-			CommandContext context = Context();
+			CommandContext context = cntxt.Invoke();
 
 			//PostCommandEvent(context);
-			OnPerform.Invoke(context);
+			if (OnPerform != null) OnPerform.Invoke(context);
 		}
 
 		public virtual void Cancel () {
 			Phase = CommandPhase.Cancelled;
 
-			CommandContext context = Context();
+			CommandContext context = cntxt.Invoke();
 
 			//PostCommandEvent(context);
-			OnCancel.Invoke(context);
+			if (OnComplete != null) OnComplete.Invoke(context);
 		}
 
 		protected virtual void Complete () {
 			Phase = CommandPhase.Complete;
 
-			CommandContext context = Context();
+			CommandContext context = cntxt.Invoke();
 
 			//PostCommandEvent(context);
-			OnComplete.Invoke(context);
-		}
-
-		private CommandContext Context () {
-			return new CommandContext(Character, this, Phase);
+			if (OnComplete != null) OnComplete.Invoke(context);
 		}
 
 		public virtual void OnTriggerEnter(Collider2D collision) { }
 
+		//Temporarily discontinuing this. Provided alternatives so only internal systems with access to the Commands can influence their behaviour using public events above
+		//Not deleting as Observer could still be adopted effectively for CommandEvents
 		private CharacterEvent.CommandEvent PostCommandEvent(CommandContext context) {
 			return EventBus.Post(new CharacterEvent.CommandEvent(context));
 		}
@@ -88,6 +91,7 @@ namespace TankGame.Units.Commands {
 		internal Command(Type _type, string _name) {
 			TargetType = _type;
 			Name = _name;
+			Phase = CommandPhase.Waiting;
 		}
 
 		public T GetAsType<T>() where T : Command {
@@ -99,19 +103,22 @@ namespace TankGame.Units.Commands {
 		}
 
 		public enum CommandPhase {
+			Waiting,
 			Started,
 			Performed,
 			Cancelled,
 			Complete
 		}
 
-		public struct CommandContext {
+		public class CommandContext {
 
 			public Character Character { get; private set; }
 			public Command Command { get; private set; }
 			public CommandPhase Phase { get; private set; }
 
-			internal CommandContext(Character _character, Command _command, CommandPhase _phase) {
+			protected CommandContext(Command _command) : this(_command.Character, _command, _command.Phase) {}
+
+			internal CommandContext (Character _character, Command _command, CommandPhase _phase){
 				Character = _character;
 				Command = _command;
 				Phase = _phase;

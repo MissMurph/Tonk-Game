@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 980698760530667078}
   - component: {fileID: 980698760530667076}
   - component: {fileID: -6929218160477850403}
+  - component: {fileID: -3861473991246493379}
   m_Layer: 6
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Entity
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,17 +50,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10b0cbc6294254c9f5e294233673b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yeetList:
-    _list: []
-    _weights: []
-    _sumWeight: 0
   target: {fileID: 0}
   targetOldPos: {x: 0, y: 0, z: 0}
   speed: 5
   path: []
   targetIndex: 0
   executingCommand: 0
-  commandManager: {fileID: 4357324035483122276}
 --- !u!114 &7544830311115477026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,6 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d755e1ae5e56842927ba5d2fcbab84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stackEntries: []
   slotCount: 4
   startingItems: []
 --- !u!114 &4357324035483122276
@@ -135,7 +132,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  executingCommand: 0
   character: {fileID: 0}
 --- !u!212 &980698760530667078
 SpriteRenderer:
@@ -226,3 +222,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-3861473991246493379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980698760530667072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
