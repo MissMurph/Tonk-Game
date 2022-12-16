@@ -138,7 +138,7 @@ namespace TankGame.Items {
 				ItemObject item = context.Interaction.Item;
 
 				for (int i = 0; i < slots.Length; i++) {
-					if (ReferenceEquals(slots[i], context.Interaction.Item.Item)) {
+					if (ReferenceEquals(slots[i], item)) {
 						slots[i] = null;
 						itemList.Remove(item);
 						return;
@@ -199,7 +199,6 @@ namespace TankGame.Items {
 				}
 			}
 
-			Debug.Log(name + "'s Inventory Interaction has called Enter");
 			return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Fail);
 		}
 

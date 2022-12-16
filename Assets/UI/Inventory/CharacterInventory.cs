@@ -110,7 +110,10 @@ namespace TankGame.UI {
 			icon.transform.SetParent(slot.transform);
 			icon.transform.SetAsLastSibling();
 
-			icon.RectTransform.anchoredPosition = Vector2.zero;
+			icon.RectTransform.anchorMin = Vector2.zero;
+			icon.RectTransform.anchorMax = Vector2.one;
+			icon.RectTransform.sizeDelta = Vector2.zero;
+			icon.RectTransform.localPosition = Vector3.zero;
 		}
 
 		public override bool TryEnterItem (ItemIcon item, InventorySlot slot) {

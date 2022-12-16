@@ -67,6 +67,8 @@ namespace TankGame.UI {
 			}
 
 			transform.SetParent(ParentSlot.transform);
+			RectTransform.sizeDelta = Vector2.zero;
+			rectTransform.localPosition = Vector3.zero;
 			selected = false;
 		}
 

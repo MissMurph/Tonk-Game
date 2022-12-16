@@ -78,8 +78,8 @@ namespace TankGame.UI {
 				return false;
 			}
 
-			for (int x = 0; x < itemObj.Item.Size.x; x++) {
-				for (int y = 0; y < itemObj.Item.Size.y; y++) {
+			for (int x = 1; x < itemObj.Item.Size.x; x++) {
+				for (int y = 11; y < itemObj.Item.Size.y; y++) {
 					if (storageSpaces[pos.x + x, pos.y + y].Occupied) {
 						Debug.LogWarning("Something else occupies requested space in UI!");
 						return false;
@@ -120,9 +120,10 @@ namespace TankGame.UI {
 				icon.transform.SetParent(transform);
 				icon.transform.SetAsLastSibling();
 
-				icon.RectTransform.anchorMin = new Vector2(pos.x / linkedInv.Size.x, pos.y / linkedInv.Size.y);
-				icon.RectTransform.anchorMax = new Vector2((pos.x + item.Item.Size.x) / linkedInv.Size.x, (pos.y + item.Item.Size.y) / linkedInv.Size.y);
-				icon.RectTransform.anchoredPosition = Vector2.zero;
+				icon.RectTransform.anchorMin = new Vector2(((float)pos.x) / linkedInv.Size.x, ((float)pos.y) / linkedInv.Size.y);
+				icon.RectTransform.anchorMax = new Vector2((((float)pos.x) + item.Item.Size.x) / linkedInv.Size.x, (((float)pos.y) + item.Item.Size.y) / linkedInv.Size.y);
+				icon.RectTransform.sizeDelta = Vector2.zero;
+				icon.RectTransform.localPosition = Vector3.zero;
 			}
 		}
 
@@ -138,8 +139,8 @@ namespace TankGame.UI {
 					return;
 				}
 
-				for (int x = 0; x < item.Item.Size.x; x++) {
-					for (int y = 0; y < item.Item.Size.y; y++) {
+				for (int x = 1; x < item.Item.Size.x; x++) {
+					for (int y = 1; y < item.Item.Size.y; y++) {
 						storageSpaces[pos.x + x, pos.y + y].OccupyingItem = icon;
 					}
 				}
@@ -172,8 +173,8 @@ namespace TankGame.UI {
 		public override bool TryTakeItem (ItemIcon item) {
 			foreach (KeyValuePair<Vector2Int, ItemIcon> entry in iconMap) {
 				if (ReferenceEquals(entry.Value, item)) {
-					for (int x = 0; x < item.Item.Item.Size.x; x++) {
-						for (int y = 0; y < item.Item.Item.Size.y; y++) {
+					for (int x = 1; x < item.Item.Item.Size.x; x++) {
+						for (int y = 1; y < item.Item.Item.Size.y; y++) {
 							storageSpaces[entry.Key.x + x, entry.Key.y + y].OccupyingItem = null;
 						}
 					}

@@ -77,6 +77,7 @@ namespace TankGame.Units {
 			}
 		}
 
+		//This one can only be used for pathfinding, can't be used for embarked movement
 		public void SubmitTarget(Vector2 _target, PathComplete callback) {
 			PathRequestManager.RequestPath(transform.position, _target, OnPathFound);
 			pathCompleteCallback = callback;
