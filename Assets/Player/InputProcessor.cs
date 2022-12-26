@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace TankGame.Players.Input {
 
-	public class InputProcessor : MonoBehaviour, IControllable {
+	public class InputProcessor : MonoBehaviour {
 
 		[SerializeField]
 		private InputEntry[] inputEntries;
@@ -31,10 +31,6 @@ namespace TankGame.Players.Input {
 				//Debug.Log("Dictionary contained");
 				function.Invoke(context);
 			}
-		}
-
-		public GameObject GetObject() {
-			return gameObject;
 		}
 
 		public void AddInput(InputEntry entry) {

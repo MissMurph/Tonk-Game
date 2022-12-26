@@ -9,6 +9,7 @@ using TankGame.Tanks.Stations;
 using TankGame.Units.Pathfinding;
 using TankGame.Items;
 using TankGame.Units.Interactions;
+using TankGame.Tanks;
 
 namespace TankGame.Units {
 
@@ -41,19 +42,21 @@ namespace TankGame.Units {
 
 		private PathComplete pathCompleteCallback;
 
+		private Tank embarkedVehicle;
+
 		public bool Embarked {
+			get {
+				return embarkedVehicle != null;
+			}
+		}
+
+		private Seat embarkedSeat;
+
+		public bool Seated {
 			get {
 				return embarkedSeat != null;
 			}
 		}
-
-		private IControllable embarkedSeat;
-
-		GameObject[] children;
-
-		private delegate void TriggerReaction(Collider2D collision);
-
-		private TriggerReaction reaction;
 
 		private void Awake() {
 			CommManager = GetComponent<CommandManager>();
