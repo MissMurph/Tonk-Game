@@ -42,19 +42,19 @@ namespace TankGame.Units {
 
 		private PathComplete pathCompleteCallback;
 
-		private Tank embarkedVehicle;
+		public Tank EmbarkedVehicle { get; protected set; }
 
 		public bool Embarked {
 			get {
-				return embarkedVehicle != null;
+				return EmbarkedVehicle != null;
 			}
 		}
 
-		private Seat embarkedSeat;
+		public Seat EmbarkedSeat { get; protected set; }
 
 		public bool Seated {
 			get {
-				return embarkedSeat != null;
+				return EmbarkedSeat != null;
 			}
 		}
 
@@ -66,10 +66,6 @@ namespace TankGame.Units {
 
 		private void Start() {
 			StartCoroutine(UpdatePath());
-		}
-
-		private void Update() {
-
 		}
 
 		private void OnPathFound(Vector3[] newPath, bool pathSuccessful) {
@@ -142,10 +138,11 @@ namespace TankGame.Units {
 			}
 		}
 
-		
+		public void Unseat () {
 
+		}
 
-		public virtual void Embark(IControllable seat) {
+		/*public virtual void Embark(IControllable seat) {
 			TankStation station = seat.GetObject().GetComponent<TankStation>();
 
 			if (!station.Embark(this)) return;
@@ -166,7 +163,7 @@ namespace TankGame.Units {
 			embarkedSeat = null;
 			transform.position = transform.position + (Vector3.left * 2f);
 			transform.SetParent(null);
-		}
+		}*/
 
 		public void OnDrawGizmos() {
 			if (path != null) {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace TankGame.Tanks.Stations {
+namespace TankGame.Tanks.Systems.Stations {
 
-	public class TurretStation : TankStation {
+	public class Turret : Station {
 
 		//private Vector2 mousePos;
 
@@ -42,7 +42,7 @@ namespace TankGame.Tanks.Stations {
 		}
 
 		private void FixedUpdate() {
-			if (!Occupied) return;
+			if (!Manned) return;
 
 
 

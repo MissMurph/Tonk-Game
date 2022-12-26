@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace TankGame.Tanks.Systems {
 
-namespace TankGame.Tanks.Stations {
-
-	public class CoaxGunnerStation : MonoBehaviour {
+	public class System : MonoBehaviour {
 
 		void Start() {
 

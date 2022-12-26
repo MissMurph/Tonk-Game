@@ -5,20 +5,20 @@ using TankGame.Players.Input;
 using UnityEngine;
 //using UnityEngine.InputSystem;
 
-namespace TankGame.Tanks.Stations {
+namespace TankGame.Tanks.Systems.Stations {
 
-	public class CommandStation : TankStation {
+	public class Commander : Station {
 
-		List<TankStation> stations;
+		List<Station> stations;
 
 		protected override void Awake() {
 			base.Awake();
 
 			stations = parentTank.GetStations();
 
-			foreach (TankStation station in stations) {
-				InputProcessor input = (InputProcessor)station.GetController();
-				InputProcessor receiver = (InputProcessor)GetController();
+			foreach (Station station in stations) {
+				InputProcessor input = station.InputReceiver;
+				InputProcessor receiver = InputReceiver;
 
 				foreach (InputEntry iEntry in input.GetInputs()) {
 					receiver.AddInput(iEntry);

@@ -29,5 +29,13 @@ namespace TankGame.Tanks.Stations {
 
 			occupant = null;
 		}
+
+		public GameObject GetObject() {
+			return gameObject;
+		}
+
+		public List<AbstractInteractionFactory> GetInteractions() {
+			throw new System.NotImplementedException();
+		}
 	}
 }

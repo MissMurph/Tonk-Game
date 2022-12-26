@@ -9,8 +9,6 @@ namespace TankGame.Units.Interactions {
 
 		public delegate InteractionContext<T> InteractionFunction (T interaction);
 
-		
-
 		private InteractionFunction func;
 
 		protected AbstractInteraction (InteractionFunction _destination, Character _character, string _name, IInteractable _parent) : base(typeof(T), _name, _parent, _character) {

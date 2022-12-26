@@ -13,32 +13,32 @@ TagManager:
   - 
   - Water
   - UI
-  - Selectable
-  - Interactable
-  - Controllable
+  - Characters
+  - Vehicles
+  - Systems
+  - WorldObjects
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Unwalkable
   - Walkable
   - Grass
   - Bog
   - Road
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   m_SortingLayers:
   - name: Terrain
     uniqueID: 3467290093

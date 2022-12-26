@@ -6,37 +6,41 @@ using UnityEngine.InputSystem;
 using TankGame.Tanks.Stations;
 using TankGame.Units;
 using TankGame.Units.Interactions;
+using TankGame.Tanks.Systems.Stations;
 
 namespace TankGame.Tanks {
 
     public class Tank : MonoBehaviour, IInteractable {
 
-        private Dictionary<Station, TankStation> stations = new Dictionary<Station, TankStation>();
+        private Dictionary<Stations, Station> stations = new Dictionary<Stations, Station>();
 
         public PlayerInput input;
 
-        private List<Character> embarkedCharacters = new List<Character>();
+        //private List<Character> embarkedCharacters = new List<Character>();
 
         public InputAction moveAction;
 
         public Vector2 yeetDirection;
 
+		[SerializeField]
+        private Port[] embarkPorts;
+
         private void Awake() {
             input = GetComponent<PlayerInput>();
 
-            foreach (TankStation station in GetComponentsInChildren<TankStation>()) {
-                stations.Add((Station)Enum.Parse(typeof(Station), station.gameObject.name), station);
+            foreach (Station station in GetComponentsInChildren<Station>()) {
+                stations.Add((Stations)Enum.Parse(typeof(Stations), station.gameObject.name), station);
             }
         }
 
-        public void Disembark(Character character) {
+        /*public void Disembark(Character character) {
             if (embarkedCharacters.Contains(character)) {
                 embarkedCharacters.Remove(character);
             }
-        }
+        }*/
 
-        public List<TankStation> GetStations() {
-            return new List<TankStation>(stations.Values);
+        public List<Station> GetStations() {
+            return new List<Station>(stations.Values);
         }
 
         /*  INPUT FUNCTIONS */
@@ -60,14 +64,49 @@ namespace TankGame.Tanks {
         }
 
         public List<AbstractInteractionFactory> GetInteractions () {
-            List<AbstractInteractionFactory> output = new List<AbstractInteractionFactory>();
-
-            output.Add(new InteractionFactory<Station>("embark", TryEmbark, () => { return new List<Station>(stations.Keys); }, EvaluateSeat));
-
-            return output;
+            return new List<AbstractInteractionFactory>() {
+                new GenericInteractionFactory("Embark", TryEmbark),
+                new GenericInteractionFactory("Disembark", TryDisembark)
+            };
         }
 
-        private InteractionContext<Embark> IEmbark (Embark interaction) {
+        private GenericInteraction TryEmbark (Character character, string name) {
+            if (!ReferenceEquals(character.EmbarkedVehicle, this)) return null;
+
+            float lowestDist = 100f;
+            Port closestPort = null;
+
+            foreach (Port port in embarkPorts) {
+                float newDist = (character.transform.position - port.transform.position).magnitude;
+
+                if (newDist < lowestDist) {
+                    lowestDist = newDist;
+                    closestPort = port;
+                }
+			}
+
+            return closestPort.TryUsePort(character, name);
+		}
+
+        private GenericInteraction TryDisembark(Character character, string name) {
+            if (ReferenceEquals(character.EmbarkedVehicle, this)) return null;
+
+            float lowestDist = 100f;
+            Port closestPort = null;
+
+            foreach (Port port in embarkPorts) {
+                float newDist = (character.transform.position - port.transform.position).magnitude;
+
+                if (newDist < lowestDist) {
+                    lowestDist = newDist;
+                    closestPort = port;
+                }
+            }
+
+            return closestPort.TryUsePort(character, name);
+        }
+
+        /*private InteractionContext<Embark> IEmbark (Embark interaction) {
             if (!interaction.Seat.Occupied) {
                 interaction.ActingCharacter.Embark(interaction.Seat.GetController());
                 return new InteractionContext<Embark>(interaction, IPhase.Post, IResult.Success);
@@ -78,7 +117,7 @@ namespace TankGame.Tanks {
         }
 
         private AbstractInteraction TryEmbark (Station seat, Character character, string name) {
-            if (stations.TryGetValue(seat, out TankStation station) && !station.Occupied) {
+            if (stations.TryGetValue(seat, out Station station) && !station.Occupied) {
                 return new Embark(station, character, name, this, IEmbark);
             }
 
@@ -89,7 +128,7 @@ namespace TankGame.Tanks {
         private Station EvaluateSeat (Character character) {
             if (character.GetType().Equals(typeof(PlayerCharacter))) return Station.Commander;
 
-            foreach (KeyValuePair<Station, TankStation> entry in stations) {
+            foreach (KeyValuePair<Station, Station> entry in stations) {
                 if (!entry.Key.Equals(Station.Commander) && !entry.Value.Occupied) {
                     return entry.Key;
                 }
@@ -97,26 +136,26 @@ namespace TankGame.Tanks {
 
             Debug.LogWarning("No free station available! Null value provided");
             return Station.Driver;
-        }
+        }*/
 
         protected class Embark : AbstractInteraction<Embark> {
 
-            internal TankStation Seat { get; private set; }
+            internal Station Seat { get; private set; }
 
-            internal Embark (TankStation seat, Character character, string name, IInteractable parent, InteractionFunction destination) : base(destination, character, name, parent) {
+            internal Embark (Station seat, Character character, string name, IInteractable parent, InteractionFunction destination) : base(destination, character, name, parent) {
                 Seat = seat;
             }
         }
 
         /*public void Interact(Character character) {
             Debug.Log("Interact");
-            if (character.GetType().Equals(typeof(PlayerCharacter)) && stations.TryGetValue("CommandStation", out TankStation station)) {
+            if (character.GetType().Equals(typeof(PlayerCharacter)) && stations.TryGetValue("CommandStation", out Station station)) {
                 character.Embark(station.GetController());
                 return;
             }
 
             Debug.Log("Interact Not Player");
-            foreach (TankStation seat in stations.Values) {
+            foreach (Station seat in stations.Values) {
                 if (seat.Occupied || seat.name == "CommandStation") continue;
 
                 Debug.Log("Seat " + seat.name + " is not occupied");
@@ -126,7 +165,7 @@ namespace TankGame.Tanks {
             }
         }*/
 
-        public enum Station {
+        public enum Stations {
             Driver,
             Gunner,
             Loader,

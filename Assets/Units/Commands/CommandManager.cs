@@ -22,7 +22,6 @@ namespace TankGame.Units.Commands {
 			}
 		}
 
-
 		private Coroutine currentCoroutine;
 
 		public Command ActiveCommand { get; private set; }
@@ -68,7 +67,7 @@ namespace TankGame.Units.Commands {
 				boundFunction.Invoke(command, CommandComplete);
 			}*/
 
-			if (character.Embarked) character.Disembark();
+			if (character.Seated) character.Unseat();
 
 			ActiveCommand = command;
 			ActiveCommand.Start(character);
@@ -94,7 +93,6 @@ namespace TankGame.Units.Commands {
 
 			PerformCommand(command);
 		}
-
 
 		//interaction trigger
 		private void OnTriggerEnter2D (Collider2D collision) {

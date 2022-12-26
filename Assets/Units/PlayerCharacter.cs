@@ -15,17 +15,5 @@ namespace TankGame.Units {
 		public PlayerInput GetInput() {
 			return input;
 		}
-
-		public override void Embark(IControllable seat) {
-			base.Embark(seat);
-
-			player.SwitchControl(seat);
-		}
-
-		public override void Disembark() {
-			base.Disembark();
-
-			player.ResetControl();
-		}
 	}
 }

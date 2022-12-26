@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Tanks.Stations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace TankGame.Tanks.Stations {
+namespace TankGame.Tanks.Systems.Stations {
 
-    public class DriverStation : TankStation {
+    public class Driver : Station {
 
         public Vector2 movingDirection;
 
@@ -25,7 +26,7 @@ namespace TankGame.Tanks.Stations {
         }
 
         private void FixedUpdate() {
-            if (!Occupied) return;
+            if (!Manned) return;
 
             //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + (rotationSpeed * movingDirection.x * Time.deltaTime));
             //transform.position += transform.up * movingDirection.y * moveSpeed * Time.deltaTime;
