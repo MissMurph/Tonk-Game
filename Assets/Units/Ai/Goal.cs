@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,19 +12,18 @@ namespace TankGame.Units.Ai {
 		public int BaseWeight { get; private set; }
 		public int Weight { get; private set; }
 
-		private class Decision {
+		private int[] startNodes;
+		//private List<Decision> nodes = new List<Decision>();
 
-			public State State { get; private set; }
+		private Decision[] nodes;
 
-			public int BaseWeight { get; private set; }
-			public int Weight { get; private set; }
-
-			public List<State> Next { get; private set; }
-
-			public Decision (State _state, int _baseWeight) {
-				State = _state;
-				BaseWeight = _baseWeight;
-			}
+		public Goal (string _name, int _baseWeight, Decision[] _nodes, int[] _startNodes) {
+			Name = _name;
+			BaseWeight = _baseWeight;
+			nodes = _nodes;
+			startNodes = _startNodes;
 		}
+
+		
 	}
 }

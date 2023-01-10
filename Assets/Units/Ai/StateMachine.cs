@@ -6,9 +6,18 @@ namespace TankGame.Units.Ai {
 
 	public class StateMachine : MonoBehaviour {
 
-		public State State { get; private set; }
+		public Decision State { get; private set; }
 
 		private float stateUpdateTime = 0.25f;  //Four updates per second
+
+		private List<Goal> baseGoals = new List<Goal>();
+
+		[SerializeField]
+		private GoalEntry[] entries;
+
+		protected virtual void Awake () {
+
+		}
 
 		protected virtual void Start () {
 			StartCoroutine(UpdateState());

@@ -6,12 +6,10 @@ namespace TankGame.Units.Ai {
 
     public abstract class State {
 
-        public string Name { get; private set; }
-        public int BaseWeight { get; private set; }
-        public int Weight { get; private set; }
+        public abstract string Name { get; protected set; }
 
-        public List<State> Next { get; private set; }
+        public abstract Transform Target { get; protected set; }
         
-        public abstract void Act ();
+        public abstract void Act (Character actor);
     }
 }
