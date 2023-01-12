@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Number : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace TankGame.Units.Ai {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	[Serializable]
+	public abstract class Number : IEvaluator {
+
+		[SerializeField] public Operations[] Operation { get; private set; } = new Operations[2];
+
+		public abstract int GetInt ();
+		public abstract float GetFloat ();
+		public abstract double GetDouble ();
+		public abstract string GetString ();
+
+		public abstract bool Act ();
+
+		public abstract string Name ();
+	}
 }

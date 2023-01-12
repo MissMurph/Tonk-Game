@@ -15,9 +15,8 @@ namespace TankGame.Units {
 
 	public class Character : Unit, ISelectable {
 
-		public int Health {
-			get; private set;
-		}
+		[SerializeField]
+		public int Health { get; private set; } = 100;
 
 		const float minPathUpdateTime = .2f;
 		const float pathUpdateMoveThreshold = .5f;
@@ -61,7 +60,7 @@ namespace TankGame.Units {
 		private void Awake() {
 			CommManager = GetComponent<CommandManager>();
 			IntManager = GetComponent<InteractionManager>();
-			Health = 100;
+			//Health = 100;
 		}
 
 		private void Start() {

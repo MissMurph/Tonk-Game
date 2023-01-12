@@ -14,6 +14,10 @@ namespace TankGame.Units.Ai {
 			Name = _name;
 		}
 
+		public IdleWandering () {
+
+		}
+
 		public override void Act (Character actor) {
 			waitInterval--;
 

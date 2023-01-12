@@ -2,32 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace TankGame.Units.Ai {
 
-    public class Goals : MonoBehaviour {
+    public class Goals : SerializedMonoBehaviour {
 
         [SerializeField]
-        private GoalEntry[] goals;
-
-        public static Dictionary<string, Goal> LoadedGoals { get; private set; }
+        private Dictionary<string, Goal> goals = new Dictionary<string, Goal>();
 
         private void Awake () {
-            foreach (GoalEntry entry in goals) {
 
-                Decision[] nodes = new Decision[entry.decisions.Length];
-
-                for (int i = 0; i < nodes.Length; i++) {
-                    DecisionEntry dEntry = entry.decisions[i];
-                    //nodes[i] = new Decision();
-                }
-            }
         }
 
         
     }
 
-    [Serializable]
+    /*[Serializable]
     public class GoalEntry {
         public string name;
         public int baseWeight;
@@ -40,5 +31,5 @@ namespace TankGame.Units.Ai {
         public string stateName;
         public int baseWeight;
         public int[] nextNodes;     //Each decision will have an ID corresponding to position in array
-    }
+    }*/
 }

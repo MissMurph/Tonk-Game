@@ -12,6 +12,10 @@ namespace TankGame.Units.Ai {
 			Name = _name;
 		}
 
+		public IdleStanding () {
+
+		}
+
 		public override void Act (Character actor) {
 			//Target = actor.transform;
 		}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace TankGame.Units.Ai {
 		bool Act ();
 		string Name ();
 
-		IEvalBuilder Builder();
+		//IEvalBuilder Builder();
 	}
 
 	public interface IEvalSerializer<T> {
