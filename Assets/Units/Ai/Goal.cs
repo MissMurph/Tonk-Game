@@ -16,12 +16,12 @@ namespace TankGame.Units.Ai {
 		[ReadOnly] [SerializeField] public int ModWeight { get; private set; }
 		[SerializeField] public int Weight { get { return BaseWeight + ModWeight; } }
 
-		[SerializeField]
+		[OdinSerialize]
 		//[ValueDropdown("nodes")]
 		private List<int> startNodes = new List<int>();
 
-		[SerializeField]
-		private Decision[] nodes;
+		[OdinSerialize]
+		public Decision[] Nodes { get; private set; }
 
 		/*public Goal (string _name, int _baseWeight, Decision[] _nodes, int[] _startNodes) {
 			Name = _name;
@@ -31,14 +31,20 @@ namespace TankGame.Units.Ai {
 		}*/
 
 		public Goal () {
+			
+		}
 
+		public void Initialize () {
+			foreach (Decision node in Nodes) {
+				node.Initialize(this);
+			}
 		}
 
 		public List<Decision> GetStart () {
 			List<Decision> output = new List<Decision>();
 			
 			foreach (int index in startNodes) {
-				output.Add(nodes[index]);
+				output.Add(Nodes[index]);
 			}
 
 			return output;

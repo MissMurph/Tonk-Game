@@ -2,20 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace TankGame.Units.Ai {
 
 	public class StateMachine : SerializedMonoBehaviour {
 
+		//[ReadOnly]
+		//[SerializeField]
 		public Decision State { get; private set; }
 
+		[SerializeField]
 		private float stateUpdateTime = 0.25f;  //Four updates per second
 
-		[SerializeField]
+		[OdinSerialize]
 		[DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
 		private Dictionary<string, Goal> baseGoals = new Dictionary<string, Goal>();
-
-		private List<Decision> availableDecisions = new List<Decision>();
 
 		private Character character;
 
@@ -25,10 +27,8 @@ namespace TankGame.Units.Ai {
 		protected virtual void Awake () {
 			character = GetComponent<Character>();
 
-			foreach (KeyValuePair<string, Goal> entry in baseGoals) {
-				foreach (Decision node in entry.Value.GetStart()) {
-					availableDecisions.Add(node);
-				}
+			foreach (Goal goal in baseGoals.Values) {
+				goal.Initialize();
 			}
 		}
 
@@ -44,26 +44,38 @@ namespace TankGame.Units.Ai {
 			while (true) {
 				yield return new WaitForSeconds(stateUpdateTime);
 
-				Decision oldState = State;
-
 				Decision nextState = WeightedRandom();
 
-				if (ReferenceEquals(nextState, State)) State = nextState;
+				if (!ReferenceEquals(nextState, State)) {
+					State = nextState;
+				}
 
 				State.State.Act(character);
-
-				/*if (!ExecutingCommand && commandQueue.TryDequeue(out Command command)) {
-					StopCoroutine(currentCoroutine);
-					PerformCommand(command);
-				}
-				else if (ActiveCommand != null) {
-					ActiveCommand.Perform();
-				}
-				*/
 			}
 		}
 
+		private List<Decision> GetAvailable () {
+			List<Decision> output = new List<Decision>();
+
+			if (State != null) {
+				output.Add(State);
+				if (State.Next != null) output.AddRange(State.Next);
+			}
+
+			foreach (Goal goal in baseGoals.Values) {
+				foreach (Decision node in goal.GetStart()) {
+					if (!ReferenceEquals(node, State)) {
+						output.Add(node);
+					}
+				}
+			}
+
+			return output;
+		}
+
 		private Decision WeightedRandom () {
+			List<Decision> availableDecisions = GetAvailable();
+
 			int[] weights = new int[availableDecisions.Count];
 			int totalWeight = 0;
 
@@ -76,13 +88,13 @@ namespace TankGame.Units.Ai {
 
 			int result = rando.Next(0, totalWeight);
 
-			for (int i = availableDecisions.Count - 1; i > 0; i--) {
+			for (int i = availableDecisions.Count - 1; i >= 0; i--) {
 				totalWeight -= weights[i];
 
 				if (result >= totalWeight) return availableDecisions[i];
 			}
 
-			return null;
+			return State;
 		}
 	}
 }

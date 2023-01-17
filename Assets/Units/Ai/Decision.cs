@@ -15,6 +15,14 @@ namespace TankGame.Units.Ai {
 		//Base Weight is not modified at all during run-time, any modifications are applied to ModWeight so the same Modification can be reversed. Query Weight for the combined Base + Mod Weight
 		[SerializeField] public int BaseWeight { get; private set; }
 
+		public bool IsStart {
+			get {
+				return Parent.GetStart().Contains(this);
+			}
+		}
+
+		private Goal Parent { get; set; }
+
 		[ReadOnly]
 		[SerializeField]
 		public int ModWeight {
@@ -31,15 +39,33 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
-		[SerializeField] public int Weight { get { return BaseWeight + ModWeight; } }
+		[SerializeField] public int Weight { 
+			get { 
+				return 
+					BaseWeight + 
+					ModWeight + 
+					Parent.Weight; 
+			} 
+		}
 
 		//All nodes have a position in Goal's array. Enter the array index of the next nodes to link
-		[SerializeField] public List<int> Next { get; private set; } = new List<int>();
+		[SerializeField] private List<int> nextNodes = new List<int>();
+
+		public List<Decision> Next { get; private set; } = new List<Decision>();
+
 		[SerializeField] public List<IEvaluator> Evaluators { get; private set; } = new List<IEvaluator>();
 		[SerializeField] private Dictionary<int, WeightBehaviour> evalWeights = new Dictionary<int, WeightBehaviour>();
 
 		public Decision () {
 
+		}
+
+		public void Initialize (Goal parentGoal) {
+			Parent = parentGoal;
+
+			foreach (int index in nextNodes) {
+				Next.Add(Parent.Nodes[index]);
+			}
 		}
 
 		[Serializable]
