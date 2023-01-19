@@ -18,7 +18,10 @@ namespace TankGame.Units.Interactions {
 		public override InteractionContext Act (InteractionManager actor) {
 			InteractionContext<T> context = actor.Post(new InteractionContext<T>((T)this, IPhase.Pre, IResult.Start));
 
-			if (context.Result.Equals(IResult.Cancel)) return context;
+			if (context.Result.Equals(IResult.Cancel)) {
+				context.Phase = IPhase.Post;
+				return context;
+			}
 
 			context = func.Invoke((T)this);
 
@@ -54,7 +57,7 @@ namespace TankGame.Units.Interactions {
 	}
 
 	public class InteractionContext {
-		public IPhase Phase { get; private set; }
+		public IPhase Phase { get; internal set; }
 		public IResult Result { get; private set; }
 		public string Name { get; private set; }
 

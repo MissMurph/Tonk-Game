@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
+using TankGame.Units.Commands;
 
 namespace TankGame.Units.Ai {
 
@@ -18,6 +19,8 @@ namespace TankGame.Units.Ai {
 		[OdinSerialize]
 		[DictionaryDrawerSettings(DisplayMode = DictionaryDisplayOptions.ExpandedFoldout)]
 		private Dictionary<string, Goal> baseGoals = new Dictionary<string, Goal>();
+
+		private Command currentCommand;
 
 		private Character character;
 
@@ -44,22 +47,45 @@ namespace TankGame.Units.Ai {
 			while (true) {
 				yield return new WaitForSeconds(stateUpdateTime);
 
+				Decision oldState = State;
+
 				Decision nextState = WeightedRandom();
 
 				if (!ReferenceEquals(nextState, State)) {
 					State = nextState;
+					if (oldState != null) oldState.State.Exit(character);
+					State.State.Enter(character);
 				}
-
+				
 				State.State.Act(character);
 			}
+		}
+
+		public void SubmitCommand (Command command) {
+			if (currentCommand != null) currentCommand.OnComplete -= CommandCallback;
+			currentCommand = command;
+			currentCommand.Initialize();
+			currentCommand.OnComplete += CommandCallback;
+		}
+
+		private void CommandCallback () {
+			currentCommand = null;
 		}
 
 		private List<Decision> GetAvailable () {
 			List<Decision> output = new List<Decision>();
 
 			if (State != null) {
-				output.Add(State);
+				if (!State.State.Complete) output.Add(State);
 				if (State.Next != null) output.AddRange(State.Next);
+			}
+
+			if (currentCommand != null) {
+				foreach (Decision node in currentCommand.GetStart()) {
+					if (!ReferenceEquals(node, State)) {
+						output.Add(node);
+					}
+				}
 			}
 
 			foreach (Goal goal in baseGoals.Values) {

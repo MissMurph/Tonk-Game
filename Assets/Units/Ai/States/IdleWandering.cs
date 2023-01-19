@@ -6,7 +6,7 @@ namespace TankGame.Units.Ai {
 
 	public class IdleWandering : State {
 		public override string Name { get; protected set; }
-		public override Transform Target { get; protected set; }
+		//public override Transform Target { get; protected set; }
 
 		private int waitInterval = 10;	//-1 4 times per second, 4 = 1 second
 

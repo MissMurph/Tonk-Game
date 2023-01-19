@@ -7,15 +7,19 @@ using UnityEngine.InputSystem;
 
 namespace TankGame.Units.Commands {
 
-	public class Interact : Command<AbstractInteraction> {
+	public class Interact : TargetedCommand<AbstractInteraction> {
 
 		private InteractionManager localManager;
 
-		public Interact(AbstractInteraction target) : base(target, "interact") {
+		public Interact(AbstractInteraction target) : base(Commands.GetTree("interact"), target) {
 			
 		}
 
-		public override void Start(Character character) {
+		protected override void End () {
+			
+		}
+
+		/*public override void Start(Character character) {
 			base.Start(character);
 
 			TargetTransform = Target.Parent.GetObject().transform;
@@ -57,6 +61,6 @@ namespace TankGame.Units.Commands {
 
 		private void OnPathComplete(bool success) {
 			if (!success) Cancel();
-		}
+		}*/
 	}
 }

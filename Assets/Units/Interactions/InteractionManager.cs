@@ -14,6 +14,8 @@ namespace TankGame.Units.Interactions {
 
 		private Dictionary<string, UnityEventBase> listenerMap = new Dictionary<string, UnityEventBase>();
 
+		private List<Transform> inRangeTransforms = new List<Transform>();
+
 		private void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
 
@@ -90,6 +92,27 @@ namespace TankGame.Units.Interactions {
 
 			Debug.LogWarning("No interaction created! Null value provided");
 			return null;
+		}
+
+		//interaction trigger
+		private void OnTriggerEnter2D (Collider2D collision) {
+			Transform parentTransform = collision.transform.root;
+
+			inRangeTransforms.Add(collision.transform);
+		}
+
+		private void OnTriggerExit2D (Collider2D collision) {
+			if (inRangeTransforms.Contains(collision.transform)) {
+				inRangeTransforms.Remove(collision.transform);
+			}
+		}
+
+		public bool IsInRange (Transform transform) {
+			return inRangeTransforms.Contains(transform);
+		}
+
+		public List<Transform> TransformsInRange () {
+			return new List<Transform>(inRangeTransforms);
 		}
 	}
 }

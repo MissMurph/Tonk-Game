@@ -18,5 +18,7 @@ namespace TankGame.Units.Ai {
 		public abstract bool Act ();
 
 		public abstract string Name ();
+
+		//public abstract IEvaluator Copy ();
 	}
 }

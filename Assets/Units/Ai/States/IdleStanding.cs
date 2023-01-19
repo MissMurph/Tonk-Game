@@ -6,7 +6,7 @@ namespace TankGame.Units.Ai {
 
 	public class IdleStanding : State {
 		public override string Name { get;  protected set; }
-		public override Transform Target { get; protected set; }
+		//public override Transform Target { get; protected set; }
 
 		public IdleStanding (string _name) {
 			Name = _name;

@@ -42,9 +42,7 @@ namespace TankGame.Units.Ai {
 		[SerializeField] public int Weight { 
 			get { 
 				return 
-					BaseWeight + 
-					ModWeight + 
-					Parent.Weight; 
+					BaseWeight + ModWeight + Parent.Weight; 
 			} 
 		}
 
@@ -58,6 +56,15 @@ namespace TankGame.Units.Ai {
 
 		public Decision () {
 
+		}
+
+		//copy constructor
+		public Decision (Decision decision) {
+			State = decision.State;
+			BaseWeight = decision.BaseWeight;
+			nextNodes.AddRange(decision.nextNodes);
+			Evaluators.AddRange(decision.Evaluators);
+			evalWeights = decision.evalWeights;
 		}
 
 		public void Initialize (Goal parentGoal) {

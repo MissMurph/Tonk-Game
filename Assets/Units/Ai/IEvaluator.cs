@@ -9,14 +9,6 @@ namespace TankGame.Units.Ai {
 		bool Act ();
 		string Name ();
 
-		//IEvalBuilder Builder();
-	}
-
-	public interface IEvalSerializer<T> {
-		IEvaluator Deserialize ();
-	}
-
-	public interface IEvalBuilder {
-		IEvaluator Build ();
+		//IEvaluator Copy();
 	}
 }
