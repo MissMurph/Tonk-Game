@@ -12,9 +12,5 @@ namespace TankGame.Units.Commands {
 		public Move(Vector2 _targetPosition) : base(Commands.GetTree("move"), _targetPosition) {
 			
 		}
-
-		protected override void End () {
-			
-		}
 	}
 }

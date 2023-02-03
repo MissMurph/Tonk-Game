@@ -5,9 +5,9 @@ using System;
 using Sirenix.OdinInspector;
 
 namespace TankGame.Units.Ai {
-
+	
 	[Serializable]
-	public class Decision {
+	public class Decision : IComparable {
 
 		[SerializeField] public string Name { get; private set; }
 		[SerializeField] public State State { get; private set; }
@@ -72,6 +72,17 @@ namespace TankGame.Units.Ai {
 
 			foreach (int index in nextNodes) {
 				Next.Add(Parent.Nodes[index]);
+			}
+		}
+
+		public int CompareTo (object obj) {
+			Decision decision = obj as Decision;
+
+			if (decision != null) {
+				return Weight.CompareTo(decision.Weight);
+			}
+			else {
+				throw new ArgumentException("object is not a decision!");
 			}
 		}
 
