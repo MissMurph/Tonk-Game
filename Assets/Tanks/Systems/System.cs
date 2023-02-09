@@ -6,12 +6,7 @@ namespace TankGame.Tanks.Systems {
 
 	public class System : MonoBehaviour {
 
-		void Start() {
-
-		}
-
-		void Update() {
-
-		}
+		[SerializeField]
+		public int Health { get; private set; } = 100;
 	}
 }

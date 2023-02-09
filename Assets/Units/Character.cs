@@ -10,14 +10,18 @@ using TankGame.Units.Pathfinding;
 using TankGame.Items;
 using TankGame.Units.Interactions;
 using TankGame.Tanks;
+using TankGame.Units.Ai;
 
 namespace TankGame.Units {
 
 	public class Character : Unit, ISelectable {
 
-		public int Health {
-			get; private set;
-		}
+		[SerializeField]
+		public int Health { get; private set; } = 100;
+		[SerializeField]
+		public int Morale { get; private set; } = 75;
+		[SerializeField]
+		public int Stress { get; private set; } = 0;
 
 		const float minPathUpdateTime = .2f;
 		const float pathUpdateMoveThreshold = .5f;
@@ -30,19 +34,17 @@ namespace TankGame.Units {
 
 		public bool executingCommand = false;
 
-		public CommandManager CommManager { get; private set; } 
-
 		public InteractionManager IntManager { get; private set; }
 
 		private Coroutine movementCoroutine;
-
-		private Command currentCommand;
 
 		public delegate void PathComplete(bool success);
 
 		private PathComplete pathCompleteCallback;
 
 		public Tank EmbarkedVehicle { get; protected set; }
+
+		private StateMachine stateMachine;
 
 		public bool Embarked {
 			get {
@@ -59,9 +61,9 @@ namespace TankGame.Units {
 		}
 
 		private void Awake() {
-			CommManager = GetComponent<CommandManager>();
 			IntManager = GetComponent<InteractionManager>();
-			Health = 100;
+			stateMachine = GetComponent<StateMachine>();
+			//Health = 100;
 		}
 
 		private void Start() {
@@ -117,13 +119,14 @@ namespace TankGame.Units {
 			Vector3 currentWaypoint = path[0];
 
 			while (true) {
-				if (CommManager.ActiveCommand != null && CommManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
+				//if (CommManager.ActiveCommand != null && CommManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
 
 				if (transform.position == currentWaypoint) {
 					targetIndex++;
 
 					if (targetIndex >= path.Length) {
 						// if (target != null) ;
+						pathCompleteCallback.Invoke(true);
 						yield break;
 					}
 
@@ -184,12 +187,16 @@ namespace TankGame.Units {
 		/*	INTERFACE FUNCTIONS	*/
 
 		public void EnqueueCommand(Command command) {
-			CommManager.EnqueueCommand(command);
+			//CommManager.EnqueueCommand(command);
 		}
 
 		public void ExecuteCommand(Command command) {
-			if (command != null) CommManager.ExecuteCommand(command);
+			if (command != null) stateMachine.SubmitCommand(command);
 			else Debug.Log("Null Command");
+		}
+
+		public void ExecuteCommand (string name) {
+
 		}
 
 		public GameObject GetObject() {

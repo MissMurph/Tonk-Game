@@ -14,6 +14,8 @@ namespace TankGame.Units.Interactions {
 
 		private Dictionary<string, UnityEventBase> listenerMap = new Dictionary<string, UnityEventBase>();
 
+		private List<Transform> inRangeTransforms = new List<Transform>();
+
 		private void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
 
@@ -79,6 +81,8 @@ namespace TankGame.Units.Interactions {
 		}
 
 		//This is bad stinky temp method that will be replaced when this whole system stops being spaghet
+		//All this does is loop through each factory and tries to construct an interaction
+		//Need to better define default interactions
 		public AbstractInteraction RequestInteraction (Character character) {
 			foreach (KeyValuePair<string, AbstractInteractionFactory> entry in interactionsMap) {
 				AbstractInteraction test = entry.Value.Construct(character);
@@ -90,6 +94,27 @@ namespace TankGame.Units.Interactions {
 
 			Debug.LogWarning("No interaction created! Null value provided");
 			return null;
+		}
+
+		//interaction trigger
+		private void OnTriggerEnter2D (Collider2D collision) {
+			Transform parentTransform = collision.transform.root;
+
+			inRangeTransforms.Add(collision.transform);
+		}
+
+		private void OnTriggerExit2D (Collider2D collision) {
+			if (inRangeTransforms.Contains(collision.transform)) {
+				inRangeTransforms.Remove(collision.transform);
+			}
+		}
+
+		public bool IsInRange (Transform transform) {
+			return inRangeTransforms.Contains(transform);
+		}
+
+		public List<Transform> TransformsInRange () {
+			return new List<Transform>(inRangeTransforms);
 		}
 	}
 }

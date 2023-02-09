@@ -7,33 +7,10 @@ using TankGame.Units.Pathfinding;
 
 namespace TankGame.Units.Commands {
 
-	public class Move : Command<Vector2> {
+	public class Move : TargetedCommand<Vector2> {
 
-		public Move(Vector2 _targetPosition) : base(_targetPosition, "move") { }
-
-		/*public override string Name() {
-			return "MoveCommand";
-		}*/
-
-		public override void Start(Character character) {
-			base.Start(character);
-
-			character.SubmitTarget(Target, OnPathComplete);
-		}
-
-		public override void Cancel() {
-			base.Cancel();
-
-			Character.Stop();
-		}
-
-		private void OnPathComplete (bool success) {
-			if (success) {
-				Complete();
-			}
-			else {
-				Cancel();
-			}
+		public Move(Vector2 _targetPosition) : base(Commands.GetTree("move"), _targetPosition) {
+			
 		}
 	}
 }

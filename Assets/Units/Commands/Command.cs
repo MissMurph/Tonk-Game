@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TankGame.Events;
+using TankGame.Units.Ai;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -9,120 +10,67 @@ using UnityEngine.InputSystem;
 namespace TankGame.Units.Commands {
 
 	[Serializable]
-	public abstract class Command<T> : Command {
+	public abstract class Command : Goal {
 
-		public T Target { get; private set; }
+		[SerializeField] public string Name { get; private set; }
 
-		protected Command(T _target, string _name) : base(typeof(T), _name) {
-			Target = _target;
-			if (cntxt == null) cntxt = () => new CommandContext(Character, this, Phase);
+		public CommandPhase Phase { get; protected set; } = CommandPhase.Waiting;
+
+		public delegate void Callback ();
+
+		public event Callback OnComplete;
+
+		public Command () {
+
+		}
+
+		protected Command (Command command) : base(command) {
+			Name = command.Name;
+		}
+
+		protected virtual void End () {
+			if (OnComplete != null) OnComplete.Invoke();
 		}
 	}
 
-	[Serializable]
-	public abstract class Command {
-		public string Name { get; private set; }
-		public Type TargetType { get; private set; }
-		public CommandPhase Phase { get; private set; }
-		public Transform TargetTransform { get; protected set; }
+	public abstract class TargetedCommand<T> : Command {
 
-		protected Character Character { get; private set; }
+		public T Target { get; protected set; }
 
-		public delegate void CommandCallback(CommandContext context);
+		[SerializeField] private int endNode;
 
-		public event CommandCallback OnStart;
-		public event CommandCallback OnPerform;
-		public event CommandCallback OnComplete;
-
-		public delegate CommandContext ContextConstructor ();
-
-		protected ContextConstructor cntxt;
-
-		public virtual void Start(Character character) {
-			//These IF checks exist in case timing causes either Start or Perform to be called as the completion is triggering, potentially reversing the completion and soft-locking the manager
-			if (Phase.Equals(CommandPhase.Cancelled) || Phase.Equals(CommandPhase.Complete)) return;
-
-			Character = character;
-			Phase = CommandPhase.Started;
-
-			CommandContext context = cntxt.Invoke();
-
-			//PostCommandEvent(context);
-			if (OnStart != null) OnStart.Invoke(context);
+		public TargetedCommand () {
+			
 		}
 
-		public virtual void Perform () {
-			if (Phase.Equals(CommandPhase.Cancelled) || Phase.Equals(CommandPhase.Complete) || Phase.Equals(CommandPhase.Performed)) return;
+		protected TargetedCommand (Command command, T _target) : base(command) {
+			if (command is TargetedCommand<T>) {
+				TargetedCommand<T> tComm = (TargetedCommand<T>) command;
 
-			Phase = CommandPhase.Performed;
-
-			CommandContext context = cntxt.Invoke();
-
-			//PostCommandEvent(context);
-			if (OnPerform != null) OnPerform.Invoke(context);
-		}
-
-		public virtual void Cancel () {
-			Phase = CommandPhase.Cancelled;
-
-			CommandContext context = cntxt.Invoke();
-
-			//PostCommandEvent(context);
-			if (OnComplete != null) OnComplete.Invoke(context);
-		}
-
-		protected virtual void Complete () {
-			Phase = CommandPhase.Complete;
-
-			CommandContext context = cntxt.Invoke();
-
-			//PostCommandEvent(context);
-			if (OnComplete != null) OnComplete.Invoke(context);
-		}
-
-		public virtual void OnTriggerEnter(Collider2D collision) { }
-
-		//Temporarily discontinuing this. Provided alternatives so only internal systems with access to the Commands can influence their behaviour using public events above
-		//Not deleting as Observer could still be adopted effectively for CommandEvents
-		private CharacterEvent.CommandEvent PostCommandEvent(CommandContext context) {
-			return EventBus.Post(new CharacterEvent.CommandEvent(context));
-		}
-
-		internal Command(Type _type, string _name) {
-			TargetType = _type;
-			Name = _name;
-			Phase = CommandPhase.Waiting;
-		}
-
-		public T GetAsType<T>() where T : Command {
-			if (typeof(T) == this.GetType()) {
-				return (T)this;
+				endNode = tComm.endNode;
 			}
 
-			else return null;
+			Target = _target;
 		}
 
-		public enum CommandPhase {
-			Waiting,
-			Started,
-			Performed,
-			Cancelled,
-			Complete
-		}
+		public override void Initialize () {
+			base.Initialize();
 
-		public class CommandContext {
+			Nodes[endNode].State.OnComplete += End;
 
-			public Character Character { get; private set; }
-			public Command Command { get; private set; }
-			public CommandPhase Phase { get; private set; }
-
-			protected CommandContext(Command _command) : this(_command.Character, _command, _command.Phase) {}
-
-			internal CommandContext (Character _character, Command _command, CommandPhase _phase){
-				Character = _character;
-				Command = _command;
-				Phase = _phase;
+			foreach (Decision node in Nodes) {
+				if (node.State is TargetedState<T>) {
+					TargetedState<T> state = (TargetedState<T>)node.State;
+					state.SetTarget(Target);
+				}
 			}
 		}
+	}
+
+	public enum CommandPhase {
+		Waiting,
+		Acting,
+		Completed,
+		Failed
 	}
 }

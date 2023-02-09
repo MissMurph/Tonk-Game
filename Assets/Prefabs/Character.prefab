@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 980698760530667079}
   - component: {fileID: 980698760530667073}
   - component: {fileID: 7544830311115477026}
-  - component: {fileID: 4357324035483122276}
   - component: {fileID: 980698760530667078}
   - component: {fileID: 980698760530667076}
   - component: {fileID: -6929218160477850403}
@@ -50,6 +49,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10b0cbc6294254c9f5e294233673b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Health
+      Entry: 3
+      Data: 100
+    - Name: Morale
+      Entry: 3
+      Data: 75
+    - Name: Stress
+      Entry: 3
+      Data: 0
   target: {fileID: 0}
   targetOldPos: {x: 0, y: 0, z: 0}
   speed: 5
@@ -71,68 +88,6 @@ MonoBehaviour:
   stackEntries: []
   slotCount: 4
   startingItems: []
---- !u!114 &4357324035483122276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980698760530667072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77ca20c29fc797d439493012d67a6627, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  commands:
-  - name: move
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 980698760530667073}
-          m_TargetAssemblyTypeName: Character, Assembly-CSharp
-          m_MethodName: Command_Move
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - name: interact
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 980698760530667073}
-          m_TargetAssemblyTypeName: Character, Assembly-CSharp
-          m_MethodName: Command_Interact
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - name: transfer_item
-    action:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 980698760530667073}
-          m_TargetAssemblyTypeName: Character, Assembly-CSharp
-          m_MethodName: Command_TransferItem
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  character: {fileID: 0}
 --- !u!212 &980698760530667078
 SpriteRenderer:
   m_ObjectHideFlags: 0
