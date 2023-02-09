@@ -15,10 +15,6 @@ namespace TankGame.Units.Commands {
 			
 		}
 
-		protected override void End () {
-			
-		}
-
 		/*public override void Start(Character character) {
 			base.Start(character);
 

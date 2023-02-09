@@ -44,7 +44,7 @@ namespace TankGame.Units.Commands {
 		}
 
 		protected TargetedCommand (Command command, T _target) : base(command) {
-			if (command.GetType().Equals(typeof(TargetedCommand<T>))) {
+			if (command is TargetedCommand<T>) {
 				TargetedCommand<T> tComm = (TargetedCommand<T>) command;
 
 				endNode = tComm.endNode;

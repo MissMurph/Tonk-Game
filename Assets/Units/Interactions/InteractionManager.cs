@@ -81,6 +81,8 @@ namespace TankGame.Units.Interactions {
 		}
 
 		//This is bad stinky temp method that will be replaced when this whole system stops being spaghet
+		//All this does is loop through each factory and tries to construct an interaction
+		//Need to better define default interactions
 		public AbstractInteraction RequestInteraction (Character character) {
 			foreach (KeyValuePair<string, AbstractInteractionFactory> entry in interactionsMap) {
 				AbstractInteraction test = entry.Value.Construct(character);

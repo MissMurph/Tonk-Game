@@ -3394,7 +3394,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackEntries: []
   slotCount: 4
-  startingItems: []
+  startingItems:
+  - test
 --- !u!50 &1564242499
 Rigidbody2D:
   serializedVersion: 4
@@ -3450,13 +3451,73 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: baseGoals
+    - Name: State
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.Goal,
+      Data: 0|TankGame.Units.Ai.Decision, Assembly-CSharp
+    - Name: Name
+      Entry: 1
+      Data: 
+    - Name: State
+      Entry: 6
+      Data: 
+    - Name: BaseWeight
+      Entry: 3
+      Data: 0
+    - Name: Evaluators
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: nextNodes
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: evalWeights
+      Entry: 7
+      Data: 3|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
+      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: baseGoals
+      Entry: 7
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.Goal,
+        Assembly-CSharp]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 6|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -3472,7 +3533,7 @@ MonoBehaviour:
       Data: keep_healthy
     - Name: $v
       Entry: 7
-      Data: 2|TankGame.Units.Ai.Goal, Assembly-CSharp
+      Data: 7|TankGame.Units.Ai.Goal, Assembly-CSharp
     - Name: BaseWeight
       Entry: 3
       Data: 100
@@ -3481,19 +3542,19 @@ MonoBehaviour:
       Data: 0
     - Name: Nodes
       Entry: 7
-      Data: 3|TankGame.Units.Ai.Decision[], Assembly-CSharp
+      Data: 8|TankGame.Units.Ai.Decision[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 4|TankGame.Units.Ai.Decision, Assembly-CSharp
+      Data: 9|TankGame.Units.Ai.Decision, Assembly-CSharp
     - Name: Name
       Entry: 1
       Data: is_health_low
     - Name: State
       Entry: 7
-      Data: 5|TankGame.Units.Ai.IdleWandering, Assembly-CSharp
+      Data: 10|TankGame.Units.Ai.IdleWandering, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -3502,17 +3563,17 @@ MonoBehaviour:
       Data: 100
     - Name: Evaluators
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
+      Data: 11|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
       Data: 2
     - Name: 
       Entry: 7
-      Data: 7|TankGame.Units.Ai.HealthEval, Assembly-CSharp
+      Data: 12|TankGame.Units.Ai.HealthEval, Assembly-CSharp
     - Name: Operation
       Entry: 7
-      Data: 8|TankGame.Operations[], Assembly-CSharp
+      Data: 13|TankGame.Operations[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 2
@@ -3539,10 +3600,10 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 9|TankGame.Units.Ai.HealthEval, Assembly-CSharp
+      Data: 14|TankGame.Units.Ai.HealthEval, Assembly-CSharp
     - Name: Operation
       Entry: 7
-      Data: 10|TankGame.Operations[], Assembly-CSharp
+      Data: 15|TankGame.Operations[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
@@ -3572,7 +3633,7 @@ MonoBehaviour:
       Data: 
     - Name: nextNodes
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+      Data: 16|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -3584,11 +3645,11 @@ MonoBehaviour:
       Data: 
     - Name: evalWeights
       Entry: 7
-      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
+      Data: 17|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+      Data: 18|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib
     - Name: 
       Entry: 8
@@ -3604,7 +3665,7 @@ MonoBehaviour:
       Data: 0
     - Name: $v
       Entry: 7
-      Data: 14|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
+      Data: 19|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
     - Name: value
       Entry: 3
       Data: 100
@@ -3622,7 +3683,7 @@ MonoBehaviour:
       Data: 1
     - Name: $v
       Entry: 7
-      Data: 15|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
+      Data: 20|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
     - Name: value
       Entry: 3
       Data: -100
@@ -3649,7 +3710,7 @@ MonoBehaviour:
       Data: 
     - Name: startNodes
       Entry: 7
-      Data: 16|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+      Data: 21|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -3676,7 +3737,7 @@ MonoBehaviour:
       Data: idle
     - Name: $v
       Entry: 7
-      Data: 17|TankGame.Units.Ai.Goal, Assembly-CSharp
+      Data: 22|TankGame.Units.Ai.Goal, Assembly-CSharp
     - Name: BaseWeight
       Entry: 3
       Data: 100
@@ -3685,19 +3746,19 @@ MonoBehaviour:
       Data: 0
     - Name: Nodes
       Entry: 7
-      Data: 18|TankGame.Units.Ai.Decision[], Assembly-CSharp
+      Data: 23|TankGame.Units.Ai.Decision[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 7
-      Data: 19|TankGame.Units.Ai.Decision, Assembly-CSharp
+      Data: 24|TankGame.Units.Ai.Decision, Assembly-CSharp
     - Name: Name
       Entry: 1
       Data: idle
     - Name: State
       Entry: 7
-      Data: 20|TankGame.Units.Ai.IdleStanding, Assembly-CSharp
+      Data: 25|TankGame.Units.Ai.IdleStanding, Assembly-CSharp
     - Name: 
       Entry: 8
       Data: 
@@ -3706,7 +3767,7 @@ MonoBehaviour:
       Data: 100
     - Name: Evaluators
       Entry: 7
-      Data: 21|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
+      Data: 26|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
         mscorlib
     - Name: 
       Entry: 12
@@ -3719,7 +3780,7 @@ MonoBehaviour:
       Data: 
     - Name: nextNodes
       Entry: 7
-      Data: 22|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+      Data: 27|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -3731,11 +3792,11 @@ MonoBehaviour:
       Data: 
     - Name: evalWeights
       Entry: 7
-      Data: 23|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
+      Data: 28|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 9
-      Data: 13
+      Data: 18
     - Name: 
       Entry: 12
       Data: 0
@@ -3756,7 +3817,7 @@ MonoBehaviour:
       Data: 
     - Name: startNodes
       Entry: 7
-      Data: 24|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
+      Data: 29|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1

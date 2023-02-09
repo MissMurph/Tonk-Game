@@ -137,18 +137,36 @@ namespace TankGame.Units.Ai {
 			if (currentCommand != null) currentCommand.OnComplete -= CommandCallback;
 			currentCommand = command;
 			currentCommand.Initialize();
+			openSet.AddRange(currentCommand.GetStart());
 			currentCommand.OnComplete += CommandCallback;
 		}
 
-		public void SubmitGoal (Goal goal) {
-
+		public void SubmitGoal (string name, Goal goal) {
+			newGoals.Add(name, goal);
+			openSet.AddRange(goal.GetStart());
 		}
 
-		public void ExpireGoal () {
+		public void ExpireGoal (string name) {
+			if (newGoals.TryGetValue(name, out Goal goal)) {
+				foreach (Decision decision in goal.GetStart()) {
+					openSet.Remove(decision);
+				}
 
+				newGoals.Remove(name);
+			}
 		}
 
 		private void CommandCallback () {
+			if (ReferenceEquals(State.Parent, currentCommand)) {
+				foreach (Decision node in State.Next) {
+					openSet.Remove(node);
+				}
+			}
+
+			foreach (Decision node in currentCommand.GetStart()) {
+				openSet.Remove(node);
+			}
+
 			currentCommand = null;
 		}
 	}

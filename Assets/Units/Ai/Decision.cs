@@ -21,7 +21,7 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
-		private Goal Parent { get; set; }
+		public Goal Parent { get; private set; }
 
 		[ReadOnly]
 		[SerializeField]
@@ -41,8 +41,7 @@ namespace TankGame.Units.Ai {
 
 		[SerializeField] public int Weight { 
 			get { 
-				return 
-					BaseWeight + ModWeight + Parent.Weight; 
+				return Mathf.Max(0, BaseWeight + ModWeight + Parent.Weight); 
 			} 
 		}
 
