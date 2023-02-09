@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TankGame.Units.Pathfinding;
+using Sirenix.OdinInspector;
 
 namespace TankGame.GameWorld {
 
-    public class World : MonoBehaviour {
+    public class WorldGrid : SerializedMonoBehaviour {
 
-        public Vector2Int GridSize;
+        [SerializeField]
+        public Vector2Int GridSize { get; private set; }
 
-        public bool displayGizmos;
+        [SerializeField]
+        private bool DisplayGizmos;
 
         public TerrainType[] walkableRegions;
 
         [SerializeField]
         private float nodeSize = 1;
 
-        public GameObject agent;
-        public GameObject target;
-
         private Node[,] grid;
-
-        [SerializeField]
-        private Pathfinding pathfinding;
 
         private Dictionary<int, int> walkableRegionsDic = new Dictionary<int, int>();
 
@@ -45,8 +42,6 @@ namespace TankGame.GameWorld {
         }
 
         private void Awake() {
-            pathfinding = GetComponent<Pathfinding>();
-
             foreach (TerrainType region in walkableRegions) {
                 //LayerMasks.AddLayerToMask(region.terrainMask.value, LayerMasks.WalkableMask);
                 walkableRegionsDic.Add(Mathf.RoundToInt(Mathf.Log(region.terrainMask.value, 2)), region.terrainPenalty);
@@ -67,10 +62,6 @@ namespace TankGame.GameWorld {
                     int penalty = 0;
 
                     if (walkable) {
-                        /*GameObject obj = Physics2D.BoxCast(worldPos, Vector2.one * (nodeSize / 2), 0, Vector2.zero, 0, walkableMask).collider.gameObject;
-
-                        if (obj != null) walkableRegionsDic.TryGetValue(obj.layer, out penalty);*/
-
                         RaycastHit2D hit = Physics2D.Raycast(worldPos + Vector3.back * 50, Vector3.forward, 100, LayerMasks.WalkableMask);
 
                         if (hit.collider != null) walkableRegionsDic.TryGetValue(hit.collider.gameObject.layer, out penalty);
@@ -166,7 +157,7 @@ namespace TankGame.GameWorld {
 
 
         private void OnDrawGizmos() {
-            if (displayGizmos) {
+            if (DisplayGizmos) {
                 Gizmos.DrawWireCube(transform.position, new Vector3(GridSize.x * nodeSize, GridSize.y * nodeSize, 1));
 
                 if (grid != null) {

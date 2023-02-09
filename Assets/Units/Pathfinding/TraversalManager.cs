@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace TankGame.Units.Pathfinding {
 
-	public class PathRequestManager : MonoBehaviour {
+	public class TraversalManager : MonoBehaviour {
 
-		Queue<PathResult> results = new Queue<PathResult>();
-
-		static PathRequestManager instance;
-		Pathfinding pathFinding;
+		private Queue<PathResult> results = new Queue<PathResult>();
+		private ITraversable pathFinding;
 
 		private void Awake() {
-			instance = this;
-			pathFinding = GetComponent<Pathfinding>();
+			pathFinding = GetComponent<ITraversable>();
 		}
 
 		private void Update() {
@@ -32,9 +29,9 @@ namespace TankGame.Units.Pathfinding {
 			}
 		}
 
-		public static void RequestPath(Vector3 startPos, Vector3 targetPos, Action<Vector3[], bool> callback) {
+		public void RequestPath(Vector3 startPos, Vector3 targetPos, Action<Vector3[], bool> callback) {
 			ThreadStart threadStart = delegate {
-				instance.pathFinding.FindPath(new PathRequest(startPos, targetPos, callback), instance.FinishedProcessingPath);
+				pathFinding.FindPath(new PathRequest(startPos, targetPos, callback), FinishedProcessingPath);
 			};
 
 			threadStart.Invoke();
@@ -46,7 +43,7 @@ namespace TankGame.Units.Pathfinding {
 			}
 		}
 	}
-
+	  
 	public struct PathResult {
 		public Vector3[] path;
 		public bool success;

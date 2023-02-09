@@ -6,10 +6,10 @@ using TankGame.GameWorld;
 
 namespace TankGame.Units.Pathfinding {
 
-	public class Pathfinding : MonoBehaviour {
+	public class GridPathfinder : MonoBehaviour, ITraversable {
 
-		[SerializeField]
-		private World world;
+		[SerializeField] 
+		private WorldGrid world;
 
 		public void FindPath(PathRequest request, Action<PathResult> callback) {
 			Vector3[] waypoints = new Vector3[0];

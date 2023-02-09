@@ -46,6 +46,8 @@ namespace TankGame.Units {
 
 		private StateMachine stateMachine;
 
+		private TraversalManager environment;
+
 		public bool Embarked {
 			get {
 				return EmbarkedVehicle != null;
@@ -67,6 +69,7 @@ namespace TankGame.Units {
 		}
 
 		private void Start() {
+			environment = GetComponentInParent<TraversalManager>();
 			StartCoroutine(UpdatePath());
 		}
 
@@ -80,7 +83,7 @@ namespace TankGame.Units {
 
 		//This one can only be used for pathfinding, can't be used for embarked movement
 		public void SubmitTarget(Vector2 _target, PathComplete callback) {
-			PathRequestManager.RequestPath(transform.position, _target, OnPathFound);
+			environment.RequestPath(transform.position, _target, OnPathFound);
 			pathCompleteCallback = callback;
 		}
 
@@ -108,7 +111,7 @@ namespace TankGame.Units {
 				yield return new WaitForSeconds(minPathUpdateTime);
 
 				if (target != null && (target.position - targetOldPos).sqrMagnitude > sqrMoveThreshold) {
-					PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+					environment.RequestPath(transform.position, target.position, OnPathFound);
 					targetOldPos = target.position;
 				}
 			}
@@ -135,7 +138,7 @@ namespace TankGame.Units {
 
 				//Debug.Log(currentWaypoint);
 
-				transform.position = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+				transform.localPosition = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 
 				yield return null;
 			}

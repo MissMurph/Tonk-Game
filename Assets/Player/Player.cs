@@ -42,7 +42,7 @@ namespace TankGame.Players {
 
 		private PlayerController playerController;
 
-		public World world;
+		public WorldGrid world;
 
 		public IControllable currentControl;
 
