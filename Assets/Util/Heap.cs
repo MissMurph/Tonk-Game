@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TankGame.Units.Pathfinding {
+namespace TankGame.Util {
 
 	public class Heap<T> where T : IHeapItem<T> {
 

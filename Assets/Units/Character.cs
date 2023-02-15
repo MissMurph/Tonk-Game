@@ -6,11 +6,11 @@ using UnityEngine.Events;
 using TankGame.Units.Commands;
 using TankGame.Players.Input;
 using TankGame.Tanks.Stations;
-using TankGame.Units.Pathfinding;
 using TankGame.Items;
 using TankGame.Units.Interactions;
 using TankGame.Tanks;
 using TankGame.Units.Ai;
+using TankGame.Units.Navigation;
 
 namespace TankGame.Units {
 
@@ -46,7 +46,10 @@ namespace TankGame.Units {
 
 		private StateMachine stateMachine;
 
-		private TraversalManager environment;
+		public ITraversable Traversable;
+
+		[SerializeField]
+		private Transform targetTracker;
 
 		public bool Embarked {
 			get {
@@ -69,7 +72,7 @@ namespace TankGame.Units {
 		}
 
 		private void Start() {
-			environment = GetComponentInParent<TraversalManager>();
+			Traversable = GetComponentInParent<ITraversable>();
 			StartCoroutine(UpdatePath());
 		}
 
@@ -81,15 +84,20 @@ namespace TankGame.Units {
 			}
 		}
 
-		//This one can only be used for pathfinding, can't be used for embarked movement
+		//This will assume that the target exists only in the global Traversable and will not be usable for Transforms within a Traversable
 		public void SubmitTarget(Vector2 _target, PathComplete callback) {
-			environment.RequestPath(transform.position, _target, OnPathFound);
-			pathCompleteCallback = callback;
+			targetTracker.transform.position = _target;
+			RequestPath(targetTracker, Navigation.World.GlobalTraversable, callback);
 		}
 
+		//Use this if need to potentially cross Traversables
 		public void SubmitTarget(Transform _target, PathComplete callback) {
-			SubmitTarget(_target.position, callback);
+			RequestPath(_target, Traversable, callback);
+		}
 
+		private void RequestPath (Transform _target, ITraversable _traversable, PathComplete callback) {
+			PathRequestManager.RequestPath(transform, _target, _traversable, OnPathFound);
+			pathCompleteCallback = callback;
 			target = _target;
 		}
 
@@ -111,7 +119,7 @@ namespace TankGame.Units {
 				yield return new WaitForSeconds(minPathUpdateTime);
 
 				if (target != null && (target.position - targetOldPos).sqrMagnitude > sqrMoveThreshold) {
-					environment.RequestPath(transform.position, target.position, OnPathFound);
+					PathRequestManager.RequestPath(transform, target, Traversable, OnPathFound);
 					targetOldPos = target.position;
 				}
 			}
@@ -142,10 +150,6 @@ namespace TankGame.Units {
 
 				yield return null;
 			}
-		}
-
-		public void Unseat () {
-
 		}
 
 		/*public virtual void Embark(IControllable seat) {

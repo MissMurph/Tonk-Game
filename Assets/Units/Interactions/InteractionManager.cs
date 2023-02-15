@@ -16,7 +16,7 @@ namespace TankGame.Units.Interactions {
 
 		private List<Transform> inRangeTransforms = new List<Transform>();
 
-		private void Awake () {
+		protected virtual void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
 
 			foreach (IInteractable interactable in interactables) {
@@ -57,7 +57,7 @@ namespace TankGame.Units.Interactions {
 			return context;
 		}
 
-		public AbstractInteraction RequestInteraction<T> (string name, T target, Character character) where T : AbstractInteraction<T> {
+		public virtual AbstractInteraction RequestInteraction<T> (string name, T target, Character character) where T : AbstractInteraction<T> {
 			if (interactionsMap.TryGetValue(name, out AbstractInteractionFactory factory) && factory.TargetType.Equals(typeof(T))) {
 				AbstractInteraction interaction = factory.GetAsType<T>().Construct(target, character);
 
@@ -72,7 +72,7 @@ namespace TankGame.Units.Interactions {
 		public AbstractInteraction RequestInteraction (string name, Character character) {
 			if (interactionsMap.TryGetValue(name, out AbstractInteractionFactory factory)) {
 				AbstractInteraction interaction = factory.Construct(character);
-
+				
 				if (interaction != null) return interaction;
 			}
 

@@ -7,10 +7,11 @@ using TankGame.Tanks.Stations;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using TankGame.Tanks.Systems.Stations;
+using TankGame.Units.Navigation;
 
 namespace TankGame.Tanks {
 
-    public class Tank : MonoBehaviour, IInteractable {
+    public class Tank : MonoBehaviour, IInteractable, ITraversable {
 
         private Dictionary<Stations, Station> stations = new Dictionary<Stations, Station>();
 
@@ -104,6 +105,13 @@ namespace TankGame.Tanks {
             }
 
             return closestPort.TryUsePort(character, name);
+        }
+
+        public void FindPath (PathRequest request, Action<PathResult> callback) {
+            //Vector3[] outPut = new Vector3[1] { request.pathEnd };
+            //callback(new PathResult(outPut, true, request.callback));
+            
+
         }
 
         /*private InteractionContext<Embark> IEmbark (Embark interaction) {

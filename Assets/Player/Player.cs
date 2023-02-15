@@ -8,7 +8,7 @@ using TankGame.Units;
 using TankGame.Units.Commands;
 using TankGame.Players.Input;
 using TankGame.Events;
-using TankGame.GameWorld;
+using TankGame.Units.Navigation;
 
 namespace TankGame.Players {
 
@@ -42,7 +42,7 @@ namespace TankGame.Players {
 
 		private PlayerController playerController;
 
-		public WorldGrid world;
+		public World world;
 
 		public IControllable currentControl;
 

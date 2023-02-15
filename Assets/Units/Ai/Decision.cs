@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace TankGame.Units.Ai {
 	

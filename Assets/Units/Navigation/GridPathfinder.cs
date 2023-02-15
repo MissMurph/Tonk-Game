@@ -2,21 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TankGame.GameWorld;
+using TankGame.Util;
 
-namespace TankGame.Units.Pathfinding {
+namespace TankGame.Units.Navigation {
 
 	public class GridPathfinder : MonoBehaviour, ITraversable {
 
 		[SerializeField] 
-		private WorldGrid world;
+		private World world;
 
 		public void FindPath(PathRequest request, Action<PathResult> callback) {
 			Vector3[] waypoints = new Vector3[0];
 			bool pathSuccess = false;
 
-			Node originNode = world.GetNodeFromWorldPos(request.pathStart);
-			Node targetNode = world.GetNodeFromWorldPos(request.pathEnd);
+			Node originNode = world.GetNodeFromWorldPos(request.pathStart.position);
+			Node targetNode = world.GetNodeFromWorldPos(request.pathEnd.position);
 
 			if (originNode.Walkable && targetNode.Walkable) {
 				Heap<Node> openSet = new Heap<Node>(world.MaxGridSize);
@@ -98,6 +98,10 @@ namespace TankGame.Units.Pathfinding {
 
 			if (distX > distY) return 14 * distY + 10 * (distX - distY);
 			return 14 * distX + 10 * (distY - distX);
+		}
+
+		public GameObject GetObject () {
+			return gameObject;
 		}
 	}
 }

@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TankGame.Units.Pathfinding;
 using Sirenix.OdinInspector;
 
-namespace TankGame.GameWorld {
+namespace TankGame.Units.Navigation {
 
-    public class WorldGrid : SerializedMonoBehaviour {
+    public class World : SerializedMonoBehaviour {
 
         [SerializeField]
         public Vector2Int GridSize { get; private set; }
@@ -29,6 +28,16 @@ namespace TankGame.GameWorld {
         int penaltyMin = 0;
         int penaltyMax = 10;
 
+        private static World instance;
+
+        public static ITraversable GlobalTraversable {
+            get {
+                return instance.traversable;
+            }
+        }
+
+        private ITraversable traversable;
+
         public int MaxGridSize {
             get {
                 return GridSize.x * GridSize.y;
@@ -47,6 +56,8 @@ namespace TankGame.GameWorld {
                 walkableRegionsDic.Add(Mathf.RoundToInt(Mathf.Log(region.terrainMask.value, 2)), region.terrainPenalty);
             }
 
+            instance = this;
+            traversable = GetComponent<ITraversable>();
             CreateGrid();
         }
 

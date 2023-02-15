@@ -1266,6 +1266,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"baseGoals.{\"keep_healthy\"}.Nodes.[0].Evaluators.[0].character","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      value: '"path":"baseGoals.{\"keep_healthy\"}.Nodes.[0].Evaluators.[1].character","value":$eref:0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 1004413264}
     m_RemovedComponents:
     - {fileID: 4357324035483122276, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
@@ -1440,7 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 284375261}
   uiController: {fileID: 1039500156}
-  world: {fileID: 1968719342}
+  world: {fileID: 0}
   sceneCharacters:
   - {fileID: 1564242494}
   - {fileID: 1082128959}
@@ -2253,6 +2277,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 7544830311115477026, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: startingItems.Array.size
       value: 1
@@ -2858,6 +2886,7 @@ GameObject:
   - component: {fileID: 1446016332}
   - component: {fileID: 1446016331}
   - component: {fileID: 1446016333}
+  - component: {fileID: 1446016334}
   m_Layer: 7
   m_Name: Tank
   m_TagString: Entity
@@ -2973,6 +3002,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &1446016334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446016327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07d4345cd1fe59a4ab329b793c90629e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1477915950
 GameObject:
   m_ObjectHideFlags: 0
@@ -3372,6 +3413,7 @@ MonoBehaviour:
   path: []
   targetIndex: 0
   executingCommand: 0
+  Traversable: {fileID: 0}
   input: {fileID: 0}
   player: {fileID: 1039500152}
 --- !u!58 &1564242497
@@ -3583,7 +3625,7 @@ MonoBehaviour:
       Data: 12|TankGame.Units.Ai.HealthEval, Assembly-CSharp
     - Name: Operation
       Entry: 7
-      Data: 13|TankGame.Operations[], Assembly-CSharp
+      Data: 13|TankGame.Util.Operations[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 2
@@ -3613,7 +3655,7 @@ MonoBehaviour:
       Data: 14|TankGame.Units.Ai.HealthEval, Assembly-CSharp
     - Name: Operation
       Entry: 7
-      Data: 15|TankGame.Operations[], Assembly-CSharp
+      Data: 15|TankGame.Util.Operations[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
@@ -4192,9 +4234,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1968719343}
-  - component: {fileID: 1968719342}
   - component: {fileID: 1968719346}
   - component: {fileID: 1968719345}
+  - component: {fileID: 1968719348}
+  - component: {fileID: 1968719347}
   m_Layer: 0
   m_Name: World
   m_TagString: GameController
@@ -4202,55 +4245,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1968719342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1968719341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54bbebc2323b1b7498bc2bc878e09116, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: GridSize
-      Entry: 7
-      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
-    - Name: 
-      Entry: 3
-      Data: 200
-    - Name: 
-      Entry: 3
-      Data: 200
-    - Name: 
-      Entry: 8
-      Data: 
-  DisplayGizmos: 0
-  walkableRegions:
-  - terrainMask:
-      serializedVersion: 2
-      m_Bits: 2147483648
-    terrainPenalty: 0
-  - terrainMask:
-      serializedVersion: 2
-      m_Bits: 536870912
-    terrainPenalty: 20
-  - terrainMask:
-      serializedVersion: 2
-      m_Bits: 1073741824
-    terrainPenalty: 40
-  nodeSize: 0.25
-  obstaclePenalty: 20
 --- !u!4 &1968719343
 Transform:
   m_ObjectHideFlags: 0
@@ -4302,7 +4296,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6723e7b99b16ec54d863b7d07e10e43c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  world: {fileID: 1968719342}
+  world: {fileID: 1968719347}
+--- !u!114 &1968719347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968719341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97cc4c90adf7e249b7e0c3e64143970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: GridSize
+      Entry: 7
+      Data: UnityEngine.Vector2Int, UnityEngine.CoreModule
+    - Name: 
+      Entry: 3
+      Data: 200
+    - Name: 
+      Entry: 3
+      Data: 200
+    - Name: 
+      Entry: 8
+      Data: 
+  DisplayGizmos: 0
+  walkableRegions:
+  - terrainMask:
+      serializedVersion: 2
+      m_Bits: 536870912
+    terrainPenalty: 20
+  - terrainMask:
+      serializedVersion: 2
+      m_Bits: 2147483648
+    terrainPenalty: 0
+  nodeSize: 1
+  obstaclePenalty: 10
+--- !u!114 &1968719348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968719341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4018154c39e7ae24988d82446d5d75aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2035609400
 GameObject:
   m_ObjectHideFlags: 0

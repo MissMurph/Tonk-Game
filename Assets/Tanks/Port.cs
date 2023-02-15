@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using UnityEngine;
+using TankGame.Units.Navigation;
 
 namespace TankGame.Tanks {
 
@@ -10,8 +11,11 @@ namespace TankGame.Tanks {
 
 		private Tank parentTank;
 
+		private PathRequestManager parentManager;
+
 		private void Awake() {
 			parentTank = GetComponentInParent<Tank>();
+			parentManager = GetComponentInParent<PathRequestManager>();
 		}
 
 		public List<AbstractInteractionFactory> GetInteractions() {
@@ -31,11 +35,13 @@ namespace TankGame.Tanks {
 			if (!character.Embarked) {
 				character.transform.SetParent(parentTank.transform);
 				character.transform.localPosition = transform.localPosition;
+				character.Traversable = parentTank;
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 			else {
 				character.transform.SetParent(null);
 				character.transform.position = transform.localPosition;
+				character.Traversable = World.GlobalTraversable;
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 		}
