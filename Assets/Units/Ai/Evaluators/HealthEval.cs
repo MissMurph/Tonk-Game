@@ -10,9 +10,8 @@ namespace TankGame.Units.Ai {
 	public class HealthEval : Number {
 
 		[SerializeField] private int value;
-		[SerializeField] private Character character;
 
-		public override bool Act () {
+		public override bool Act (Character character) {
 			//Operations can be combined as an or statement. You can have up to two Operations and as long as one Operation's condition is fulfilled, this returns true
 
 			foreach (Operations op in Operation) {

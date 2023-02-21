@@ -5,7 +5,6 @@ using Unity.Jobs;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using TankGame.Units.Commands;
-using Unity.Collections;
 using System;
 using System.Threading;
 
@@ -13,9 +12,13 @@ namespace TankGame.Units.Ai {
 
 	public class StateMachine : SerializedMonoBehaviour {
 
-		[Sirenix.OdinInspector.ReadOnly]
+		[ReadOnly]
 		[SerializeField]
-		public Decision State { get; private set; } = null;
+		public Decision CurrentDecision { get; private set; } = null;
+
+		[ReadOnly]
+		[SerializeField]
+		public Goal CurrentGoal { get; private set; } = null;
 
 		private Queue<Decision> madeDecisions = new Queue<Decision>();
 
@@ -30,23 +33,34 @@ namespace TankGame.Units.Ai {
 
 		private Command currentCommand;
 
+		private Queue<Command> commandQueue = new Queue<Command>();
+
 		private Character character;
 
 		private List<Decision> openSet = new List<Decision>();
 
-		private static System.Random tempRando = new System.Random();
+		[ReadOnly]
+		[SerializeField]
+		private Dictionary<string, PreRequisite> preRequisites = new Dictionary<string, PreRequisite>();
 
 		protected virtual void Awake () {
 			character = GetComponent<Character>();
 
 			foreach (Goal goal in baseGoals.Values) {
-				goal.Initialize();
+				goal.Initialize(character);
 				openSet.AddRange(goal.GetStart());
 			}
 		}
 
 		protected virtual void Start () {
 			StartCoroutine(UpdateState());
+		}
+
+		private void Update () {
+			if (currentCommand is null && commandQueue.TryDequeue(out Command command)) {
+				openSet.AddRange(command.GetStart());
+				command.OnComplete += CommandCallback;
+			}
 		}
 
 		IEnumerator UpdateState () {
@@ -64,13 +78,19 @@ namespace TankGame.Units.Ai {
 				yield return new WaitForSeconds(stateUpdateTime);
 
 				if (madeDecisions.TryDequeue(out Decision newState)) {
-					if (State is null) State.State.Exit(character);
+					if (!(CurrentDecision is null)) CurrentDecision.Exit(character);
 
-					State = newState;
-					State.State.Enter(character);
+					openSet.Remove(CurrentDecision);
+					CurrentDecision.Next.ForEach((decision) => openSet.Remove(decision));
+
+					if (!openSet.Contains(newState)) openSet.Add(newState);
+					CurrentDecision = newState;
+					openSet.AddRange(CurrentDecision.Next);
+
+					CurrentDecision.Enter(character);
 				}
 
-				State.State.Act(character);
+				CurrentDecision.Act(character);
 
 				ThreadStart newThread = delegate {
 					MakeDecision(openSet, character.Stress, character.Morale, DecisionMade);
@@ -81,7 +101,7 @@ namespace TankGame.Units.Ai {
 		}
 
 		private void DecisionMade(Decision nextState) {
-			if (!ReferenceEquals(nextState, State)) lock (madeDecisions) {
+			if (!ReferenceEquals(nextState, CurrentDecision)) lock (madeDecisions) {
 				madeDecisions.Enqueue(nextState);
 			}
 		}
@@ -133,16 +153,32 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
-		public void SubmitCommand (Command command) {
-			if (currentCommand != null) currentCommand.OnComplete -= CommandCallback;
-			currentCommand = command;
-			currentCommand.Initialize();
-			openSet.AddRange(currentCommand.GetStart());
-			currentCommand.OnComplete += CommandCallback;
+		public void ExecuteCommand (Command command) {
+			commandQueue.Clear();
+
+			if (!(currentCommand is null)) {
+				if (ReferenceEquals(CurrentDecision.Parent, currentCommand)) {
+					CurrentDecision.Next.ForEach((decision) => { openSet.Remove(decision); });
+					openSet.Remove(CurrentDecision);
+				}
+
+				currentCommand.GetStart().ForEach((decision) => { openSet.Remove(decision); });
+
+				currentCommand.OnComplete -= CommandCallback;
+				currentCommand = null;
+			}
+
+			EnqueueCommand(command);
+		}
+
+		public void EnqueueCommand (Command command) {
+			command.Initialize(character);
+			commandQueue.Enqueue(command);
 		}
 
 		public void SubmitGoal (string name, Goal goal) {
 			newGoals.Add(name, goal);
+			goal.Initialize(character);
 			openSet.AddRange(goal.GetStart());
 		}
 
@@ -156,17 +192,34 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
+		public void SubmitPreRequisite (string key, IEvaluator condition, State solution) {
+			PreRequisite output = new PreRequisite {
+				condition = condition,
+				solution = solution
+			};
+
+			preRequisites.Add(key, output);
+		}
+
+		public void ExpirePreRequisite (string key) {
+			if (!preRequisites.ContainsKey(key)) return;
+
+			preRequisites.Remove(key);
+		}
+
 		private void CommandCallback () {
-			if (ReferenceEquals(State.Parent, currentCommand)) {
-				foreach (Decision node in State.Next) {
+			if (ReferenceEquals(CurrentDecision.Parent, currentCommand)) {
+				foreach (Decision node in CurrentDecision.Next) {
 					openSet.Remove(node);
 				}
+				openSet.Remove(CurrentDecision);
 			}
 
 			foreach (Decision node in currentCommand.GetStart()) {
 				openSet.Remove(node);
 			}
 
+			currentCommand.OnComplete -= CommandCallback;
 			currentCommand = null;
 		}
 	}

@@ -32,10 +32,11 @@ namespace TankGame.Tanks {
 		private InteractionContext<GenericInteraction> UsePort (GenericInteraction interaction) {
 			Character character = interaction.ActingCharacter;
 
-			if (!character.Embarked) {
+			if (!ReferenceEquals(character.Traversable, parentTank)) {
 				character.transform.SetParent(parentTank.transform);
 				character.transform.localPosition = transform.localPosition;
 				character.Traversable = parentTank;
+				character.StateMachine.SubmitPreRequisite("embarkment", );
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 			else {

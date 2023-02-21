@@ -53,10 +53,10 @@ namespace TankGame.Units.Commands {
 			Target = _target;
 		}
 
-		public override void Initialize () {
-			base.Initialize();
+		public override void Initialize (Character character) {
+			base.Initialize(character);
 
-			Nodes[endNode].State.OnComplete += End;
+			Nodes[endNode].OnComplete += End;
 
 			foreach (Decision node in Nodes) {
 				if (node.State is TargetedState<T>) {

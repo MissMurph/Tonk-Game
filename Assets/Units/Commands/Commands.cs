@@ -29,5 +29,9 @@ namespace TankGame.Units.Commands {
 		public static Command GetTree (string name) {
 			return instance.commands.GetValueOrDefault(name);
 		}
+
+		private void OnDestroy () {
+			instance = null;
+		}
 	}
 }

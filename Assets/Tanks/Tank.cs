@@ -72,7 +72,7 @@ namespace TankGame.Tanks {
         }
 
         private GenericInteraction TryEmbark (Character character, string name) {
-            if (!ReferenceEquals(character.EmbarkedVehicle, this)) return null;
+            if (!ReferenceEquals(character.Traversable, this)) return null;
 
             float lowestDist = 100f;
             Port closestPort = null;
@@ -90,7 +90,7 @@ namespace TankGame.Tanks {
 		}
 
         private GenericInteraction TryDisembark(Character character, string name) {
-            if (ReferenceEquals(character.EmbarkedVehicle, this)) return null;
+            if (ReferenceEquals(character.Traversable, this)) return null;
 
             float lowestDist = 100f;
             Port closestPort = null;
@@ -108,10 +108,12 @@ namespace TankGame.Tanks {
         }
 
         public void FindPath (PathRequest request, Action<PathResult> callback) {
-            //Vector3[] outPut = new Vector3[1] { request.pathEnd };
-            //callback(new PathResult(outPut, true, request.callback));
-            
+            Vector3[] outPut = new Vector3[1] { request.pathEnd.localPosition };
+            callback(new PathResult(outPut, true, request.callback));
 
+            if (ReferenceEquals(request.targetTraversable, this)) {
+
+            }
         }
 
         /*private InteractionContext<Embark> IEmbark (Embark interaction) {

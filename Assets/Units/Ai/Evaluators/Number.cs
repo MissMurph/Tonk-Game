@@ -16,7 +16,7 @@ namespace TankGame.Units.Ai {
 		public abstract double GetDouble ();
 		public abstract string GetString ();
 
-		public abstract bool Act ();
+		public abstract bool Act (Character character);
 
 		public abstract string Name ();
 

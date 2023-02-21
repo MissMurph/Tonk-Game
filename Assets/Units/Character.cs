@@ -42,32 +42,16 @@ namespace TankGame.Units {
 
 		private PathComplete pathCompleteCallback;
 
-		public Tank EmbarkedVehicle { get; protected set; }
-
-		private StateMachine stateMachine;
+		public StateMachine StateMachine { get; protected set; }
 
 		public ITraversable Traversable;
 
 		[SerializeField]
 		private Transform targetTracker;
 
-		public bool Embarked {
-			get {
-				return EmbarkedVehicle != null;
-			}
-		}
-
-		public Seat EmbarkedSeat { get; protected set; }
-
-		public bool Seated {
-			get {
-				return EmbarkedSeat != null;
-			}
-		}
-
 		private void Awake() {
 			IntManager = GetComponent<InteractionManager>();
-			stateMachine = GetComponent<StateMachine>();
+			StateMachine = GetComponent<StateMachine>();
 			//Health = 100;
 		}
 
@@ -84,10 +68,10 @@ namespace TankGame.Units {
 			}
 		}
 
-		//This will assume that the target exists only in the global Traversable and will not be usable for Transforms within a Traversable
+		//This will assume that the target exists only in the global Traversable and will not be usable for Transforms within a Traversable. Unit will disembark when receiving this
 		public void SubmitTarget(Vector2 _target, PathComplete callback) {
 			targetTracker.transform.position = _target;
-			RequestPath(targetTracker, Navigation.World.GlobalTraversable, callback);
+			RequestPath(targetTracker, World.GlobalTraversable, callback);
 		}
 
 		//Use this if need to potentially cross Traversables
@@ -103,7 +87,6 @@ namespace TankGame.Units {
 
 		public void Stop () {
 			if (movementCoroutine != null) StopCoroutine(movementCoroutine);
-			//movementCoroutine = StartCoroutine(FollowPath());
 			path = null;
 			target = null;
 		}
@@ -130,8 +113,6 @@ namespace TankGame.Units {
 			Vector3 currentWaypoint = path[0];
 
 			while (true) {
-				//if (CommManager.ActiveCommand != null && CommManager.ActiveCommand.Phase != Command.CommandPhase.Started) yield return null;
-
 				if (transform.position == currentWaypoint) {
 					targetIndex++;
 
@@ -144,36 +125,11 @@ namespace TankGame.Units {
 					currentWaypoint = path[targetIndex];
 				}
 
-				//Debug.Log(currentWaypoint);
-
 				transform.localPosition = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
 
 				yield return null;
 			}
 		}
-
-		/*public virtual void Embark(IControllable seat) {
-			TankStation station = seat.GetObject().GetComponent<TankStation>();
-
-			if (!station.Embark(this)) return;
-
-			StopCoroutine(movementCoroutine);
-
-			transform.SetParent(station.transform, true);
-
-			transform.localPosition = Vector3.zero;
-
-			//Debug.Log(transform.);
-
-			embarkedSeat = seat;
-		}
-
-		public virtual void Disembark() {
-			embarkedSeat.GetObject().GetComponent<TankStation>().Disembark();
-			embarkedSeat = null;
-			transform.position = transform.position + (Vector3.left * 2f);
-			transform.SetParent(null);
-		}*/
 
 		public void OnDrawGizmos() {
 			if (path != null) {
@@ -194,16 +150,11 @@ namespace TankGame.Units {
 		/*	INTERFACE FUNCTIONS	*/
 
 		public void EnqueueCommand(Command command) {
-			//CommManager.EnqueueCommand(command);
+			StateMachine.EnqueueCommand(command);
 		}
 
 		public void ExecuteCommand(Command command) {
-			if (command != null) stateMachine.SubmitCommand(command);
-			else Debug.Log("Null Command");
-		}
-
-		public void ExecuteCommand (string name) {
-
+			StateMachine.ExecuteCommand(command);
 		}
 
 		public GameObject GetObject() {

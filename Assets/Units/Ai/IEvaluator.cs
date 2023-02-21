@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Commands;
 using UnityEngine;
 
 namespace TankGame.Units.Ai {
 
 	public interface IEvaluator {
-		bool Act ();
+		bool Act (Character character);
 		string Name ();
 
-		//IEvaluator Copy();
+		//Override this function to inject Command data straight into an evaluator
+		void CommandInjector (Command command) { }
 	}
 }

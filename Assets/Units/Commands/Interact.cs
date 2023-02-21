@@ -9,8 +9,6 @@ namespace TankGame.Units.Commands {
 
 	public class Interact : TargetedCommand<AbstractInteraction> {
 
-		private InteractionManager localManager;
-
 		public Interact(AbstractInteraction target) : base(Commands.GetTree("interact"), target) {
 			
 		}

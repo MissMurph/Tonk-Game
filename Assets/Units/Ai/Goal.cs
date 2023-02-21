@@ -23,6 +23,8 @@ namespace TankGame.Units.Ai {
 		[OdinSerialize]
 		public Decision[] Nodes { get; protected set; }
 
+		public Character Actor { get; private set; }
+
 		/*public Goal (string _name, int _baseWeight, Decision[] _nodes, int[] _startNodes) {
 			Name = _name;
 			BaseWeight = _baseWeight;
@@ -46,7 +48,9 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
-		public virtual void Initialize () {
+		public virtual void Initialize (Character character) {
+			Actor = character;
+
 			foreach (Decision node in Nodes) {
 				node.Initialize(this);
 			}
