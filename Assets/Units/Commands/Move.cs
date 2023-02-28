@@ -32,8 +32,8 @@ namespace TankGame.Units.Commands {
 			foreach (Decision node in Nodes) {
 				node.Initialize(this, convertedPos);
 
-				if (node.State is TargetedState<Vector2>) {
-					TargetedState<Vector2> state = node.State as TargetedState<Vector2>;
+				if (node.CurrentState is TargetedState<Vector2>) {
+					TargetedState<Vector2> state = node.CurrentState as TargetedState<Vector2>;
 					state.SetTarget(Target);
 				}
 			}

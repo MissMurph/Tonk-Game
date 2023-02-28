@@ -22,8 +22,8 @@ namespace TankGame.Units.Commands {
 			foreach (Decision node in Nodes) {
 				node.Initialize(this, Target.Parent.GetObject().transform);
 
-				if (node.State is TargetedState<AbstractInteraction>) {
-					TargetedState<AbstractInteraction> state = node.State as TargetedState<AbstractInteraction>;
+				if (node.CurrentState is TargetedState<AbstractInteraction>) {
+					TargetedState<AbstractInteraction> state = node.CurrentState as TargetedState<AbstractInteraction>;
 					state.SetTarget(Target);
 				}
 			}

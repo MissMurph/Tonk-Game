@@ -59,8 +59,8 @@ namespace TankGame.Units.Commands {
 			Nodes[endNode].OnComplete += End;
 
 			foreach (Decision node in Nodes) {
-				if (node.State is TargetedState<T>) {
-					TargetedState<T> state = node.State as TargetedState<T>;
+				if (node.CurrentState is TargetedState<T>) {
+					TargetedState<T> state = node.CurrentState as TargetedState<T>;
 					state.SetTarget(Target);
 				}
 			}

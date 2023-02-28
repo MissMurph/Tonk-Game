@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587271, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,129 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &129723028
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1968719343}
+    m_Modifications:
+    - target: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Name
+      value: (P) Jessie
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.481
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    m_RemovedComponents:
+    - {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+--- !u!4 &129723029 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_PrefabInstance: {fileID: 129723028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &129723030 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 993713274712581808, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_PrefabInstance: {fileID: 129723028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &129723031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_PrefabInstance: {fileID: 129723028}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &129723032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129723031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67df804c04d85144b9e7a3c1c98a2f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Health
+      Entry: 3
+      Data: 100
+    - Name: Morale
+      Entry: 3
+      Data: 75
+    - Name: Stress
+      Entry: 3
+      Data: 0
+    - Name: Traversable
+      Entry: 6
+      Data: 
+  target: {fileID: 0}
+  targetOldPos: {x: 0, y: 0, z: 0}
+  speed: 5
+  path: []
+  targetIndex: 0
+  executingCommand: 0
+  targetTracker: {fileID: 129723030}
+  input: {fileID: 0}
+  player: {fileID: 1039500152}
 --- !u!1 &258804153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,7 +1347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1272,7 +1395,7 @@ PrefabInstance:
       objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
@@ -1282,7 +1405,7 @@ PrefabInstance:
         mscorlib]], mscorlib","$rlength":0,"$rcontent":[]},"evalWeights":{"$id":3,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
         mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
         mscorlib","comparer":{"$id":4,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]},"preRequisites":null}'
+        mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[1]
@@ -1313,10 +1436,6 @@ PrefabInstance:
       propertyPath: serializationData.PrefabModifications.Array.data[6]
       value: '"path":"CurrentDecision.nextNodes","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[System.Int32,
         mscorlib]], mscorlib","$rlength":0,"$rcontent":[]}'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
-      value: '"path":"CurrentDecision.preRequisites","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
@@ -1498,7 +1617,7 @@ MonoBehaviour:
   uiController: {fileID: 1039500156}
   world: {fileID: 0}
   sceneCharacters:
-  - {fileID: 1564242494}
+  - {fileID: 129723032}
   - {fileID: 1082128959}
   - {fileID: 1004413264}
   characters: []
@@ -1888,6 +2007,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 4|TankGame.Units.Ai.Decision, Assembly-CSharp
+    - Name: CurrentState
+      Entry: 6
+      Data: 
     - Name: Name
       Entry: 1
       Data: move
@@ -1947,9 +2069,6 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -2011,6 +2130,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 13|TankGame.Units.Ai.Decision, Assembly-CSharp
+    - Name: CurrentState
+      Entry: 6
+      Data: 
     - Name: Name
       Entry: 1
       Data: interacting
@@ -2079,9 +2201,6 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -2280,7 +2399,7 @@ PrefabInstance:
       objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2327,677 +2446,56 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.size
-      value: 116
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 3
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
-      value: '"path":"baseGoals.{\"idle\"}.Nodes.[0].baseState","value":{"$id":0,"$type":"TankGame.Units.Ai.IdleStanding,
-        Assembly-CSharp"}'
+      value: '"path":"CurrentDecision","value":{"$id":0,"$type":"TankGame.Units.Ai.Decision,
+        Assembly-CSharp","CurrentState":null,"Name":null,"BaseWeight":0,"Evaluators":{"$id":1,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
+        Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"baseState":null,"nextNodes":{"$id":2,"$type":"System.Collections.Generic.List`1[[System.Int32,
+        mscorlib]], mscorlib","$rlength":0,"$rcontent":[]},"evalWeights":{"$id":3,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
+        mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
+        mscorlib","comparer":{"$id":4,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[1]
-      value: '"path":"baseGoals.{\"keep_healthy\"}.Nodes.[0].baseState","value":{"$id":0,"$type":"TankGame.Units.Ai.IdleWandering,
-        Assembly-CSharp"}'
+      value: '"path":"CurrentDecision.baseState","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[2]
-      value: '"path":"baseGoals.{\"keep_healthy\"}.Nodes.[0].BaseWeight","value":{"$id":0,"$type":"System.Int32,
+      value: '"path":"CurrentDecision.BaseWeight","value":{"$id":0,"$type":"System.Int32,
         mscorlib",0}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[15].Data
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"CurrentDecision.CurrentState","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      value: '"path":"CurrentDecision.Evaluators","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
+        Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      value: '"path":"CurrentDecision.evalWeights","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
+        mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
+        mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
+        mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      value: '"path":"CurrentDecision.Name","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      value: '"path":"CurrentDecision.nextNodes","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[System.Int32,
+        mscorlib]], mscorlib","$rlength":0,"$rcontent":[]}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModificationsReferencedUnityObjects.Array.size
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[37].Data
-      value: 10|TankGame.Units.Ai.IdleWandering, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[38].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[38].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[39].Data
-      value: 11|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[39].Name
-      value: nextNodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[40].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[42].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[42].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[43].Data
-      value: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[43].Name
-      value: evalWeights
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[44].Data
-      value: 13|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[44].Name
-      value: comparer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[45].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[46].Data
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[47].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[47].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[48].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[48].Name
-      value: $k
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[49].Data
-      value: 14|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[49].Name
-      value: $v
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[50].Data
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[50].Name
-      value: value
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[53].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[53].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[54].Data
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[54].Name
-      value: $k
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[55].Data
-      value: 15|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[55].Name
-      value: $v
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[56].Data
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[56].Name
-      value: value
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[60].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[61].Name
-      value: preRequisites
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[64].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[64].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[65].Data
-      value: 16|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[65].Name
-      value: startNodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[66].Data
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[67].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[72].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[72].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[73].Data
-      value: idle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[73].Name
-      value: $k
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[74].Data
-      value: 17|TankGame.Units.Ai.Goal, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[74].Name
-      value: $v
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[75].Data
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[75].Name
-      value: BaseWeight
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[76].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[76].Name
-      value: ModWeight
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[77].Data
-      value: 18|TankGame.Units.Ai.Decision[], Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[77].Name
-      value: Nodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[78].Data
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[79].Data
-      value: 19|TankGame.Units.Ai.Decision, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[79].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[80].Data
-      value: idle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[80].Name
-      value: Name
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[81].Data
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[81].Name
-      value: BaseWeight
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[82].Data
-      value: 20|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
-        Assembly-CSharp]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[82].Name
-      value: Evaluators
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[83].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[85].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[86].Data
-      value: 21|TankGame.Units.Ai.IdleStanding, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[86].Name
-      value: baseState
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[87].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[88].Data
-      value: 22|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[88].Name
-      value: nextNodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[89].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[90].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[90].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[91].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[91].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[92].Data
-      value: 23|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[92].Name
-      value: evalWeights
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[93].Data
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[93].Name
-      value: comparer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[94].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[95].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[97].Name
-      value: preRequisites
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[99].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[99].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[100].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[101].Data
-      value: 24|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[101].Name
-      value: startNodes
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[102].Data
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[103].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[108].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[108].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[109].Data
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[109].Name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[110].Data
-      value: 25|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.PreRequisite,
-        Assembly-CSharp]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[110].Name
-      value: preRequisites
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[111].Data
-      value: 26|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[111].Name
-      value: comparer
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[113].Data
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[37].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[38].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[39].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[40].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[41].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[42].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[44].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[45].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[46].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[47].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[48].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[49].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[50].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[52].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[53].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[54].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[55].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[56].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[58].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[59].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[60].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[61].Entry
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[62].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[63].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[64].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[65].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[66].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[67].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[68].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[71].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[72].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[73].Entry
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[74].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[76].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[77].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[78].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[79].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[80].Entry
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[81].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[82].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[83].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[84].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[85].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[87].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[88].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[89].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[90].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[91].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[92].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[93].Entry
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[94].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[95].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[97].Entry
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[99].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[100].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[101].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[102].Entry
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[103].Entry
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[104].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[106].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[108].Entry
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[109].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[110].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[111].Entry
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[112].Entry
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.SerializationNodes.Array.data[113].Entry
-      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
@@ -3616,7 +3114,7 @@ Transform:
   - {fileID: 655992074}
   - {fileID: 1529610347}
   m_Father: {fileID: 1968719343}
-  m_RootOrder: 10
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1446016329
 MonoBehaviour:
@@ -3989,666 +3487,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4392f1709858a60438b7f1c43255c9df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1564242491
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1564242493}
-  - component: {fileID: 1564242494}
-  - component: {fileID: 1564242498}
-  - component: {fileID: 1564242492}
-  - component: {fileID: 1564242497}
-  - component: {fileID: 1564242499}
-  - component: {fileID: 1564242500}
-  - component: {fileID: 1564242501}
-  m_Layer: 6
-  m_Name: (P)Jessie
-  m_TagString: Entity
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &1564242492
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 519124561
-  m_SortingLayer: -1
-  m_SortingOrder: 5
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0.21048418, g: 0.8001269, b: 0.8113208, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!4 &1564242493
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.385, y: -0.318, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1968719343}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1564242494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67df804c04d85144b9e7a3c1c98a2f2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: Health
-      Entry: 3
-      Data: 100
-    - Name: Morale
-      Entry: 3
-      Data: 75
-    - Name: Stress
-      Entry: 3
-      Data: 0
-    - Name: Traversable
-      Entry: 6
-      Data: 
-  target: {fileID: 0}
-  targetOldPos: {x: 0, y: 0, z: 0}
-  speed: 5
-  path: []
-  targetIndex: 0
-  executingCommand: 0
-  targetTracker: {fileID: 0}
-  input: {fileID: 0}
-  player: {fileID: 1039500152}
---- !u!58 &1564242497
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.3
---- !u!114 &1564242498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06d755e1ae5e56842927ba5d2fcbab84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stackEntries: []
-  slotCount: 4
-  startingItems:
-  - test
---- !u!50 &1564242499
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &1564242500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1564242501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564242491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab55e87c8aab824587bb4b92fcbd0f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: CurrentDecision
-      Entry: 7
-      Data: 0|TankGame.Units.Ai.Decision, Assembly-CSharp
-    - Name: Name
-      Entry: 6
-      Data: 
-    - Name: BaseWeight
-      Entry: 3
-      Data: 0
-    - Name: Evaluators
-      Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseState
-      Entry: 6
-      Data: 
-    - Name: nextNodes
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: evalWeights
-      Entry: 7
-      Data: 3|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 4|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: CurrentGoal
-      Entry: 7
-      Data: 5|TankGame.Units.Ai.Goal, Assembly-CSharp
-    - Name: BaseWeight
-      Entry: 3
-      Data: 100
-    - Name: ModWeight
-      Entry: 3
-      Data: 0
-    - Name: Nodes
-      Entry: 6
-      Data: 
-    - Name: startNodes
-      Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseGoals
-      Entry: 7
-      Data: 7|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.Goal,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 8|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: keep_healthy
-    - Name: $v
-      Entry: 7
-      Data: 9|TankGame.Units.Ai.Goal, Assembly-CSharp
-    - Name: BaseWeight
-      Entry: 3
-      Data: 100
-    - Name: ModWeight
-      Entry: 3
-      Data: 0
-    - Name: Nodes
-      Entry: 7
-      Data: 10|TankGame.Units.Ai.Decision[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 11|TankGame.Units.Ai.Decision, Assembly-CSharp
-    - Name: Name
-      Entry: 1
-      Data: is_health_low
-    - Name: BaseWeight
-      Entry: 3
-      Data: 100
-    - Name: Evaluators
-      Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 13|TankGame.Units.Ai.HealthEval, Assembly-CSharp
-    - Name: Operation
-      Entry: 7
-      Data: 14|TankGame.Util.Operations[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: value
-      Entry: 3
-      Data: 50
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 15|TankGame.Units.Ai.HealthEval, Assembly-CSharp
-    - Name: Operation
-      Entry: 7
-      Data: 16|TankGame.Util.Operations[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 2
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: value
-      Entry: 3
-      Data: 50
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseState
-      Entry: 7
-      Data: 17|TankGame.Units.Ai.IdleWandering, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: nextNodes
-      Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: evalWeights
-      Entry: 7
-      Data: 19|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 20|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 0
-    - Name: $v
-      Entry: 7
-      Data: 21|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
-    - Name: value
-      Entry: 3
-      Data: 100
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
-      Entry: 7
-      Data: 22|TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp
-    - Name: value
-      Entry: 3
-      Data: -100
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: startNodes
-      Entry: 7
-      Data: 23|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: idle
-    - Name: $v
-      Entry: 7
-      Data: 24|TankGame.Units.Ai.Goal, Assembly-CSharp
-    - Name: BaseWeight
-      Entry: 3
-      Data: 100
-    - Name: ModWeight
-      Entry: 3
-      Data: 0
-    - Name: Nodes
-      Entry: 7
-      Data: 25|TankGame.Units.Ai.Decision[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 26|TankGame.Units.Ai.Decision, Assembly-CSharp
-    - Name: Name
-      Entry: 1
-      Data: idle
-    - Name: BaseWeight
-      Entry: 3
-      Data: 100
-    - Name: Evaluators
-      Entry: 7
-      Data: 27|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseState
-      Entry: 7
-      Data: 28|TankGame.Units.Ai.IdleStanding, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: nextNodes
-      Entry: 7
-      Data: 29|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: evalWeights
-      Entry: 7
-      Data: 30|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 20
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: startNodes
-      Entry: 7
-      Data: 31|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 7
-      Data: 32|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.PreRequisite,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 33|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-  stateUpdateTime: 0.25
 --- !u!1 &1852387732
 GameObject:
   m_ObjectHideFlags: 0
@@ -5017,10 +3855,10 @@ Transform:
   - {fileID: 327074740}
   - {fileID: 1261350792}
   - {fileID: 1335743893}
-  - {fileID: 1564242493}
+  - {fileID: 1446016328}
+  - {fileID: 129723029}
   - {fileID: 1082128965}
   - {fileID: 1145299767}
-  - {fileID: 1446016328}
   - {fileID: 2139553735}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -5459,6 +4297,9 @@ MonoBehaviour:
     - Name: 
       Entry: 7
       Data: 4|TankGame.Units.Ai.Decision, Assembly-CSharp
+    - Name: CurrentState
+      Entry: 6
+      Data: 
     - Name: Name
       Entry: 1
       Data: is_embarked
@@ -5513,15 +4354,15 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: preRequisites
-      Entry: 6
-      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
       Data: 9|TankGame.Units.Ai.Decision, Assembly-CSharp
+    - Name: CurrentState
+      Entry: 6
+      Data: 
     - Name: Name
       Entry: 6
       Data: 
@@ -5571,9 +4412,6 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 8
-      Data: 
-    - Name: preRequisites
-      Entry: 6
       Data: 
     - Name: 
       Entry: 8

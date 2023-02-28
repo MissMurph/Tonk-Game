@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.Jobs;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using TankGame.Units.Commands;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
+using TankGame.Units.Commands;
+using UnityEngine;
 
 namespace TankGame.Units.Ai {
 
@@ -15,10 +14,6 @@ namespace TankGame.Units.Ai {
 		[ReadOnly]
 		[SerializeField]
 		public Decision CurrentDecision { get; private set; } = null;
-
-		[ReadOnly]
-		[SerializeField]
-		public Goal CurrentGoal { get; private set; } = null;
 
 		private Queue<Decision> madeDecisions = new Queue<Decision>();
 
@@ -50,6 +45,8 @@ namespace TankGame.Units.Ai {
 				goal.Initialize(character);
 				openSet.AddRange(goal.GetStart());
 			}
+
+			CurrentDecision = openSet[0];
 		}
 
 		protected virtual void Start () {
@@ -78,10 +75,13 @@ namespace TankGame.Units.Ai {
 				yield return new WaitForSeconds(stateUpdateTime);
 
 				if (madeDecisions.TryDequeue(out Decision newState)) {
-					if (!(CurrentDecision is null)) CurrentDecision.Exit(character);
+					if (!(CurrentDecision is null)) {
+						CurrentDecision.Exit(character);
+						if (!CurrentDecision.IsStart) openSet.Remove(CurrentDecision);
+						CurrentDecision.Next.ForEach((decision) => openSet.Remove(decision));
 
-					openSet.Remove(CurrentDecision);
-					CurrentDecision.Next.ForEach((decision) => openSet.Remove(decision));
+						//CurrentDecision.Parent.GetStart().ForEach((decision) => { if (!openSet.Contains(decision)) openSet.Add(decision); });
+					}
 
 					if (!openSet.Contains(newState)) openSet.Add(newState);
 					CurrentDecision = newState;
@@ -111,7 +111,7 @@ namespace TankGame.Units.Ai {
 			decisions.Sort();
 
 			int middle = decisions.Count % 2 <= 0 ? decisions.Count / 2 : (decisions.Count + 1) / 2;
-			int median = decisions[middle].Weight;
+			int median = decisions[middle - 1].Weight;
 
 			int[] modWeights = new int[decisions.Count];
 
@@ -120,11 +120,13 @@ namespace TankGame.Units.Ai {
 				if (decisions[i].Weight <= median) {
 					//negative amplification
 					int newWeight = Mathf.RoundToInt(decisions[i].Weight - ((1 - (decisions[i].Weight / (float)median)) * (stress / 100f)));
+					if (newWeight < 0) newWeight = 0;
 					modWeights[i] = newWeight;
 				}
 				else {
 					//Positive amplification
 					int newWeight = Mathf.RoundToInt(decisions[i].Weight + ((1 - ((float)median / decisions[i].Weight)) * (morale / 100f)));
+					if (newWeight < 0) newWeight = 0;
 					modWeights[i] = newWeight;
 				}
 			}

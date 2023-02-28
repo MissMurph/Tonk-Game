@@ -10,16 +10,9 @@ namespace TankGame.Units.Ai {
 	[Serializable]
 	public class Decision : IComparable {
 
-		[SerializeField] public string Name { get; private set; }
-
-		[ReadOnly][SerializeField] public State State { get { return currentState; } }
-
-		private State currentState;
-
-		[SerializeField] private State baseState;
-
-		//Base Weight is not modified at all during run-time, any modifications are applied to ModWeight so the same Modification can be reversed. Query Weight for the combined Base + Mod Weight
-		[SerializeField] public int BaseWeight { get; private set; }
+		[ReadOnly]
+		[SerializeField]
+		public State CurrentState { get; private set; }
 
 		public bool IsStart {
 			get {
@@ -45,7 +38,8 @@ namespace TankGame.Units.Ai {
 			}
 		}
 
-		[SerializeField] public int Weight { 
+		[SerializeField]
+		public int Weight { 
 			get { 
 				return Mathf.Max(0, BaseWeight + ModWeight + Parent.Weight);
 			} 
@@ -57,28 +51,43 @@ namespace TankGame.Units.Ai {
 
 		public Transform Target { get; private set; }
 
-		//All nodes have a position in Goal's array. Enter the array index of the next nodes to link
-		[SerializeField] private List<int> nextNodes = new List<int>();
+		public List<Decision> Next { get; private set; }
 
-		public List<Decision> Next { get; private set; } = new List<Decision>();
 
-		[SerializeField] public List<IEvaluator> Evaluators { get; private set; } = new List<IEvaluator>();
-		[SerializeField] private Dictionary<int, WeightBehaviour> evalWeights = new Dictionary<int, WeightBehaviour>();
+		/*	Inspector Fields	*/
+		/*	These Fields are initialized typically in Inspector, need to verify existence before using	*/
 
-		[SerializeField] private PreRequisite[] preRequisites;
+		[SerializeField]
+		public string Name { get; private set; }
 
-		private List<PreRequisite> addedPreRequisites = new List<PreRequisite>();
+		[SerializeField]
+		public int BaseWeight { get; private set; }
 
-		private Queue<PreRequisite> preRequisuiteFulfillmentQueue = new Queue<PreRequisite>();
+		[SerializeField]
+		private State baseState;
 
-		public Decision () {
-			currentState = baseState;
-		}
+		[SerializeField]
+		private List<int> nextNodes = new List<int>();
+
+		[SerializeField] 
+		public List<IEvaluator> Evaluators { get; private set; } = new List<IEvaluator>();
+
+		[SerializeField] 
+		private Dictionary<int, WeightBehaviour> evalWeights = new Dictionary<int, WeightBehaviour>();
+
+
+		/*	Pre-Requisites	*/
+		/*	Pre-Requisites are stored in the below list, when one needs to be fulfilled it will be added to the Queue, so that each Pre-Req. can be fulfilled	*/
+		private List<PreRequisite> preRequisites;
+
+		private Queue<PreRequisite> preRequisuiteFulfillmentQueue;
+
+		//Odin Constructor
+		public Decision () {}
 
 		//copy constructor
 		public Decision (Decision decision) {
-			baseState = decision.State;
-			currentState = baseState;
+			baseState = decision.CurrentState;
 			BaseWeight = decision.BaseWeight;
 			nextNodes.AddRange(decision.nextNodes);
 			Evaluators.AddRange(decision.Evaluators);
@@ -89,47 +98,49 @@ namespace TankGame.Units.Ai {
 		public void Enter (Character character) {
 			baseState.OnComplete += () => { if (OnComplete != null) OnComplete.Invoke(); };
 
-			foreach (PreRequisite preReq in addedPreRequisites) {
-				if (preReq.condition.Act(Parent.Actor)) preRequisuiteFulfillmentQueue.Enqueue(preReq);
-			}
-
 			foreach (PreRequisite preReq in preRequisites) {
 				if (preReq.condition.Act(Parent.Actor)) preRequisuiteFulfillmentQueue.Enqueue(preReq);
 			}
 
 			if (preRequisuiteFulfillmentQueue.TryDequeue(out PreRequisite requirement)) {
-				currentState = requirement.solution;
-				currentState.OnComplete += () => { Enter(character); };
+				CurrentState = requirement.solution;
+				CurrentState.OnComplete += () => { Enter(character); };
 			}
 			else {
-				currentState = baseState;
+				CurrentState = baseState;
 			}
 
-			State.Enter(character);
+			CurrentState.Enter(character);
 		}
 
 		public void Enter (Character character, params PreRequisite[] preRequisites) {
-			addedPreRequisites.AddRange(preRequisites);
+			this.preRequisites.AddRange(preRequisites);
 
 			Enter(character);
 		}
 
 		public void Exit (Character character) {
-			addedPreRequisites.Clear();
+			preRequisites.Clear();
 
-			State.Exit(character);
+			CurrentState.Exit(character);
 		}
 
 		public void Act (Character character) {
-			State.Act(character);
+			CurrentState.Act(character);
 		}
 
 		public void Initialize (Goal parentGoal) {
 			Parent = parentGoal;
+			CurrentState = baseState;
+
+			Next = new List<Decision>();
 
 			foreach (int index in nextNodes) {
 				Next.Add(Parent.Nodes[index]);
 			}
+
+			preRequisites = new List<PreRequisite>();
+			preRequisuiteFulfillmentQueue = new Queue<PreRequisite>();
 		}
 
 		public void Initialize (Goal parentGoal, Transform target) {
