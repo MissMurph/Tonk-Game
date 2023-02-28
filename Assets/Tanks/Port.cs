@@ -4,6 +4,7 @@ using TankGame.Units;
 using TankGame.Units.Interactions;
 using UnityEngine;
 using TankGame.Units.Navigation;
+using TankGame.Units.Ai;
 
 namespace TankGame.Tanks {
 
@@ -36,13 +37,14 @@ namespace TankGame.Tanks {
 				character.transform.SetParent(parentTank.transform);
 				character.transform.localPosition = transform.localPosition;
 				character.Traversable = parentTank;
-				character.StateMachine.SubmitPreRequisite("embarkment", );
+				character.StateMachine.SubmitPreRequisite("embarkment", new Embarkment(parentTank), new Interacting(TryUsePort(character, "Disembark")));
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 			else {
 				character.transform.SetParent(null);
 				character.transform.position = transform.localPosition;
 				character.Traversable = World.GlobalTraversable;
+				character.StateMachine.ExpirePreRequisite("embarkment");
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 		}

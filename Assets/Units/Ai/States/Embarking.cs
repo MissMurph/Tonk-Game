@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TankGame.Units.Ai {
 
-    public delegate AbstractInteraction Yeet<T> (string name, T target, Character character);
+    //public delegate AbstractInteraction Yeet<T> (string name, T target, Character character);
 
     public class Embarking : Interacting {
 

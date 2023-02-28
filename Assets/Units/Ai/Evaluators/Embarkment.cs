@@ -16,15 +16,15 @@ namespace TankGame.Units.Ai {
 		}
 
 		public bool Act (Character character) {
-			return ReferenceEquals(character.Traversable, parent);
+			return target.parent.TryGetComponent(out ITraversable traversable) && !ReferenceEquals(parent, traversable);
 		}
 
 		public string Name () {
 			return "character_embarkment";
 		}
 
-		public void CommandInjector (Command command) {
-			
+		public void DecisionInjector (Decision decision) {
+			target = decision.Target;
 		}
 	}
 }

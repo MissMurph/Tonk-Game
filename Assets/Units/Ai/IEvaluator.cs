@@ -11,6 +11,6 @@ namespace TankGame.Units.Ai {
 		string Name ();
 
 		//Override this function to inject Command data straight into an evaluator
-		void CommandInjector (Command command) { }
+		void DecisionInjector (Decision decision) { }
 	}
 }

@@ -7,6 +7,12 @@ namespace TankGame.Units.Ai {
 
 	public class Interacting : TargetedState<AbstractInteraction> {
 
+		public Interacting () { }
+
+		public Interacting (AbstractInteraction interaction) {
+			Target = interaction;
+		}
+
 		public override void Enter (Character actor) {
 			base.Enter(actor);
 

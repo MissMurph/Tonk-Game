@@ -47,7 +47,7 @@ namespace TankGame.Units {
 		public ITraversable Traversable;
 
 		[SerializeField]
-		private Transform targetTracker;
+		public Transform targetTracker;
 
 		private void Awake() {
 			IntManager = GetComponent<InteractionManager>();

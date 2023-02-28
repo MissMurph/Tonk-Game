@@ -37,7 +37,7 @@ namespace TankGame.Units.Commands {
 
 		public T Target { get; protected set; }
 
-		[SerializeField] private int endNode;
+		[SerializeField] protected int endNode;
 
 		public TargetedCommand () {
 			
@@ -60,7 +60,7 @@ namespace TankGame.Units.Commands {
 
 			foreach (Decision node in Nodes) {
 				if (node.State is TargetedState<T>) {
-					TargetedState<T> state = (TargetedState<T>)node.State;
+					TargetedState<T> state = node.State as TargetedState<T>;
 					state.SetTarget(Target);
 				}
 			}

@@ -116,38 +116,6 @@ namespace TankGame.Tanks {
             }
         }
 
-        /*private InteractionContext<Embark> IEmbark (Embark interaction) {
-            if (!interaction.Seat.Occupied) {
-                interaction.ActingCharacter.Embark(interaction.Seat.GetController());
-                return new InteractionContext<Embark>(interaction, IPhase.Post, IResult.Success);
-            }
-
-            Debug.LogWarning(name + " could not embark seat " + interaction.Seat.name);
-            return new InteractionContext<Embark>(interaction, IPhase.Post, IResult.Fail);
-        }
-
-        private AbstractInteraction TryEmbark (Station seat, Character character, string name) {
-            if (stations.TryGetValue(seat, out Station station) && !station.Occupied) {
-                return new Embark(station, character, name, this, IEmbark);
-            }
-
-            Debug.LogWarning("No free station available! Null value provided");
-            return null;
-        }
-
-        private Station EvaluateSeat (Character character) {
-            if (character.GetType().Equals(typeof(PlayerCharacter))) return Station.Commander;
-
-            foreach (KeyValuePair<Station, Station> entry in stations) {
-                if (!entry.Key.Equals(Station.Commander) && !entry.Value.Occupied) {
-                    return entry.Key;
-                }
-            }
-
-            Debug.LogWarning("No free station available! Null value provided");
-            return Station.Driver;
-        }*/
-
         protected class Embark : AbstractInteraction<Embark> {
 
             internal Station Seat { get; private set; }
@@ -156,24 +124,6 @@ namespace TankGame.Tanks {
                 Seat = seat;
             }
         }
-
-        /*public void Interact(Character character) {
-            Debug.Log("Interact");
-            if (character.GetType().Equals(typeof(PlayerCharacter)) && stations.TryGetValue("CommandStation", out Station station)) {
-                character.Embark(station.GetController());
-                return;
-            }
-
-            Debug.Log("Interact Not Player");
-            foreach (Station seat in stations.Values) {
-                if (seat.Occupied || seat.name == "CommandStation") continue;
-
-                Debug.Log("Seat " + seat.name + " is not occupied");
-                character.Embark(seat.GetController());
-                embarkedCharacters.Add(character);
-                break;
-            }
-        }*/
 
         public enum Stations {
             Driver,

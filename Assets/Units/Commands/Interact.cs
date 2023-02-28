@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Ai;
 using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,48 +14,19 @@ namespace TankGame.Units.Commands {
 			
 		}
 
-		/*public override void Start(Character character) {
-			base.Start(character);
+		public override void Initialize (Character character) {
+			//base.Initialize(character);
 
-			TargetTransform = Target.Parent.GetObject().transform;
+			Nodes[endNode].OnComplete += End;
 
-			localManager = character.GetComponent<InteractionManager>();
+			foreach (Decision node in Nodes) {
+				node.Initialize(this, Target.Parent.GetObject().transform);
 
-			if (character.CommManager.IsInRange(TargetTransform)) {
-				Perform();
-				return;
+				if (node.State is TargetedState<AbstractInteraction>) {
+					TargetedState<AbstractInteraction> state = node.State as TargetedState<AbstractInteraction>;
+					state.SetTarget(Target);
+				}
 			}
-
-			character.SubmitTarget(TargetTransform, OnPathComplete);
 		}
-
-		public override void Perform() {
-			if (!Character.CommManager.IsInRange(TargetTransform) || Phase.Equals(CommandPhase.Performed)) {
-				return;
-			}
-
-			base.Perform();
-
-			InteractionContext result = localManager.Interact(Target);
-
-			if (result.Result.Equals(IResult.Success)) { Complete(); return; }
-			if (result.Result.Equals(IResult.Fail) || result.Result.Equals(IResult.Cancel)) { Cancel(); return; }
-		}
-
-		public override void OnTriggerEnter(Collider2D collision) {
-			base.OnTriggerEnter(collision);
-
-			Perform();
-		}
-
-		public override void Cancel() {
-			base.Cancel();
-
-			Character.Stop();
-		}
-
-		private void OnPathComplete(bool success) {
-			if (!success) Cancel();
-		}*/
 	}
 }

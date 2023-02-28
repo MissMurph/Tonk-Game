@@ -55,6 +55,8 @@ namespace TankGame.Units.Ai {
 
 		public event OnEnd OnComplete;
 
+		public Transform Target { get; private set; }
+
 		//All nodes have a position in Goal's array. Enter the array index of the next nodes to link
 		[SerializeField] private List<int> nextNodes = new List<int>();
 
@@ -128,6 +130,12 @@ namespace TankGame.Units.Ai {
 			foreach (int index in nextNodes) {
 				Next.Add(Parent.Nodes[index]);
 			}
+		}
+
+		public void Initialize (Goal parentGoal, Transform target) {
+			Target = target;
+
+			Initialize(parentGoal);
 		}
 
 		public int CompareTo (object obj) {
