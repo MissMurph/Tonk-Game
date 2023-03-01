@@ -38,9 +38,5 @@ namespace TankGame.Units.Commands {
 				}
 			}
 		}
-
-		protected override void End () {
-			character.targetTracker.SetParent(character.transform);
-		}
 	}
 }

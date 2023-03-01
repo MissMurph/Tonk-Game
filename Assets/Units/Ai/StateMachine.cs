@@ -57,6 +57,7 @@ namespace TankGame.Units.Ai {
 			if (currentCommand is null && commandQueue.TryDequeue(out Command command)) {
 				openSet.AddRange(command.GetStart());
 				command.OnComplete += CommandCallback;
+				currentCommand = command;
 			}
 		}
 
@@ -87,7 +88,13 @@ namespace TankGame.Units.Ai {
 					CurrentDecision = newState;
 					openSet.AddRange(CurrentDecision.Next);
 
-					CurrentDecision.Enter(character);
+					List<PreRequisite> preReqs = new List<PreRequisite>();
+
+					foreach (PreRequisite preReq in preRequisites.Values) {
+						preReqs.Add(preReq);
+					}
+
+					CurrentDecision.Enter(character, preReqs.ToArray());
 				}
 
 				CurrentDecision.Act(character);

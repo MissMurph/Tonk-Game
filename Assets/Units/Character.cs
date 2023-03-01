@@ -70,17 +70,17 @@ namespace TankGame.Units {
 
 		//This will assume that the target exists only in the global Traversable and will not be usable for Transforms within a Traversable. Unit will disembark when receiving this
 		public void SubmitTarget(Vector2 _target, PathComplete callback) {
+			targetTracker.transform.SetParent(World.GlobalTraversable.GetObject().transform);
 			targetTracker.transform.position = _target;
-			RequestPath(targetTracker, World.GlobalTraversable, callback);
+
+			PathRequestManager.RequestPath(transform, targetTracker, World.GlobalTraversable, OnPathFound);
+			pathCompleteCallback = callback;
+			target = targetTracker;
 		}
 
 		//Use this if need to potentially cross Traversables
 		public void SubmitTarget(Transform _target, PathComplete callback) {
-			RequestPath(_target, Traversable, callback);
-		}
-
-		private void RequestPath (Transform _target, ITraversable _traversable, PathComplete callback) {
-			PathRequestManager.RequestPath(transform, _target, _traversable, OnPathFound);
+			PathRequestManager.RequestPath(transform, _target, OnPathFound);
 			pathCompleteCallback = callback;
 			target = _target;
 		}

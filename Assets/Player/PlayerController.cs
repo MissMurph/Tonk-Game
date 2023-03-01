@@ -65,7 +65,7 @@ namespace TankGame.Players.Input {
 				success = true;
 			}
 
-			EventBus.Post<PlayerEvent.Selection>(new PlayerEvent.Selection(selectable, success));
+			EventBus.Post(new PlayerEvent.Selection(selectable, success));
 			return success;
 		}
 

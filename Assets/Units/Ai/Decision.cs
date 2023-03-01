@@ -87,7 +87,7 @@ namespace TankGame.Units.Ai {
 
 		//copy constructor
 		public Decision (Decision decision) {
-			baseState = decision.CurrentState;
+			baseState = decision.baseState;
 			BaseWeight = decision.BaseWeight;
 			nextNodes.AddRange(decision.nextNodes);
 			Evaluators.AddRange(decision.Evaluators);
@@ -98,7 +98,12 @@ namespace TankGame.Units.Ai {
 		public void Enter (Character character) {
 			baseState.OnComplete += () => { if (OnComplete != null) OnComplete.Invoke(); };
 
-			foreach (PreRequisite preReq in preRequisites) {
+			List<PreRequisite> countedPreReqs = new List<PreRequisite>();
+
+			countedPreReqs.AddRange(preRequisites);
+			countedPreReqs.AddRange(Parent.PreRequisites);
+
+			foreach (PreRequisite preReq in countedPreReqs) {
 				if (preReq.condition.Act(Parent.Actor)) preRequisuiteFulfillmentQueue.Enqueue(preReq);
 			}
 

@@ -25,6 +25,8 @@ namespace TankGame.Units.Ai {
 
 		public Character Actor { get; private set; }
 
+		public List<PreRequisite> PreRequisites { get; protected set; } = new List<PreRequisite>();
+
 		/*public Goal (string _name, int _baseWeight, Decision[] _nodes, int[] _startNodes) {
 			Name = _name;
 			BaseWeight = _baseWeight;

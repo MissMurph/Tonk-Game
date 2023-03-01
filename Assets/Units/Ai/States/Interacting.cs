@@ -7,14 +7,27 @@ namespace TankGame.Units.Ai {
 
 	public class Interacting : TargetedState<AbstractInteraction> {
 
+		public delegate AbstractInteraction Supplier(Character character, string name);
+
+		Supplier supplier;
+		string name;
+
 		public Interacting () { }
 
 		public Interacting (AbstractInteraction interaction) {
 			Target = interaction;
 		}
 
+		public Interacting(Supplier _supplier, string _name) {
+			//Target = interaction;
+			supplier = _supplier;
+			name = _name;
+		}
+
 		public override void Enter (Character actor) {
 			base.Enter(actor);
+
+			Target = supplier.Invoke(actor, name);
 
 			actor.SubmitTarget(Target.Parent.GetObject().transform, (success) => { });
 		}

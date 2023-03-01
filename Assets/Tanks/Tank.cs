@@ -71,7 +71,7 @@ namespace TankGame.Tanks {
             };
         }
 
-        private GenericInteraction TryEmbark (Character character, string name) {
+        public GenericInteraction TryEmbark (Character character, string name) {
             if (!ReferenceEquals(character.Traversable, this)) return null;
 
             float lowestDist = 100f;
@@ -111,7 +111,7 @@ namespace TankGame.Tanks {
             Vector3[] outPut = new Vector3[1] { request.pathEnd.localPosition };
             callback(new PathResult(outPut, true, request.callback));
 
-            if (ReferenceEquals(request.targetTraversable, this)) {
+            if (!ReferenceEquals(request.originTraversable, request.targetTraversable) && ReferenceEquals(this, request.targetTraversable)) {
 
             }
         }

@@ -25,6 +25,8 @@ namespace TankGame.Units.Commands {
 				if (node.CurrentState is TargetedState<AbstractInteraction>) {
 					TargetedState<AbstractInteraction> state = node.CurrentState as TargetedState<AbstractInteraction>;
 					state.SetTarget(Target);
+
+					PreRequisites.AddRange(state.Target.Parent.GetPreRequisites());
 				}
 			}
 		}

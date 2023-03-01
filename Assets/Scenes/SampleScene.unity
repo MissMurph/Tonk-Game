@@ -138,6 +138,18 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6509434
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.g
+      value: 0.63806236
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -1395,12 +1407,12 @@ PrefabInstance:
       objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
       value: '"path":"CurrentDecision","value":{"$id":0,"$type":"TankGame.Units.Ai.Decision,
-        Assembly-CSharp","Name":null,"BaseWeight":0,"Evaluators":{"$id":1,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
+        Assembly-CSharp","CurrentState":null,"Name":null,"BaseWeight":0,"Evaluators":{"$id":1,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
         Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"baseState":null,"nextNodes":{"$id":2,"$type":"System.Collections.Generic.List`1[[System.Int32,
         mscorlib]], mscorlib","$rlength":0,"$rcontent":[]},"evalWeights":{"$id":3,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
         mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
@@ -1418,22 +1430,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[3]
+      value: '"path":"CurrentDecision.CurrentState","value":null'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
       value: '"path":"CurrentDecision.Evaluators","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
         Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
       value: '"path":"CurrentDecision.evalWeights","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
         mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
         mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
       value: '"path":"CurrentDecision.Name","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
       value: '"path":"CurrentDecision.nextNodes","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[System.Int32,
         mscorlib]], mscorlib","$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
@@ -1994,7 +2010,7 @@ MonoBehaviour:
       Data: 2|TankGame.Units.Commands.Move, Assembly-CSharp
     - Name: BaseWeight
       Entry: 3
-      Data: 400
+      Data: 1000
     - Name: ModWeight
       Entry: 3
       Data: 0
@@ -2031,9 +2047,18 @@ MonoBehaviour:
       Data: 
     - Name: baseState
       Entry: 7
-      Data: 6|TankGame.Units.Ai.Interacting, Assembly-CSharp
+      Data: 6|TankGame.Units.Ai.Moving, Assembly-CSharp
     - Name: Target
-      Entry: 6
+      Entry: 7
+      Data: UnityEngine.Vector2, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
       Data: 
     - Name: 
       Entry: 8
@@ -2117,7 +2142,7 @@ MonoBehaviour:
       Data: 11|TankGame.Units.Commands.Interact, Assembly-CSharp
     - Name: BaseWeight
       Entry: 3
-      Data: 400
+      Data: 1000
     - Name: ModWeight
       Entry: 3
       Data: 0
@@ -2154,18 +2179,9 @@ MonoBehaviour:
       Data: 
     - Name: baseState
       Entry: 7
-      Data: 15|TankGame.Units.Ai.Moving, Assembly-CSharp
+      Data: 15|TankGame.Units.Ai.Interacting, Assembly-CSharp
     - Name: Target
-      Entry: 7
-      Data: UnityEngine.Vector2, UnityEngine.CoreModule
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 4
-      Data: 0
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
@@ -2279,12 +2295,10 @@ MonoBehaviour:
     - serializedVersion: 2
       m_Bits: 536870912
     - serializedVersion: 2
-      m_Bits: 1073741824
-    - serializedVersion: 2
       m_Bits: 2147483648
   walkableMask:
     serializedVersion: 2
-    m_Bits: 268435456
+    m_Bits: 3758096384
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 134217728
@@ -2293,7 +2307,7 @@ MonoBehaviour:
     m_Bits: 64
   interactableMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 256
 --- !u!114 &1067486723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2397,6 +2411,18 @@ PrefabInstance:
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5521822
+      objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -3086,7 +3112,6 @@ GameObject:
   - component: {fileID: 1446016332}
   - component: {fileID: 1446016331}
   - component: {fileID: 1446016333}
-  - component: {fileID: 1446016334}
   m_Layer: 7
   m_Name: Tank
   m_TagString: Entity
@@ -3202,18 +3227,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1446016334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446016327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07d4345cd1fe59a4ab329b793c90629e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1477915950
 GameObject:
   m_ObjectHideFlags: 0
@@ -3500,6 +3513,7 @@ GameObject:
   - component: {fileID: 1852387735}
   - component: {fileID: 1852387734}
   - component: {fileID: 1852387738}
+  - component: {fileID: 1852387739}
   m_Layer: 8
   m_Name: Driver
   m_TagString: Untagged
@@ -3645,6 +3659,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1852387739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852387732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1884028986
 GameObject:
   m_ObjectHideFlags: 0
