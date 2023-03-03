@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TankGame.Players.Input;
 using TankGame.Units;
+using TankGame.Units.Interactions;
 using UnityEngine;
 //using UnityEngine.InputSystem;
 
@@ -10,7 +11,23 @@ namespace TankGame.Tanks.Systems.Stations {
 
 	public class Commander : Station {
 
-		List<Station> stations;
+		private List<Station> stations;
+
+		private Seat localSeat;
+
+		public override bool Manned {
+			get {
+				return manningCharacter is not null;
+			}
+		}
+
+		protected override Character manningCharacter {
+			get {
+				return localSeat.Occupant;
+			}
+		}
+
+		
 
 		protected override void Awake() {
 			base.Awake();
@@ -25,6 +42,10 @@ namespace TankGame.Tanks.Systems.Stations {
 					receiver.AddInput(iEntry);
 				}
 			}
+		}
+
+		public override GenericInteraction TryMan(Character character, string name) {
+			return localSeat.TrySit(character, "Sit");
 		}
 	}
 }

@@ -12,11 +12,11 @@ namespace TankGame.Tanks {
 
 		private Tank parentTank;
 
-		private PathRequestManager parentManager;
+		private InteractionManager manager;
 
 		private void Awake() {
 			parentTank = GetComponentInParent<Tank>();
-			parentManager = GetComponentInParent<PathRequestManager>();
+			manager = GetComponent<InteractionManager>();
 		}
 
 		public List<AbstractInteractionFactory> GetInteractions() {
@@ -37,20 +37,24 @@ namespace TankGame.Tanks {
 				character.transform.SetParent(parentTank.transform);
 				character.transform.localPosition = transform.localPosition;
 				character.Traversable = parentTank;
-				character.StateMachine.SubmitPreRequisite("embarkment", new Embarkment(parentTank), new Interacting(TryUsePort(character, "Disembark")));
+				character.StateMachine.SubmitPreRequisite("embarked", new NeedsToDisembark(parentTank), new Interacting(TryUsePort, "Disembark"));
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 			else {
-				character.transform.SetParent(null);
-				character.transform.position = transform.localPosition;
+				character.transform.SetParent(World.GlobalTraversable.GetObject().transform);
+				character.transform.localPosition = transform.localPosition;
 				character.Traversable = World.GlobalTraversable;
-				character.StateMachine.ExpirePreRequisite("embarkment");
+				character.StateMachine.ExpirePreRequisite("embarked");
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 		}
 
 		public GenericInteraction TryUsePort (Character character, string name) {
 			return new GenericInteraction(UsePort, character, name, this);
+		}
+
+		public InteractionManager GetManager() {
+			return manager;
 		}
 	}
 }

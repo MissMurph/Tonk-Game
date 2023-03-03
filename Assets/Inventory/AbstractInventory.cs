@@ -14,10 +14,14 @@ namespace TankGame.Items {
         [SerializeField]
         protected StackEntry[] stackEntries;
 
+        protected InteractionManager manager;
+
         private void Awake () {
             foreach (StackEntry entry in stackEntries) {
                 stackDictionary.TryAdd(ItemHolder.GetItem(entry.itemName), entry.stackLimit);
             }
+
+            manager = GetComponent<InteractionManager>();
         }
 
         /*public List<ItemObject> GetStored () {
@@ -51,7 +55,11 @@ namespace TankGame.Items {
             return output;
         }
 
-        public class InvInteraction : AbstractInteraction<InvInteraction> {
+		public InteractionManager GetManager() {
+            return manager;
+		}
+
+		public class InvInteraction : AbstractInteraction<InvInteraction> {
 
             internal ItemObject Item { get; private set; }
 

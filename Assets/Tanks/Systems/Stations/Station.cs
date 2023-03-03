@@ -8,49 +8,39 @@ using TankGame.Units.Ai;
 
 namespace TankGame.Tanks.Systems.Stations {
 
-	public class Station : System, IInteractable {
+	public abstract class Station : System, IInteractable {
 
 		public InputProcessor InputReceiver { get; private set; }
 
 		protected Tank parentTank;
 
-		public bool Manned {
-			get {
-				return manningCharacter != null;
-			}
-		}
+		public abstract bool Manned { get; }
 
-		protected Character manningCharacter;
+		protected abstract Character manningCharacter { get; }
 
-		protected virtual void Awake() {
+		protected override void Awake() {
+			base.Awake();
 			InputReceiver = GetComponent<InputProcessor>();
 			parentTank = GetComponentInParent<Tank>();
-			manningCharacter = null;
 		}
 
-		public GameObject GetObject() {
-			return gameObject;
+		public override List<AbstractInteractionFactory> GetInteractions() {
+			List<AbstractInteractionFactory> output = base.GetInteractions();
+
+			output.Add(new GenericInteractionFactory("man_station", TryMan));
+
+			return output;
 		}
 
-		public List<AbstractInteractionFactory> GetInteractions() {
-			return new List<AbstractInteractionFactory>() {
-				new GenericInteractionFactory("test", TryTest),
-			};
-		}
-
-		private InteractionContext<GenericInteraction> TestFunc(GenericInteraction interaction) {
-			return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
-		}
-
-		public GenericInteraction TryTest(Character character, string name) {
-			return new GenericInteraction(TestFunc, character, name, this);
-		}
+		public abstract GenericInteraction TryMan(Character character, string name); /*{
+			return !Manned ? new GenericInteraction(ManStation, character, name, this) : null;
+		}*/
 
 		public List<PreRequisite> GetPreRequisites() {
 			List<PreRequisite> output = new List<PreRequisite>();
 
 			output.Add(new PreRequisite { 
-				condition = new Embarkment(parentTank), 
+				condition = new NeedsToEmbark(parentTank), 
 				solution = new Interacting(parentTank.TryEmbark, "Embark") 
 			});
 

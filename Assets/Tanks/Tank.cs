@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TankGame.Tanks.Stations;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using TankGame.Tanks.Systems.Stations;
@@ -26,8 +25,11 @@ namespace TankGame.Tanks {
 		[SerializeField]
         private Port[] embarkPorts;
 
+        private InteractionManager manager;
+
         private void Awake() {
             input = GetComponent<PlayerInput>();
+            manager = GetComponent<InteractionManager>();
 
             foreach (Station station in GetComponentsInChildren<Station>()) {
                 stations.Add((Stations)Enum.Parse(typeof(Stations), station.gameObject.name), station);
@@ -110,13 +112,13 @@ namespace TankGame.Tanks {
         public void FindPath (PathRequest request, Action<PathResult> callback) {
             Vector3[] outPut = new Vector3[1] { request.pathEnd.localPosition };
             callback(new PathResult(outPut, true, request.callback));
-
-            if (!ReferenceEquals(request.originTraversable, request.targetTraversable) && ReferenceEquals(this, request.targetTraversable)) {
-
-            }
         }
 
-        protected class Embark : AbstractInteraction<Embark> {
+		public InteractionManager GetManager() {
+            return manager;
+		}
+
+		protected class Embark : AbstractInteraction<Embark> {
 
             internal Station Seat { get; private set; }
 

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TankGame.Events;
+using TankGame.Units.Ai;
 using UnityEngine;
 using UnityEngine.Events;
-using static TankGame.Items.AbstractInventory;
 
 namespace TankGame.Units.Interactions {
 
@@ -16,6 +16,8 @@ namespace TankGame.Units.Interactions {
 
 		private List<Transform> inRangeTransforms = new List<Transform>();
 
+		private List<PreRequisite> primedPreRequisites = new List<PreRequisite>();
+
 		protected virtual void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
 
@@ -25,6 +27,10 @@ namespace TankGame.Units.Interactions {
 
 				foreach (AbstractInteractionFactory factory in intFactories) {
 					interactionsMap.Add(factory.Name, factory);
+				}
+
+				foreach (PreRequisite preReq in interactable.GetPreRequisites()) {
+					primedPreRequisites.Add(preReq);
 				}
 			}
 		}
@@ -94,6 +100,10 @@ namespace TankGame.Units.Interactions {
 
 			Debug.LogWarning("No interaction created! Null value provided");
 			return null;
+		}
+
+		public List<PreRequisite> GetPreRequisites () {
+			return primedPreRequisites;
 		}
 
 		//interaction trigger

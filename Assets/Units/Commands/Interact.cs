@@ -19,14 +19,14 @@ namespace TankGame.Units.Commands {
 
 			Nodes[endNode].OnComplete += End;
 
+			PreRequisites.AddRange(Target.Parent.GetManager().GetPreRequisites());
+
 			foreach (Decision node in Nodes) {
 				node.Initialize(this, Target.Parent.GetObject().transform);
 
 				if (node.CurrentState is TargetedState<AbstractInteraction>) {
 					TargetedState<AbstractInteraction> state = node.CurrentState as TargetedState<AbstractInteraction>;
 					state.SetTarget(Target);
-
-					PreRequisites.AddRange(state.Target.Parent.GetPreRequisites());
 				}
 			}
 		}

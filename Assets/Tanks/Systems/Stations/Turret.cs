@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units;
+using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +26,10 @@ namespace TankGame.Tanks.Systems.Stations {
 				return turretRigidBody.rotation;
 			}
 		}
+
+		public override bool Manned { get { return true; } } 
+
+		protected override Character manningCharacter => throw new global::System.NotImplementedException();
 
 		[SerializeField]
 		private Rigidbody2D turretRigidBody;
@@ -106,6 +112,10 @@ namespace TankGame.Tanks.Systems.Stations {
 
 				Debug.Log("Firing...");
 			}
+		}
+
+		public override GenericInteraction TryMan(Character character, string name) {
+			throw new global::System.NotImplementedException();
 		}
 
 		//Both of these are used to move back and forth between border values on the angle so turret smoothing will always take the shortest path

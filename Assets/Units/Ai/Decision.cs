@@ -100,11 +100,12 @@ namespace TankGame.Units.Ai {
 
 			List<PreRequisite> countedPreReqs = new List<PreRequisite>();
 
-			countedPreReqs.AddRange(preRequisites);
-			countedPreReqs.AddRange(Parent.PreRequisites);
+			if (preRequisites is not null) countedPreReqs.AddRange(preRequisites);
+			if (Parent.PreRequisites is not null) countedPreReqs.AddRange(Parent.PreRequisites);
 
 			foreach (PreRequisite preReq in countedPreReqs) {
-				if (preReq.condition.Act(Parent.Actor)) preRequisuiteFulfillmentQueue.Enqueue(preReq);
+				preReq.condition.DecisionInjector(this);
+				if (preReq.condition.Act(character)) preRequisuiteFulfillmentQueue.Enqueue(preReq);
 			}
 
 			if (preRequisuiteFulfillmentQueue.TryDequeue(out PreRequisite requirement)) {
@@ -146,6 +147,8 @@ namespace TankGame.Units.Ai {
 
 			preRequisites = new List<PreRequisite>();
 			preRequisuiteFulfillmentQueue = new Queue<PreRequisite>();
+
+
 		}
 
 		public void Initialize (Goal parentGoal, Transform target) {

@@ -26,7 +26,7 @@ namespace TankGame.Units.Ai {
 
 		private Dictionary<string, Goal> newGoals = new Dictionary<string, Goal>();
 
-		private Command currentCommand;
+		public Command CurrentCommand { get; private set; }
 
 		private Queue<Command> commandQueue = new Queue<Command>();
 
@@ -54,10 +54,10 @@ namespace TankGame.Units.Ai {
 		}
 
 		private void Update () {
-			if (currentCommand is null && commandQueue.TryDequeue(out Command command)) {
+			if (CurrentCommand is null && commandQueue.TryDequeue(out Command command)) {
 				openSet.AddRange(command.GetStart());
 				command.OnComplete += CommandCallback;
-				currentCommand = command;
+				CurrentCommand = command;
 			}
 		}
 
@@ -165,16 +165,16 @@ namespace TankGame.Units.Ai {
 		public void ExecuteCommand (Command command) {
 			commandQueue.Clear();
 
-			if (!(currentCommand is null)) {
-				if (ReferenceEquals(CurrentDecision.Parent, currentCommand)) {
+			if (!(CurrentCommand is null)) {
+				if (ReferenceEquals(CurrentDecision.Parent, CurrentCommand)) {
 					CurrentDecision.Next.ForEach((decision) => { openSet.Remove(decision); });
 					openSet.Remove(CurrentDecision);
 				}
 
-				currentCommand.GetStart().ForEach((decision) => { openSet.Remove(decision); });
+				CurrentCommand.GetStart().ForEach((decision) => { openSet.Remove(decision); });
 
-				currentCommand.OnComplete -= CommandCallback;
-				currentCommand = null;
+				CurrentCommand.OnComplete -= CommandCallback;
+				CurrentCommand = null;
 			}
 
 			EnqueueCommand(command);
@@ -217,19 +217,19 @@ namespace TankGame.Units.Ai {
 		}
 
 		private void CommandCallback () {
-			if (ReferenceEquals(CurrentDecision.Parent, currentCommand)) {
+			if (ReferenceEquals(CurrentDecision.Parent, CurrentCommand)) {
 				foreach (Decision node in CurrentDecision.Next) {
 					openSet.Remove(node);
 				}
 				openSet.Remove(CurrentDecision);
 			}
 
-			foreach (Decision node in currentCommand.GetStart()) {
+			foreach (Decision node in CurrentCommand.GetStart()) {
 				openSet.Remove(node);
 			}
 
-			currentCommand.OnComplete -= CommandCallback;
-			currentCommand = null;
+			CurrentCommand.OnComplete -= CommandCallback;
+			CurrentCommand = null;
 		}
 	}
 }

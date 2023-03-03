@@ -13,6 +13,8 @@ namespace TankGame.Units.Interactions {
 
         List<AbstractInteractionFactory> GetInteractions ();
 
+        InteractionManager GetManager();
+
         List<PreRequisite> GetPreRequisites () {
             return new List<PreRequisite>();
 		}

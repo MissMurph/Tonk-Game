@@ -18,14 +18,14 @@ namespace TankGame.Units.Ai {
 
 		[OdinSerialize]
 		//[ValueDropdown("nodes")]
-		protected List<int> startNodes = new List<int>();
+		protected List<int> startNodes;
 
 		[OdinSerialize]
 		public Decision[] Nodes { get; protected set; }
 
-		public Character Actor { get; private set; }
+		public Character Actor { get; protected set; }
 
-		public List<PreRequisite> PreRequisites { get; protected set; } = new List<PreRequisite>();
+		public List<PreRequisite> PreRequisites { get; protected set; }
 
 		/*public Goal (string _name, int _baseWeight, Decision[] _nodes, int[] _startNodes) {
 			Name = _name;
@@ -35,10 +35,14 @@ namespace TankGame.Units.Ai {
 		}*/
 
 		public Goal () {
-			
+			PreRequisites = new List<PreRequisite>();
+			startNodes = new List<int>();
 		}
 
 		protected Goal (Goal goal) {
+			PreRequisites = new List<PreRequisite>();
+			startNodes = new List<int>();
+
 			BaseWeight = goal.BaseWeight;
 
 			startNodes.AddRange(goal.startNodes);

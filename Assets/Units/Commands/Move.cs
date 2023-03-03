@@ -10,8 +10,6 @@ namespace TankGame.Units.Commands {
 
 	public class Move : TargetedCommand<Vector2> {
 
-		private Character character;
-
 		public Move(Vector2 _targetPosition) : base(Commands.GetTree("move"), _targetPosition) {
 			
 		}
@@ -19,7 +17,7 @@ namespace TankGame.Units.Commands {
 		public override void Initialize (Character character) {
 			//base.Initialize(character);
 
-			this.character = character;
+			Actor = character;
 
 			Nodes[endNode].OnComplete += End;
 

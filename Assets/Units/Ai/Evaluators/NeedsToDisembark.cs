@@ -6,21 +6,27 @@ using UnityEngine;
 
 namespace TankGame.Units.Ai {
 
-	public class Embarkment : IEvaluator {
+	public class NeedsToDisembark : IEvaluator {
 
 		private ITraversable parent;
 		private Transform target;
 
-		public Embarkment (ITraversable _target) {
+		public NeedsToDisembark(ITraversable _target) {
 			parent = _target;
 		}
 
 		public bool Act (Character character) {
-			return target.parent.TryGetComponent(out ITraversable traversable) && !ReferenceEquals(parent, traversable);
+			if (target is not null && target.parent.TryGetComponent(out ITraversable targetTrav)) {
+				if (!ReferenceEquals(parent, targetTrav) && ReferenceEquals(parent, character.Traversable)) {
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public string Name () {
-			return "character_embarkment";
+			return "character_needs_to_disembark";
 		}
 
 		public void DecisionInjector (Decision decision) {

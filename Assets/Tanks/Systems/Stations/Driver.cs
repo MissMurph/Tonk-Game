@@ -1,7 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TankGame.Tanks.Stations;
+using TankGame.Units;
+using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,10 +20,25 @@ namespace TankGame.Tanks.Systems.Stations {
         public float rotationSpeed;
         public float windUpTime;    //in seconds
 
-        protected override void Awake() {
+        private Seat localSeat;
+
+		public override bool Manned {
+            get {
+                return manningCharacter is not null;
+            }
+        }
+
+		protected override Character manningCharacter {
+            get {
+                return localSeat.Occupant;
+            }
+        }
+
+		protected override void Awake() {
             base.Awake();
 
             rigidBody = GetComponentInParent<Rigidbody2D>();
+            localSeat = GetComponent<Seat>();
         }
 
         private void FixedUpdate() {
@@ -54,5 +70,9 @@ namespace TankGame.Tanks.Systems.Stations {
                 movingDirection = Vector2.zero;
             }
         }
-    }
+
+		public override GenericInteraction TryMan(Character character, string name) {
+            return localSeat.TrySit(character, "Sit");
+		}
+	}
 }
