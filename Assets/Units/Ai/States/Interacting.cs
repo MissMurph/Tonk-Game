@@ -27,7 +27,9 @@ namespace TankGame.Units.Ai {
 		public override void Enter (Character actor) {
 			base.Enter(actor);
 
-			if (supplier is not null) Target = supplier.Invoke(actor, name);
+			if (supplier is not null) {
+				Target = supplier.Invoke(actor, name);
+			}
 
 			actor.SubmitTarget(Target.Parent.GetObject().transform, (success) => { });
 		}

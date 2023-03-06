@@ -42,7 +42,7 @@ namespace TankGame.Tanks {
 			}
 			else {
 				character.transform.SetParent(World.GlobalTraversable.GetObject().transform);
-				character.transform.localPosition = transform.localPosition;
+				character.transform.localPosition = transform.position;
 				character.Traversable = World.GlobalTraversable;
 				character.StateMachine.ExpirePreRequisite("embarked");
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);

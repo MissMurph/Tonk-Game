@@ -74,7 +74,7 @@ namespace TankGame.Tanks {
         }
 
         public GenericInteraction TryEmbark (Character character, string name) {
-            if (!ReferenceEquals(character.Traversable, this)) return null;
+            if (ReferenceEquals(character.Traversable, this)) return null;
 
             float lowestDist = 100f;
             Port closestPort = null;

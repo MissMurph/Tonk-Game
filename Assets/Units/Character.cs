@@ -112,7 +112,7 @@ namespace TankGame.Units {
 			Vector3 currentWaypoint = path[0];
 
 			while (true) {
-				if (transform.position == currentWaypoint) {
+				if (transform.localPosition == currentWaypoint) {
 					targetIndex++;
 
 					if (targetIndex >= path.Length) {
@@ -124,7 +124,7 @@ namespace TankGame.Units {
 					currentWaypoint = path[targetIndex];
 				}
 
-				transform.localPosition = Vector3.MoveTowards(transform.position, currentWaypoint, speed * Time.deltaTime);
+				transform.localPosition = Vector3.MoveTowards(transform.localPosition, currentWaypoint, speed * Time.deltaTime);
 
 				yield return null;
 			}
