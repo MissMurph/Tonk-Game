@@ -20,8 +20,14 @@ namespace TankGame.Tanks.Systems.Stations {
 
 		protected override void Awake() {
 			base.Awake();
+
 			InputReceiver = GetComponent<InputProcessor>();
 			parentTank = GetComponentInParent<Tank>();
+		}
+
+		protected virtual void Start () {
+			//By submitting pre-req here we set this for the whole object
+			manager.SubmitPreRequisite("must_embark", new NeedsToEmbark(parentTank), new Interacting(parentTank.TryEmbark, "Embark"));
 		}
 
 		public override List<AbstractInteractionFactory> GetInteractions() {
@@ -35,16 +41,5 @@ namespace TankGame.Tanks.Systems.Stations {
 		public abstract GenericInteraction TryMan(Character character, string name); /*{
 			return !Manned ? new GenericInteraction(ManStation, character, name, this) : null;
 		}*/
-
-		public List<PreRequisite> GetPreRequisites() {
-			List<PreRequisite> output = new List<PreRequisite>();
-
-			output.Add(new PreRequisite { 
-				condition = new NeedsToEmbark(parentTank), 
-				solution = new Interacting(parentTank.TryEmbark, "Embark") 
-			});
-
-			return output;
-		}
 	}
 }

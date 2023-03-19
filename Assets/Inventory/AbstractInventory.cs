@@ -16,12 +16,12 @@ namespace TankGame.Items {
 
         protected InteractionManager manager;
 
-        private void Awake () {
-            foreach (StackEntry entry in stackEntries) {
-                stackDictionary.TryAdd(ItemHolder.GetItem(entry.itemName), entry.stackLimit);
-            }
-
+        protected virtual void Awake () {
             manager = GetComponent<InteractionManager>();
+
+            foreach (StackEntry entry in stackEntries) {
+                stackDictionary.TryAdd(Items.GetItem(entry.itemName), entry.stackLimit);
+            }
         }
 
         /*public List<ItemObject> GetStored () {

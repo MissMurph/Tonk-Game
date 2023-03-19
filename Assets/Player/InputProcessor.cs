@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 namespace TankGame.Players.Input {
 
-	public class InputProcessor : MonoBehaviour {
+	public class InputProcessor : MonoBehaviour, IControllable {
 
 		[SerializeField]
 		private InputEntry[] inputEntries;
@@ -43,6 +43,10 @@ namespace TankGame.Players.Input {
 
 		public List<InputEntry> GetInputs() {
 			return new List<InputEntry>(inputEntries);
+		}
+
+		public GameObject GetObject () {
+			return gameObject;
 		}
 	}
 

@@ -30,6 +30,10 @@ namespace TankGame.Tanks {
 		private void Awake() {
 			parent = transform.parent.TryGetComponent(out ITraversable traversable) ? traversable : null;
 			manager = GetComponent<InteractionManager>();
+
+			foreach (Character character in GetComponentsInChildren<Character>()) {
+				character.StateMachine.SubmitPreRequisite("seated", new NeedsToDisembark(this), new Interacting(TrySit, "Unsit"));
+			}
 		}
 
 		public List<AbstractInteractionFactory> GetInteractions() {
@@ -70,7 +74,7 @@ namespace TankGame.Tanks {
 			//what happens if we do nothing lol
 			//NOTHING GOOD
 
-			Vector3[] outPut = new Vector3[1] { transform.localPosition };
+			Vector3[] outPut = new Vector3[1] { Vector3.zero };
 			callback(new PathResult(outPut, true, request.callback));
 		}
 

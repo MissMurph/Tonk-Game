@@ -7,6 +7,7 @@ using TankGame.Units;
 using TankGame.Units.Interactions;
 using TankGame.Tanks.Systems.Stations;
 using TankGame.Units.Navigation;
+using TankGame.Units.Ai;
 
 namespace TankGame.Tanks {
 
@@ -33,6 +34,11 @@ namespace TankGame.Tanks {
 
             foreach (Station station in GetComponentsInChildren<Station>()) {
                 stations.Add((Stations)Enum.Parse(typeof(Stations), station.gameObject.name), station);
+            }
+
+            foreach (Character character in GetComponentsInChildren<Character>()) {
+                character.StateMachine.SubmitPreRequisite("embarked", new NeedsToDisembark(this), new Interacting(TryEmbark, "Disembark"));
+                character.IntManager.SubmitPreRequisite("embarked", new NeedsToEmbark(this), new Interacting(TryEmbark, "Embark"));
             }
         }
 
@@ -74,21 +80,41 @@ namespace TankGame.Tanks {
         }
 
         public GenericInteraction TryEmbark (Character character, string name) {
-            if (ReferenceEquals(character.Traversable, this)) return null;
+            if (name == "Embark") {
+                if (ReferenceEquals(character.Traversable, this)) return null;
 
-            float lowestDist = 100f;
-            Port closestPort = null;
+                float lowestDist = 100f;
+                Port closestPort = null;
 
-            foreach (Port port in embarkPorts) {
-                float newDist = (character.transform.position - port.transform.position).magnitude;
+                foreach (Port port in embarkPorts) {
+                    float newDist = (character.transform.position - port.transform.position).magnitude;
 
-                if (newDist < lowestDist) {
-                    lowestDist = newDist;
-                    closestPort = port;
+                    if (newDist < lowestDist) {
+                        lowestDist = newDist;
+                        closestPort = port;
+                    }
                 }
-			}
 
-            return closestPort.TryUsePort(character, name);
+                return closestPort.TryUsePort(character, name);
+            }
+            else if (name == "Disembark") {
+                if (!ReferenceEquals(character.Traversable, this)) return null;
+
+                float lowestDist = 100f;
+                Port closestPort = null;
+
+                foreach (Port port in embarkPorts) {
+                    float newDist = (character.transform.position - port.transform.position).magnitude;
+
+                    if (newDist < lowestDist) {
+                        lowestDist = newDist;
+                        closestPort = port;
+                    }
+                }
+
+                return closestPort.TryUsePort(character, name);
+            }
+            else return null;
 		}
 
         private GenericInteraction TryDisembark(Character character, string name) {
@@ -110,7 +136,7 @@ namespace TankGame.Tanks {
         }
 
         public void FindPath (PathRequest request, Action<PathResult> callback) {
-            Vector3[] outPut = new Vector3[1] { request.pathEnd.localPosition };
+            Vector3[] outPut = new Vector3[1] { transform.InverseTransformPoint(request.pathEnd.position) };
             callback(new PathResult(outPut, true, request.callback));
         }
 

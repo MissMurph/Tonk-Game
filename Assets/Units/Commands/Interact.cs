@@ -17,9 +17,15 @@ namespace TankGame.Units.Commands {
 		public override void Initialize (Character character) {
 			//base.Initialize(character);
 
+			Actor = character;
+
 			Nodes[endNode].OnComplete += End;
 
-			PreRequisites.AddRange(Target.Parent.GetManager().GetPreRequisites());
+			List<PreRequisite> transformReqs = Target.Parent.GetManager().GetPreRequisites();
+			List<PreRequisite> interactionReqs = Target.Parent.GetPreRequisites();
+
+			if (transformReqs is not null) PreRequisites.AddRange(transformReqs);
+			if (interactionReqs is not null) PreRequisites.AddRange(interactionReqs);
 
 			foreach (Decision node in Nodes) {
 				node.Initialize(this, Target.Parent.GetObject().transform);

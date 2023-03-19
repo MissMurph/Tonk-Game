@@ -17,8 +17,6 @@ namespace TankGame.UI {
 
 		private bool selected = false;
 
-		private RectTransform rectTransform;
-
 		public InventorySlot ParentSlot { get; private set; }
 
 		[SerializeField]
@@ -27,7 +25,6 @@ namespace TankGame.UI {
 		protected override void Awake() {
 			base.Awake();
 			image = GetComponent<Image>();
-			rectTransform = GetComponent<RectTransform>();
 		}
 
 		private void Update() {
@@ -36,7 +33,7 @@ namespace TankGame.UI {
 				
 			}
 			else {
-				rectTransform.anchoredPosition = Vector2.zero;
+				RectTransform.anchoredPosition = Vector2.zero;
 			}
 		}
 
@@ -67,8 +64,10 @@ namespace TankGame.UI {
 			}
 
 			transform.SetParent(ParentSlot.transform);
+			RectTransform.anchorMin = Vector2.zero;
+			RectTransform.anchorMax = Vector2.one;
 			RectTransform.sizeDelta = Vector2.zero;
-			rectTransform.localPosition = Vector3.zero;
+			RectTransform.localPosition = Vector3.zero;
 			selected = false;
 		}
 

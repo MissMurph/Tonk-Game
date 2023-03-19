@@ -16,7 +16,7 @@ namespace TankGame.Units.Interactions {
 
 		private List<Transform> inRangeTransforms = new List<Transform>();
 
-		private List<PreRequisite> primedPreRequisites = new List<PreRequisite>();
+		private Dictionary<string, PreRequisite> addedPreRequisites = new Dictionary<string, PreRequisite>();
 
 		protected virtual void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
@@ -27,10 +27,6 @@ namespace TankGame.Units.Interactions {
 
 				foreach (AbstractInteractionFactory factory in intFactories) {
 					interactionsMap.Add(factory.Name, factory);
-				}
-
-				foreach (PreRequisite preReq in interactable.GetPreRequisites()) {
-					primedPreRequisites.Add(preReq);
 				}
 			}
 		}
@@ -78,7 +74,7 @@ namespace TankGame.Units.Interactions {
 		public AbstractInteraction RequestInteraction (string name, Character character) {
 			if (interactionsMap.TryGetValue(name, out AbstractInteractionFactory factory)) {
 				AbstractInteraction interaction = factory.Construct(character);
-				
+
 				if (interaction != null) return interaction;
 			}
 
@@ -103,7 +99,26 @@ namespace TankGame.Units.Interactions {
 		}
 
 		public List<PreRequisite> GetPreRequisites () {
-			return primedPreRequisites;
+			List<PreRequisite> output = new List<PreRequisite>();
+
+			output.AddRange(addedPreRequisites.Values);
+
+			return output;
+		}
+
+		public void SubmitPreRequisite (string key, IEvaluator condition, State solution){
+			PreRequisite output = new PreRequisite {
+				condition = condition,
+				solution = solution
+			};
+
+			addedPreRequisites.TryAdd(key, output);
+		}
+
+		public void ExpirePreRequisite (string key) {
+			if (addedPreRequisites.ContainsKey(key)) {
+				addedPreRequisites.Remove(key);
+			}
 		}
 
 		//interaction trigger

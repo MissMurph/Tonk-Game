@@ -79,7 +79,7 @@ namespace TankGame.Units {
 
 		//Use this if need to potentially cross Traversables
 		public void SubmitTarget(Transform _target, PathComplete callback) {
-			PathRequestManager.RequestPath(transform, _target, OnPathFound);
+			PathRequestManager.RequestPath(transform, _target, Traversable, OnPathFound);
 			pathCompleteCallback = callback;
 			target = _target;
 		}

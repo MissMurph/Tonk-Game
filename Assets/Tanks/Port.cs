@@ -37,7 +37,8 @@ namespace TankGame.Tanks {
 				character.transform.SetParent(parentTank.transform);
 				character.transform.localPosition = transform.localPosition;
 				character.Traversable = parentTank;
-				character.StateMachine.SubmitPreRequisite("embarked", new NeedsToDisembark(parentTank), new Interacting(TryUsePort, "Disembark"));
+				character.StateMachine.SubmitPreRequisite("embarked", new NeedsToDisembark(parentTank), new Interacting(parentTank.TryEmbark, "Disembark"));
+				character.IntManager.SubmitPreRequisite("embarked", new NeedsToEmbark(parentTank), new Interacting(parentTank.TryEmbark, "Embark"));
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 			else {
@@ -45,6 +46,7 @@ namespace TankGame.Tanks {
 				character.transform.localPosition = transform.position;
 				character.Traversable = World.GlobalTraversable;
 				character.StateMachine.ExpirePreRequisite("embarked");
+				character.IntManager.ExpirePreRequisite("embarked");
 				return new InteractionContext<GenericInteraction>(interaction, IPhase.Post, IResult.Success);
 			}
 		}

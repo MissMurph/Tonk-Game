@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Players;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using UnityEngine;
@@ -41,7 +42,14 @@ namespace TankGame.Tanks.Systems.Stations {
             localSeat = GetComponent<Seat>();
         }
 
-        private void FixedUpdate() {
+		protected override void Start () {
+            base.Start();
+
+            manager.AddListener<GenericInteraction>("Sit", OnSit);
+            manager.AddListener<GenericInteraction>("Unsit", OnUnsit);
+        }
+
+		private void FixedUpdate() {
             if (!Manned) return;
 
             //transform.rotation = Quaternion.Euler(0, 0, transform.rotation.z + (rotationSpeed * movingDirection.x * Time.deltaTime));
@@ -68,6 +76,18 @@ namespace TankGame.Tanks.Systems.Stations {
             }
             else if (context.canceled) {
                 movingDirection = Vector2.zero;
+            }
+        }
+
+        private void OnSit (InteractionContext<GenericInteraction> context) {
+            if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+                Player.SwitchControl(InputReceiver);
+            }
+        }
+
+        private void OnUnsit (InteractionContext<GenericInteraction> context) {
+            if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+                Player.ResetControl();
             }
         }
 

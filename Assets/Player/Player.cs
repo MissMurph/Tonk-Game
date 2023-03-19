@@ -14,7 +14,7 @@ namespace TankGame.Players {
 
 	public class Player : MonoBehaviour {
 
-		public static Player Instance { get; private set; }
+		private static Player Instance;
 
 		public static PlayerController Controller {
 			get {
@@ -34,6 +34,30 @@ namespace TankGame.Players {
 			}
 		}
 
+		public static List<Character> Characters {
+			get {
+				return new List<Character>(Instance.characters);
+			}
+		}
+
+		public static Character PlayerCharacter {
+			get {
+				return Instance.playerCharacter;
+			}
+		}
+
+		public static IControllable CurrentHost {
+			get {
+				return Instance.currentControl;
+			}
+		}
+
+		public static ControlType ControlMode {
+			get {
+				return Instance.mode;
+			}
+		}
+
 		[SerializeField]
 		private Transform canvasTransform;
 
@@ -42,60 +66,51 @@ namespace TankGame.Players {
 
 		private PlayerController playerController;
 
-		public World world;
-
-		public IControllable currentControl;
+		private IControllable currentControl;
 
 		private IControllable explicitController;
 
-		public Character[] sceneCharacters;
+		[SerializeField]
+		private List<Character> characters = new List<Character>();
 
-		public List<Character> characters;
-
-		private PlayerCharacter playerCharacter;
+		[SerializeField]
+		private Character playerCharacter;
 
 		private PlayerInput input;
 
-		public bool isImplicit;
+		private ControlType mode;
 
-		private void Awake() {
+		private void Awake () {
 			playerController = GetComponent<PlayerController>();
 			currentControl = playerController;
-			characters = new List<Character>(sceneCharacters);
 			input = GetComponent<PlayerInput>();
-			isImplicit = true;
-
-			//action.ToInputAction().
-
-			foreach (Character c in characters) {
-				if (c.GetType() == typeof(PlayerCharacter)) {
-					playerCharacter = (PlayerCharacter)c;
-					break;
-				}
-			}
+			mode = ControlType.Implicit;
 
 			Instance = this;
 		}
 
-		private void Update() {
+		private void Update () {
 			if (currentControl != null && currentControl.GetObject() != this.gameObject) {
 				GameObject target = currentControl.GetObject();
 				transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
 			}
 		}
 
-		public void Input(InputAction.CallbackContext context) {
+		public void Input (InputAction.CallbackContext context) {
 			currentControl.Input(context);
 		}
 
-		public void SwitchControl(IControllable controllable) {
+		public static void SwitchControl (IControllable controllable) {
 			//Debug.Log("Old: " + currentControl.GetObject().name + "   New: " + controllable.GetObject().name);
 
-			if (explicitController == null || explicitController.GetObject().name != controllable.GetObject().name) {
-				explicitController = controllable;
-				currentControl = explicitController;
-				input.SwitchCurrentActionMap("Explicit");
-				isImplicit = false;
+			if (Instance.explicitController == null || Instance.explicitController.GetObject().name != controllable.GetObject().name) {
+				IControllable oldHost = Instance.explicitController;
+				Instance.explicitController = controllable;
+				Instance.currentControl = Instance.explicitController;
+				Instance.input.SwitchCurrentActionMap("Explicit");
+				Instance.mode = ControlType.Explicit;
+
+				EventBus.Post(new PlayerEvent.HostChange(oldHost, Instance.explicitController));
 
 				//currentControl.GetInput().enabled = false;
 
@@ -106,26 +121,31 @@ namespace TankGame.Players {
 			}
 		}
 
-		public void SwitchImplicitExplicit(InputAction.CallbackContext context) {
+		public void SwitchImplicitExplicit (InputAction.CallbackContext context) {
 			if (context.started) {
-				if (currentControl.Equals(playerController) && explicitController != null) {
-					currentControl = explicitController;
-					input.SwitchCurrentActionMap("Explicit");
-					isImplicit = false;
-					EventBus.Post(new PlayerEvent.ControlSwitch(PlayerEvent.ControlSwitch.ControlType.Explicit));
-				}
-				else {
-					currentControl = playerController;
-					input.SwitchCurrentActionMap("Implicit");
-					isImplicit = true;
-					EventBus.Post(new PlayerEvent.ControlSwitch(PlayerEvent.ControlSwitch.ControlType.Implicit));
-				}
+				SwitchControl();
 			}
 		}
 
-		public void ResetControl() {
-			if (!currentControl.GetType().Equals(playerController.GetType())) {
-				SwitchControl(playerController);
+		private void SwitchControl (){
+			if (currentControl.Equals(playerController) && explicitController != null) {
+				currentControl = explicitController;
+				input.SwitchCurrentActionMap("Explicit");
+				Instance.mode = ControlType.Explicit;
+				EventBus.Post(new PlayerEvent.ControlSwitch(PlayerEvent.ControlSwitch.ControlType.Explicit));
+			}
+			else {
+				currentControl = playerController;
+				input.SwitchCurrentActionMap("Implicit");
+				Instance.mode = ControlType.Explicit;
+				EventBus.Post(new PlayerEvent.ControlSwitch(PlayerEvent.ControlSwitch.ControlType.Implicit));
+			}
+		}
+
+		public static void ResetControl() {
+			if (Instance.mode.Equals(ControlType.Explicit)) {
+				Instance.SwitchControl();
+				Instance.explicitController = null;
 			}
 		}
 
@@ -140,5 +160,10 @@ namespace TankGame.Players {
 		private void OnDestroy () {
 			Instance = null;
 		}
+	}
+
+	public enum ControlType {
+		Explicit,
+		Implicit
 	}
 }

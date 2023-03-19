@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Players;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using UnityEngine;
@@ -27,9 +28,21 @@ namespace TankGame.Tanks.Systems.Stations {
 			}
 		}
 
-		public override bool Manned { get { return true; } } 
+		private Seat localSeat;
 
-		protected override Character manningCharacter => throw new global::System.NotImplementedException();
+		public override bool Manned {
+			get
+			{
+				return manningCharacter is not null;
+			}
+		}
+
+		protected override Character manningCharacter {
+			get
+			{
+				return localSeat.Occupant;
+			}
+		}
 
 		[SerializeField]
 		private Rigidbody2D turretRigidBody;
@@ -44,17 +57,18 @@ namespace TankGame.Tanks.Systems.Stations {
 		protected override void Awake() {
 			base.Awake();
 
+			localSeat = GetComponent<Seat>();
+		}
 
+		protected override void Start () {
+			base.Start();
+
+			manager.AddListener<GenericInteraction>("Sit", OnSit);
+			manager.AddListener<GenericInteraction>("Unsit", OnUnsit);
 		}
 
 		private void FixedUpdate() {
 			if (!Manned) return;
-
-
-
-			//Debug.Log("currentAngle: " + currentAngle);
-
-			//Quaternion newRot = Quaternion.LookRotation(lookDirection);
 
 			float distToMin = Mathf.Abs(lookAngle);
 			float distToMax = 180f - distToMin;
@@ -66,10 +80,6 @@ namespace TankGame.Tanks.Systems.Stations {
 			totalMaxDiff = distToMax + currentDistToMax;
 
 			int sameSide = (int)(Mathf.Sign(lookAngle) * Mathf.Sign(currentAngle));
-
-
-
-			//Quaternion.Slerp(turretRigidBody.transform.rotation, newRot, rotateSpeed * Time.fixedDeltaTime);
 
 			posOrNeg = 1;
 
@@ -84,12 +94,6 @@ namespace TankGame.Tanks.Systems.Stations {
 
 			if (currentAngle > 0) posOrNeg *= -1;
 
-			//float finalAngle = finalDist > rotateStep ? currentAngle + (posOrNeg * rotateSpeed * Time.fixedDeltaTime) : lookAngle;
-
-			//Debug.Log("finalAngle: " + finalAngle);
-
-			//turretRigidBody.SetRotation(finalAngle);
-
 			turretRigidBody.MoveRotation(gigaAngle);
 		}
 
@@ -101,25 +105,26 @@ namespace TankGame.Tanks.Systems.Stations {
 			lookAngle = (Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg) - 90;
 		}
 
-		public void ReadAlgorithm(InputAction.CallbackContext context) {
+		public void Fire(InputAction.CallbackContext context) {
 			if (context.started) {
-				/*Debug.Log("lookDirection: " + lookDirection);
-				Debug.Log("currentAngle: " + currentAngle);
-				Debug.Log("lookAngle: " + lookAngle);
-				Debug.Log("totalMinDiff: " + totalMinDiff);
-				Debug.Log("totalMaxDiff: " + totalMaxDiff);
-				Debug.Log("Direction: " + posOrNeg);*/
-
 				Debug.Log("Firing...");
 			}
 		}
 
-		public override GenericInteraction TryMan(Character character, string name) {
-			throw new global::System.NotImplementedException();
+		private void OnSit (InteractionContext<GenericInteraction> context) {
+			if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+				Player.SwitchControl(InputReceiver);
+			}
 		}
 
-		//Both of these are used to move back and forth between border values on the angle so turret smoothing will always take the shortest path
-		//Unity measures its rotational values as two 180 degree sides (positive and negative).
-		//In order to cross over the boundaries between both sides we need to measure the difference between the value and the relative border.
+		private void OnUnsit (InteractionContext<GenericInteraction> context) {
+			if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+				Player.ResetControl();
+			}
+		}
+
+		public override GenericInteraction TryMan(Character character, string name) {
+			return localSeat.TrySit(character, "Sit");
+		}
 	}
 }

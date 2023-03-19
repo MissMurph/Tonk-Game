@@ -10,7 +10,7 @@ namespace TankGame.Tanks.Systems {
 		[SerializeField]
 		public int Health { get; private set; } = 100;
 
-		private InteractionManager manager;
+		protected InteractionManager manager;
 
 		protected virtual void Awake () {
 			manager = GetComponent<InteractionManager>();

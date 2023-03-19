@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311912, g: 0.3807398, b: 0.3587271, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,141 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &129723028
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1968719343}
-    m_Modifications:
-    - target: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_Name
-      value: (P) Jessie
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_Color.b
-      value: 0.6509434
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_Color.g
-      value: 0.63806236
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_RootOrder
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.481
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.Prefab
-      value: 
-      objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-    m_RemovedComponents:
-    - {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
---- !u!4 &129723029 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-  m_PrefabInstance: {fileID: 129723028}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &129723030 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 993713274712581808, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-  m_PrefabInstance: {fileID: 129723028}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &129723031 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-  m_PrefabInstance: {fileID: 129723028}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &129723032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129723031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67df804c04d85144b9e7a3c1c98a2f2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: Health
-      Entry: 3
-      Data: 100
-    - Name: Morale
-      Entry: 3
-      Data: 75
-    - Name: Stress
-      Entry: 3
-      Data: 0
-    - Name: Traversable
-      Entry: 6
-      Data: 
-  target: {fileID: 0}
-  targetOldPos: {x: 0, y: 0, z: 0}
-  speed: 5
-  path: []
-  targetIndex: 0
-  executingCommand: 0
-  targetTracker: {fileID: 129723030}
-  input: {fileID: 0}
-  player: {fileID: 1039500152}
 --- !u!1 &258804153
 GameObject:
   m_ObjectHideFlags: 0
@@ -573,6 +438,7 @@ GameObject:
   - component: {fileID: 633145191}
   - component: {fileID: 633145190}
   - component: {fileID: 633145192}
+  - component: {fileID: 633145193}
   m_Layer: 8
   m_Name: Storage
   m_TagString: Untagged
@@ -687,6 +553,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.984375, y: 0.984375}
   m_EdgeRadius: 0
+--- !u!114 &633145193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633145188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &655992073
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1131,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1968719343}
+    m_TransformParent: {fileID: 1852387733}
     m_Modifications:
     - target: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_Name
@@ -1329,19 +1207,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.33333334
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.73
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.19
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1601,13 +1487,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasTransform: {fileID: 284375261}
   uiController: {fileID: 1039500156}
-  world: {fileID: 0}
-  sceneCharacters:
-  - {fileID: 129723032}
+  characters:
+  - {fileID: 1794521789}
   - {fileID: 1082128959}
   - {fileID: 1004413264}
-  characters: []
-  isImplicit: 0
+  playerCharacter: {fileID: 1794521789}
 --- !u!114 &1039500153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,7 +2171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1067486718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ddf6d5cc295b2845a90ab4eaa20ccb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 50de418a6b1355c45b18d90d8347a154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 6558844993205789566, guid: e09a834e1b7ca7b4785c56755169e115, type: 3}
@@ -2443,10 +2327,15 @@ PrefabInstance:
       objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.size
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
       propertyPath: serializationData.PrefabModifications.Array.data[0]
+      value: '"path":"baseGoals.{\"keep_healthy\"}.Nodes.[0].evalWeights.{1si}.value","value":{"$id":0,"$type":"System.Int32,
+        mscorlib",-100}'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.PrefabModifications.Array.data[1]
       value: '"path":"CurrentDecision","value":{"$id":0,"$type":"TankGame.Units.Ai.Decision,
         Assembly-CSharp","CurrentState":null,"Name":null,"BaseWeight":0,"Evaluators":{"$id":1,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
         Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]},"baseState":null,"nextNodes":{"$id":2,"$type":"System.Collections.Generic.List`1[[System.Int32,
@@ -2456,36 +2345,36 @@ PrefabInstance:
         mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[1]
+      propertyPath: serializationData.PrefabModifications.Array.data[2]
       value: '"path":"CurrentDecision.baseState","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[2]
+      propertyPath: serializationData.PrefabModifications.Array.data[3]
       value: '"path":"CurrentDecision.BaseWeight","value":{"$id":0,"$type":"System.Int32,
         mscorlib",0}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[3]
+      propertyPath: serializationData.PrefabModifications.Array.data[4]
       value: '"path":"CurrentDecision.CurrentState","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[4]
+      propertyPath: serializationData.PrefabModifications.Array.data[5]
       value: '"path":"CurrentDecision.Evaluators","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator,
         Assembly-CSharp]], mscorlib","$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[5]
+      propertyPath: serializationData.PrefabModifications.Array.data[6]
       value: '"path":"CurrentDecision.evalWeights","value":{"$id":0,"$type":"System.Collections.Generic.Dictionary`2[[System.Int32,
         mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour, Assembly-CSharp]],
         mscorlib","comparer":{"$id":1,"$type":"System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
         mscorlib]], mscorlib"},"$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[6]
+      propertyPath: serializationData.PrefabModifications.Array.data[7]
       value: '"path":"CurrentDecision.Name","value":null'
       objectReference: {fileID: 0}
     - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
-      propertyPath: serializationData.PrefabModifications.Array.data[7]
+      propertyPath: serializationData.PrefabModifications.Array.data[8]
       value: '"path":"CurrentDecision.nextNodes","value":{"$id":0,"$type":"System.Collections.Generic.List`1[[System.Int32,
         mscorlib]], mscorlib","$rlength":0,"$rcontent":[]}'
       objectReference: {fileID: 0}
@@ -3495,6 +3384,99 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1001 &1794521787
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1968719343}
+    m_Modifications:
+    - target: {fileID: 980698760530667072, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Name
+      value: (P) Jessie
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.b
+      value: 0.79062796
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667078, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_Color.r
+      value: 0.244304
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.481
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 4907567678470931568, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+--- !u!4 &1794521788 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 980698760530667079, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_PrefabInstance: {fileID: 1794521787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1794521789 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 980698760530667073, guid: c503dab71600f724d9f2016d41bd5703, type: 3}
+  m_PrefabInstance: {fileID: 1794521787}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f10b0cbc6294254c9f5e294233673b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1852387732
 GameObject:
   m_ObjectHideFlags: 0
@@ -3528,7 +3510,8 @@ Transform:
   m_LocalPosition: {x: -0.156, y: 0.755, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1145299767}
   m_Father: {fileID: 1446016328}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3692,6 +3675,8 @@ GameObject:
   - component: {fileID: 1884028989}
   - component: {fileID: 1884028988}
   - component: {fileID: 1884028991}
+  - component: {fileID: 1884028992}
+  - component: {fileID: 1884028993}
   m_Layer: 8
   m_Name: Gunner
   m_TagString: Untagged
@@ -3800,8 +3785,8 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1884028990}
-          m_TargetAssemblyTypeName: TurretStation, Assembly-CSharp
-          m_MethodName: ReadAlgorithm
+          m_TargetAssemblyTypeName: TankGame.Tanks.Systems.Stations.Turret, Assembly-CSharp
+          m_MethodName: Fire
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -3851,6 +3836,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
+--- !u!114 &1884028992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884028986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 438eb6e6ae96c484f9eaec97755c462c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1884028993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884028986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1968719341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3890,9 +3899,8 @@ Transform:
   - {fileID: 1261350792}
   - {fileID: 1335743893}
   - {fileID: 1446016328}
-  - {fileID: 129723029}
+  - {fileID: 1794521788}
   - {fileID: 1082128965}
-  - {fileID: 1145299767}
   - {fileID: 2139553735}
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -4146,7 +4154,8 @@ GameObject:
   - component: {fileID: 2115257450}
   - component: {fileID: 2115257447}
   - component: {fileID: 2115257451}
-  - component: {fileID: 2115257452}
+  - component: {fileID: 2115257453}
+  - component: {fileID: 2115257454}
   m_Layer: 8
   m_Name: Commander
   m_TagString: Untagged
@@ -4272,7 +4281,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.16, y: 0.16}
   m_EdgeRadius: 0
---- !u!114 &2115257452
+--- !u!114 &2115257453
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4281,214 +4290,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2115257445}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9117a5a3d1286488bcd2e2d97a1eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 438eb6e6ae96c484f9eaec97755c462c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: commands
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Commands.Command,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: interact
-    - Name: $v
-      Entry: 7
-      Data: 2|TankGame.Units.Commands.Interact, Assembly-CSharp
-    - Name: BaseWeight
-      Entry: 3
-      Data: 400
-    - Name: ModWeight
-      Entry: 3
-      Data: 0
-    - Name: Nodes
-      Entry: 7
-      Data: 3|TankGame.Units.Ai.Decision[], Assembly-CSharp
-    - Name: 
-      Entry: 12
-      Data: 2
-    - Name: 
-      Entry: 7
-      Data: 4|TankGame.Units.Ai.Decision, Assembly-CSharp
-    - Name: CurrentState
-      Entry: 6
-      Data: 
-    - Name: Name
-      Entry: 1
-      Data: is_embarked
-    - Name: BaseWeight
-      Entry: 3
-      Data: 0
-    - Name: Evaluators
-      Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseState
-      Entry: 6
-      Data: 
-    - Name: nextNodes
-      Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: evalWeights
-      Entry: 7
-      Data: 7|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 8|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 9|TankGame.Units.Ai.Decision, Assembly-CSharp
-    - Name: CurrentState
-      Entry: 6
-      Data: 
-    - Name: Name
-      Entry: 6
-      Data: 
-    - Name: BaseWeight
-      Entry: 3
-      Data: 0
-    - Name: Evaluators
-      Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[TankGame.Units.Ai.IEvaluator, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: baseState
-      Entry: 6
-      Data: 
-    - Name: nextNodes
-      Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: evalWeights
-      Entry: 7
-      Data: 12|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[TankGame.Units.Ai.Decision+WeightBehaviour,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 9
-      Data: 8
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: startNodes
-      Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[System.Int32, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Name
-      Entry: 6
-      Data: 
-    - Name: endNode
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+--- !u!114 &2115257454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115257445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab19e465a45b254887ba50f32f71f1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2139553733
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,5 +4387,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1968719343}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

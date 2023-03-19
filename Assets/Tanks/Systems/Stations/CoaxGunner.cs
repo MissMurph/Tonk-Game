@@ -1,3 +1,4 @@
+using TankGame.Players;
 using TankGame.Units;
 using TankGame.Units.Interactions;
 using UnityEngine;
@@ -6,20 +7,49 @@ using UnityEngine;
 namespace TankGame.Tanks.Systems.Stations {
 
 	public class CoaxGunner : Station {
-		public override bool Manned { get { return true; } }
+		private Seat localSeat;
 
-		protected override Character manningCharacter => throw new global::System.NotImplementedException();
+		public override bool Manned {
+			get
+			{
+				return manningCharacter is not null;
+			}
+		}
+
+		protected override Character manningCharacter {
+			get
+			{
+				return localSeat.Occupant;
+			}
+		}
+
+		protected override void Awake () {
+			base.Awake();
+
+			localSeat = GetComponent<Seat>();
+		}
+
+		protected override void Start () {
+			base.Start();
+
+			manager.AddListener<GenericInteraction>("Sit", OnSit);
+			manager.AddListener<GenericInteraction>("Unsit", OnUnsit);
+		}
+
+		private void OnSit (InteractionContext<GenericInteraction> context) {
+			if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+				Player.SwitchControl(InputReceiver);
+			}
+		}
+
+		private void OnUnsit (InteractionContext<GenericInteraction> context) {
+			if (ReferenceEquals(context.Interaction.ActingCharacter, Player.PlayerCharacter)) {
+				Player.ResetControl();
+			}
+		}
 
 		public override GenericInteraction TryMan(Character character, string name) {
-			throw new global::System.NotImplementedException();
-		}
-
-		void Start() {
-
-		}
-
-		void Update() {
-
+			return localSeat.TrySit(character, "Sit");
 		}
 	}
 }

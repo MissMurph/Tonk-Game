@@ -48,9 +48,9 @@ namespace TankGame.Units.Navigation {
 
 		//Use this if you don't need to specify a traversable
 		public static void RequestPath(Transform origin, Transform target, Action<Vector3[], bool> callback) {
-			ITraversable targetTraversable = target.parent.TryGetComponent(out ITraversable foundParent) ? foundParent : World.GlobalTraversable;
+			ITraversable originTraversable = origin.parent.TryGetComponent(out ITraversable foundParent) ? foundParent : World.GlobalTraversable;
 
-			RequestPath(origin, target, targetTraversable, callback);
+			RequestPath(origin, target, originTraversable, callback);
 		}
 
 		public void FinishedProcessingPath(PathResult result) {

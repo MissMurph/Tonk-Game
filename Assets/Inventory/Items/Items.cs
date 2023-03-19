@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 namespace TankGame.Items {
 
-	public class ItemHolder : MonoBehaviour {
+	public class Items : MonoBehaviour {
 
-		private static ItemHolder instance;
+		private static Items instance;
 
 		[SerializeField]
 		private GameObject itemPrefab;
@@ -23,9 +23,7 @@ namespace TankGame.Items {
 			instance = this;
 
 			foreach (ItemEntry entry in entries) {
-				//
-
-				RegisterItem<GenericItem>(entry.Name, (name) => new GenericItem(name, entry.Size, entry.Icon));
+				RegisterItem(entry.Name, (name) => new GenericItem(name, entry.Size, entry.Icon));
 			}
 		}
 
@@ -66,5 +64,6 @@ namespace TankGame.Items {
 		public string Name;
 		public Vector2Int Size;
 		public Sprite Icon;
+		public AbstractItem Item;
 	}
 }

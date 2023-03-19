@@ -16,7 +16,7 @@ namespace TankGame.Units.Ai {
 		}
 
 		public bool Act (Character character) {
-			if (ReferenceEquals(target.transform.parent, parent.GetObject().transform) && !ReferenceEquals(character.Traversable, parent)) {
+			if (target.transform.IsChildOf(parent.GetObject().transform) && !ReferenceEquals(character.Traversable, parent)) {
 				return true;
 			}
 
