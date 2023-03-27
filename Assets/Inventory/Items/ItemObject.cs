@@ -38,7 +38,7 @@ namespace TankGame.Items {
 			if (amount < StackCount) {
 				StackCount -= amount;
 
-				ItemObject newObj = ItemHolder.Construct(Item.Name, amount);
+				ItemObject newObj = Items.Construct(Item.Name, amount);
 
 				return newObj;
 			}

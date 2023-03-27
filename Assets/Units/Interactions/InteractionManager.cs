@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TankGame.Events;
+using TankGame.Units.Ai;
 using UnityEngine;
 using UnityEngine.Events;
-using static TankGame.Items.AbstractInventory;
 
 namespace TankGame.Units.Interactions {
 
@@ -14,7 +14,11 @@ namespace TankGame.Units.Interactions {
 
 		private Dictionary<string, UnityEventBase> listenerMap = new Dictionary<string, UnityEventBase>();
 
-		private void Awake () {
+		private List<Transform> inRangeTransforms = new List<Transform>();
+
+		private Dictionary<string, PreRequisite> addedPreRequisites = new Dictionary<string, PreRequisite>();
+
+		protected virtual void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
 
 			foreach (IInteractable interactable in interactables) {
@@ -51,11 +55,10 @@ namespace TankGame.Units.Interactions {
 				evnt.Invoke(context);
 			}
 
-			EventBus.Post(new InteractionEvent<T>(context));
 			return context;
 		}
 
-		public AbstractInteraction RequestInteraction<T> (string name, T target, Character character) where T : AbstractInteraction<T> {
+		public virtual AbstractInteraction RequestInteraction<T> (string name, T target, Character character) where T : AbstractInteraction<T> {
 			if (interactionsMap.TryGetValue(name, out AbstractInteractionFactory factory) && factory.TargetType.Equals(typeof(T))) {
 				AbstractInteraction interaction = factory.GetAsType<T>().Construct(target, character);
 
@@ -79,6 +82,8 @@ namespace TankGame.Units.Interactions {
 		}
 
 		//This is bad stinky temp method that will be replaced when this whole system stops being spaghet
+		//All this does is loop through each factory and tries to construct an interaction
+		//Need to better define default interactions
 		public AbstractInteraction RequestInteraction (Character character) {
 			foreach (KeyValuePair<string, AbstractInteractionFactory> entry in interactionsMap) {
 				AbstractInteraction test = entry.Value.Construct(character);
@@ -90,6 +95,50 @@ namespace TankGame.Units.Interactions {
 
 			Debug.LogWarning("No interaction created! Null value provided");
 			return null;
+		}
+
+		public List<PreRequisite> GetPreRequisites () {
+			List<PreRequisite> output = new List<PreRequisite>();
+
+			output.AddRange(addedPreRequisites.Values);
+
+			return output;
+		}
+
+		public void SubmitPreRequisite (string key, IEvaluator condition, State solution){
+			PreRequisite output = new PreRequisite {
+				condition = condition,
+				solution = solution
+			};
+
+			addedPreRequisites.TryAdd(key, output);
+		}
+
+		public void ExpirePreRequisite (string key) {
+			if (addedPreRequisites.ContainsKey(key)) {
+				addedPreRequisites.Remove(key);
+			}
+		}
+
+		//interaction trigger
+		private void OnTriggerEnter2D (Collider2D collision) {
+			Transform parentTransform = collision.transform.root;
+
+			inRangeTransforms.Add(collision.transform);
+		}
+
+		private void OnTriggerExit2D (Collider2D collision) {
+			if (inRangeTransforms.Contains(collision.transform)) {
+				inRangeTransforms.Remove(collision.transform);
+			}
+		}
+
+		public bool IsInRange (Transform transform) {
+			return inRangeTransforms.Contains(transform);
+		}
+
+		public List<Transform> TransformsInRange () {
+			return new List<Transform>(inRangeTransforms);
 		}
 	}
 }

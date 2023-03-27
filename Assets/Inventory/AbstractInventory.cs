@@ -14,9 +14,13 @@ namespace TankGame.Items {
         [SerializeField]
         protected StackEntry[] stackEntries;
 
-        private void Awake () {
+        protected InteractionManager manager;
+
+        protected virtual void Awake () {
+            manager = GetComponent<InteractionManager>();
+
             foreach (StackEntry entry in stackEntries) {
-                stackDictionary.TryAdd(ItemHolder.GetItem(entry.itemName), entry.stackLimit);
+                stackDictionary.TryAdd(Items.GetItem(entry.itemName), entry.stackLimit);
             }
         }
 
@@ -51,7 +55,11 @@ namespace TankGame.Items {
             return output;
         }
 
-        public class InvInteraction : AbstractInteraction<InvInteraction> {
+		public InteractionManager GetManager() {
+            return manager;
+		}
+
+		public class InvInteraction : AbstractInteraction<InvInteraction> {
 
             internal ItemObject Item { get; private set; }
 

@@ -20,5 +20,9 @@ namespace TankGame.Events {
             Phase = _context.Phase;
             Result = _context.Result;
         }
+
+        public void Cancel () {
+            Result = IResult.Cancel;
+        }
     }
 }

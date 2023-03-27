@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TankGame.Units;
+using TankGame.Units.Ai;
 
 namespace TankGame.Units.Interactions {
 
     public interface IInteractable {
         GameObject GetObject();
 
-        //void Interact (AbstractInteraction interaction);
-
         List<AbstractInteractionFactory> GetInteractions ();
 
-        //List<Command> Commands();
+        InteractionManager GetManager();
 
-        //Command GetInteraction();
+        List<PreRequisite> GetPreRequisites () {
+            return new List<PreRequisite>();
+		}
     }
 }

@@ -13,13 +13,5 @@ namespace TankGame.Events {
 		protected CharacterEvent(string name, Character character) : base(name) {
 			Character = character;
 		}
-
-		public class CommandEvent : CharacterEvent {
-			public Command.CommandContext Context { get; private set; }
-
-			public CommandEvent(Command.CommandContext context) : base("command_" + context.Command.Name, context.Character) {
-				Context = context;
-			}
-		}
 	}
 }
