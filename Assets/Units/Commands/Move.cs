@@ -1,38 +1,39 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Ai;
+using TankGame.Units.Navigation;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TankGame.Units.Pathfinding;
 
 namespace TankGame.Units.Commands {
 
-	public class Move : Command<Vector2> {
+	public class Move : TargetedCommand<Vector2> {
 
-		public Move(Vector2 _targetPosition) : base(_targetPosition, "move") { }
-
-		/*public override string Name() {
-			return "MoveCommand";
-		}*/
-
-		public override void Start(Character character) {
-			base.Start(character);
-
-			character.SubmitTarget(Target, OnPathComplete);
+		public Move(Vector2 _targetPosition) : base(Commands.GetTree("move"), _targetPosition) {
+			
 		}
 
-		public override void Cancel() {
-			base.Cancel();
+		public override void Initialize (Character character) {
+			//base.Initialize(character);
 
-			Character.Stop();
-		}
+			Actor = character;
 
-		private void OnPathComplete (bool success) {
-			if (success) {
-				Complete();
-			}
-			else {
-				Cancel();
+			Nodes[endNode].OnComplete += End;
+
+			Transform convertedPos = character.targetTracker;
+
+			convertedPos.position = Target;
+
+			convertedPos.SetParent(World.GlobalTraversable.GetObject().transform);
+
+			foreach (Decision node in Nodes) {
+				node.Initialize(this, convertedPos);
+
+				if (node.CurrentState is TargetedState<Vector2>) {
+					TargetedState<Vector2> state = node.CurrentState as TargetedState<Vector2>;
+					state.SetTarget(Target);
+				}
 			}
 		}
 	}

@@ -65,7 +65,7 @@ namespace TankGame.Players.Input {
 				success = true;
 			}
 
-			EventBus.Post<PlayerEvent.Selection>(new PlayerEvent.Selection(selectable, success));
+			EventBus.Post(new PlayerEvent.Selection(selectable, success));
 			return success;
 		}
 
@@ -101,7 +101,7 @@ namespace TankGame.Players.Input {
 						//s.ExecuteCommand(new Interact(interactableRay.collider.gameObject.GetComponentInParent<IInteractable>()));
 
 						Character c = s.GetObject().GetComponent<Character>();
-						AbstractInteraction interaction = interactableRay.transform.GetComponent<InteractionManager>().RequestInteraction(c);
+						AbstractInteraction interaction = interactableRay.collider.transform.GetComponent<InteractionManager>().RequestInteraction(c);
 
 						if (interaction != null) {
 							c.ExecuteCommand(new Interact(interaction));

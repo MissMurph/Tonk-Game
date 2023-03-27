@@ -32,20 +32,22 @@ namespace TankGame.Items {
 		[SerializeField]
 		private string[] startingItems;
 
-		private void Awake() {
+		protected override void Awake() {
+			base.Awake();
+
 			slots = new ItemObject[slotCount];
 		}
 
 		private void Start() {
 			foreach (string name in startingItems) {
-				ItemObject obj = ItemHolder.Construct(name);
+				ItemObject obj = Items.Construct(name);
 
 				slots[0] = obj;
 				itemList.Add(obj);
 			}
 
-			GetComponent<InteractionManager>().AddListener<InvInteraction>("TakeItem", ListenerTake);
-			GetComponent<InteractionManager>().AddListener<InvInteraction>("EnterItem", ListenerEnter);
+			manager.AddListener<InvInteraction>("TakeItem", ListenerTake);
+			manager.AddListener<InvInteraction>("EnterItem", ListenerEnter);
 		}
 
 		public override List<ItemObject> GetStored() {

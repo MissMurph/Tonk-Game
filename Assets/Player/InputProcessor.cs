@@ -33,10 +33,6 @@ namespace TankGame.Players.Input {
 			}
 		}
 
-		public GameObject GetObject() {
-			return gameObject;
-		}
-
 		public void AddInput(InputEntry entry) {
 			//Debug.Log(inputDictionary.Count);
 
@@ -47,6 +43,10 @@ namespace TankGame.Players.Input {
 
 		public List<InputEntry> GetInputs() {
 			return new List<InputEntry>(inputEntries);
+		}
+
+		public GameObject GetObject () {
+			return gameObject;
 		}
 	}
 

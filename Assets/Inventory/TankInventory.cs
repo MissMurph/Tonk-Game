@@ -18,7 +18,9 @@ namespace TankGame.Items {
 
 		public Vector2Int Size { get { return gridSize; } }
 
-		private void Awake() {
+		protected override void Awake() {
+			base.Awake();
+
 			storageSpaces = new Space[Size.x, Size.y];
 
 			for (int x = 0; x < Size.x; x++) {

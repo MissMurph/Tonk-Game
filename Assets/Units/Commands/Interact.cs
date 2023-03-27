@@ -1,62 +1,40 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Units.Ai;
 using TankGame.Units.Interactions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace TankGame.Units.Commands {
 
-	public class Interact : Command<AbstractInteraction> {
+	public class Interact : TargetedCommand<AbstractInteraction> {
 
-		private InteractionManager localManager;
-
-		public Interact(AbstractInteraction target) : base(target, "interact") {
+		public Interact(AbstractInteraction target) : base(Commands.GetTree("interact"), target) {
 			
 		}
 
-		public override void Start(Character character) {
-			base.Start(character);
+		public override void Initialize (Character character) {
+			//base.Initialize(character);
 
-			TargetTransform = Target.Parent.GetObject().transform;
+			Actor = character;
 
-			localManager = character.GetComponent<InteractionManager>();
+			Nodes[endNode].OnComplete += End;
 
-			if (character.CommManager.IsInRange(TargetTransform)) {
-				Perform();
-				return;
+			List<PreRequisite> transformReqs = Target.Parent.GetManager().GetPreRequisites();
+			List<PreRequisite> interactionReqs = Target.Parent.GetPreRequisites();
+
+			if (transformReqs is not null) PreRequisites.AddRange(transformReqs);
+			if (interactionReqs is not null) PreRequisites.AddRange(interactionReqs);
+
+			foreach (Decision node in Nodes) {
+				node.Initialize(this, Target.Parent.GetObject().transform);
+
+				if (node.CurrentState is TargetedState<AbstractInteraction>) {
+					TargetedState<AbstractInteraction> state = node.CurrentState as TargetedState<AbstractInteraction>;
+					state.SetTarget(Target);
+				}
 			}
-
-			character.SubmitTarget(TargetTransform, OnPathComplete);
-		}
-
-		public override void Perform() {
-			if (!Character.CommManager.IsInRange(TargetTransform) || Phase.Equals(CommandPhase.Performed)) {
-				return;
-			}
-
-			base.Perform();
-
-			InteractionContext result = localManager.Interact(Target);
-
-			if (result.Result.Equals(IResult.Success)) { Complete(); return; }
-			if (result.Result.Equals(IResult.Fail) || result.Result.Equals(IResult.Cancel)) { Cancel(); return; }
-		}
-
-		public override void OnTriggerEnter(Collider2D collision) {
-			base.OnTriggerEnter(collision);
-
-			Perform();
-		}
-
-		public override void Cancel() {
-			base.Cancel();
-
-			Character.Stop();
-		}
-
-		private void OnPathComplete(bool success) {
-			if (!success) Cancel();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Events;
 using UnityEngine;
 
 namespace TankGame.Units.Interactions {
@@ -9,8 +10,6 @@ namespace TankGame.Units.Interactions {
 
 		public delegate InteractionContext<T> InteractionFunction (T interaction);
 
-		
-
 		private InteractionFunction func;
 
 		protected AbstractInteraction (InteractionFunction _destination, Character _character, string _name, IInteractable _parent) : base(typeof(T), _name, _parent, _character) {
@@ -18,13 +17,26 @@ namespace TankGame.Units.Interactions {
 		}
 
 		public override InteractionContext Act (InteractionManager actor) {
-			InteractionContext<T> context = actor.Post(new InteractionContext<T>((T)this, IPhase.Pre, IResult.Start));
+			InteractionContext<T> context = PostEvent(new InteractionContext<T>((T)this, IPhase.Pre, IResult.Start));
 
-			if (context.Result.Equals(IResult.Cancel)) return context;
+			Parent.GetManager().Post(context);
+
+			if (context.Result.Equals(IResult.Cancel)) {
+				context.Phase = IPhase.Post;
+				PostEvent(context);
+				return context;
+			}
 
 			context = func.Invoke((T)this);
 
+			PostEvent(context);
+
 			return actor.Post(context);
+		}
+
+		private InteractionContext<T> PostEvent (InteractionContext<T> context) {
+			EventBus.Post(new InteractionEvent<T>(context));
+			return context;
 		}
 	}
 
@@ -56,7 +68,7 @@ namespace TankGame.Units.Interactions {
 	}
 
 	public class InteractionContext {
-		public IPhase Phase { get; private set; }
+		public IPhase Phase { get; internal set; }
 		public IResult Result { get; private set; }
 		public string Name { get; private set; }
 
