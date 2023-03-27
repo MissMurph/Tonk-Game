@@ -16,13 +16,7 @@ namespace TankGame.Tanks.Systems.Stations {
 		[SerializeField]
 		private float rotateSpeed;
 
-		private float rotateStep {
-			get {
-				return rotateSpeed * Time.fixedDeltaTime;
-			}
-		}
-
-		private float currentAngle {
+		private float CurrentAngle {
 			get {
 				return turretRigidBody.rotation;
 			}
@@ -73,13 +67,13 @@ namespace TankGame.Tanks.Systems.Stations {
 			float distToMin = Mathf.Abs(lookAngle);
 			float distToMax = 180f - distToMin;
 
-			float currentDistToMin = Mathf.Abs(currentAngle);
+			float currentDistToMin = Mathf.Abs(CurrentAngle);
 			float currentDistToMax = 180f - currentDistToMin;
 
 			totalMinDiff = distToMin + currentDistToMin;
 			totalMaxDiff = distToMax + currentDistToMax;
 
-			int sameSide = (int)(Mathf.Sign(lookAngle) * Mathf.Sign(currentAngle));
+			int sameSide = (int)(Mathf.Sign(lookAngle) * Mathf.Sign(CurrentAngle));
 
 			posOrNeg = 1;
 
@@ -90,14 +84,16 @@ namespace TankGame.Tanks.Systems.Stations {
 				finalDist = totalMaxDiff;
 			}
 
-			float gigaAngle = Mathf.MoveTowardsAngle(currentAngle, lookAngle, rotateSpeed * Time.fixedDeltaTime);
+			float gigaAngle = Mathf.MoveTowardsAngle(CurrentAngle, lookAngle, rotateSpeed * Time.fixedDeltaTime);
 
-			if (currentAngle > 0) posOrNeg *= -1;
+			if (CurrentAngle > 0) posOrNeg *= -1;
 
 			turretRigidBody.MoveRotation(gigaAngle);
 		}
 
 		public void Look(InputAction.CallbackContext context) {
+			if (!Manned) return;
+
 			Vector3 mousePos = context.ReadValue<Vector2>();
 
 			lookDirection = (Camera.main.ScreenToWorldPoint(mousePos) - turretRigidBody.gameObject.transform.position);
@@ -106,6 +102,8 @@ namespace TankGame.Tanks.Systems.Stations {
 		}
 
 		public void Fire(InputAction.CallbackContext context) {
+			if (!Manned) return;
+
 			if (context.started) {
 				Debug.Log("Firing...");
 			}

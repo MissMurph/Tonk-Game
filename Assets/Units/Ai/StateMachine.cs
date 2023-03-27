@@ -148,7 +148,7 @@ namespace TankGame.Units.Ai {
 			//Choose a random point in that total
 			System.Random rando = new System.Random();
 
-			int randomNumber = rando.Next(0, totalWeight);
+			int randomNumber = rando.Next(1, totalWeight);
 
 			//Loop backwards over the collection (as number is much more likely to land in larger weights), subtract the weight from the total then compare the random number with the new total
 			//If the random number is greater than the total, we've just subtracted the weight it's landed in

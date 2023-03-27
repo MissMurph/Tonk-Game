@@ -36,9 +36,9 @@ namespace TankGame.Units.Ai {
 
 		public override void Act (Character actor) {
 			if (Target.ActingCharacter.IntManager.IsInRange(Target.Parent.GetObject().transform)) {
-				InteractionContext cntxt = actor.IntManager.Interact(Target);
+				InteractionContext cntxt = Target.ActingCharacter.IntManager.Interact(Target);
 
-				if (cntxt.Phase == IPhase.Post) End();
+				if (cntxt.Phase == IPhase.Post && (cntxt.Result == IResult.Cancel || cntxt.Result == IResult.Success || cntxt.Result == IResult.Fail)) End();
 			}
 		}
 	}

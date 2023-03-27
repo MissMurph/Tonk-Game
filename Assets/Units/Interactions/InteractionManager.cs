@@ -55,7 +55,6 @@ namespace TankGame.Units.Interactions {
 				evnt.Invoke(context);
 			}
 
-			EventBus.Post(new InteractionEvent<T>(context));
 			return context;
 		}
 
