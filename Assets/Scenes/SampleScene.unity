@@ -1810,7 +1810,6 @@ GameObject:
   - component: {fileID: 1067486721}
   - component: {fileID: 1067486723}
   - component: {fileID: 1067486724}
-  - component: {fileID: 1067486726}
   m_Layer: 0
   m_Name: ObjectHolder
   m_TagString: GameController
@@ -2174,6 +2173,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50de418a6b1355c45b18d90d8347a154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   itemPrefab: {fileID: 6558844993205789566, guid: e09a834e1b7ca7b4785c56755169e115, type: 3}
   entries:
   - Name: test
@@ -2194,62 +2202,6 @@ MonoBehaviour:
   inventorySlot: {fileID: 5369342994539053694, guid: be6c5709cd82f1c48b9d5daf8dc1657f, type: 3}
   itemIcon: {fileID: 5118844552772872761, guid: fbb3023df9f75584ba0f66c2d1146c0b, type: 3}
   inventorySpace: {fileID: 7490683948838128760, guid: f0ac02cec3989d84f8244f09d5fbd047, type: 3}
---- !u!114 &1067486726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1067486718}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 847e86de32034fc42bf1d933dc4e7b34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: registry
-      Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[TankGame.Units.Ai.State,
-        Assembly-CSharp]], mscorlib
-    - Name: comparer
-      Entry: 7
-      Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.String,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 1
-      Data: idle_standing
-    - Name: $v
-      Entry: 7
-      Data: 2|TankGame.Units.Ai.IdleStanding, Assembly-CSharp
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
 --- !u!1001 &1082128958
 PrefabInstance:
   m_ObjectHideFlags: 0
