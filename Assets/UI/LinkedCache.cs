@@ -9,7 +9,7 @@ public class LinkedCache : MonoBehaviour {
 	private static Dictionary<Type, List<LinkedElement>> linkedMap = new Dictionary<Type, List<LinkedElement>>();
 
 	private void Start () {
-		EventBus.AddListener<InitializationEvent.InitUI>(InitializeUI);
+		EventBus.Subscribe<InitializationEvent.InitUI>(InitializeUI);
 	}
 
 	private void InitializeUI (InitializationEvent.InitUI evnt) {

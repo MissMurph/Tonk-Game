@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TankGame.Events;
 using TankGame.Units.Interactions;
+using TankGame.Items;
 
 namespace TankGame.UI {
 
@@ -10,12 +11,13 @@ namespace TankGame.UI {
     public class LinkedSpawner : MonoBehaviour {
 
 		private void Start () {
-			EventBus.AddListener<InteractionEvent<GenericInteraction>>(SearchingListener);
+			EventBus.Subscribe<InteractionEvent<GenericInteraction>>(SearchingListener);
 		}
 
+		//When we detect a Search Interaction being performed, we'll check the Linked Cache if the corresponding UI Element exists
 		private void SearchingListener (InteractionEvent<GenericInteraction> _event) {
 			if (_event.Name.Equals("Search")) {
-
+				//if (LinkedCache.FindLinkedElement<SupplyCache>(_event.)) ;
 			}
 		}
 	}

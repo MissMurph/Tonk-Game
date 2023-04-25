@@ -9,7 +9,7 @@ namespace TankGame.Items {
 	public class SupplyCache : AbstractInventory {
 
 		[SerializeField]
-		private int slotCount = 3;
+		public int slotCount = 3;
 
 		private ItemObject[] slots;
 

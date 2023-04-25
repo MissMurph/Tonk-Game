@@ -17,7 +17,7 @@ namespace TankGame.UI {
 		}
 
 		private void Start () {
-			EventBus.AddListener<PlayerEvent.ControlSwitch>(OnControlSwitch);
+			EventBus.Subscribe<PlayerEvent.ControlSwitch>(OnControlSwitch);
 		}
 
 		private void OnControlSwitch (PlayerEvent.ControlSwitch _event) {
