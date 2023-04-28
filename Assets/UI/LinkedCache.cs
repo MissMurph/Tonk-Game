@@ -16,7 +16,6 @@ public class LinkedCache : MonoBehaviour {
 		LinkedElement[] foundElements = GetComponentsInChildren<LinkedElement>();
 
 		for (int i = 0; i < foundElements.Length; i++) {
-
 			if (linkedMap.TryGetValue(foundElements[i].LinkedType, out List<LinkedElement> list)) {
 				list.Add(foundElements[i]);
 			}
@@ -34,13 +33,13 @@ public class LinkedCache : MonoBehaviour {
 			foreach (LinkedElement element in list) {
 				LinkedElement<T> linkedElement = element.GetAsType<T>();
 
-				if (linkedElement.GetLinked().Equals(requestedObject)) {
+				if (ReferenceEquals(linkedElement.GetLinked(), requestedObject)) {
 					return linkedElement;
 				}
 			}
 		}
 
-		Debug.LogError("No Linked Element Found! Are you sure the Linked Type & Name Matches?");
+		Debug.LogWarning("No Linked Element Found! Are you sure the Linked Type & Name Matches?");
 		return null;
 	}
 
@@ -58,6 +57,12 @@ public class LinkedCache : MonoBehaviour {
 	public static void OnElementInstantiate (LinkedElement element) {
 		if (linkedMap.TryGetValue(element.LinkedType, out List<LinkedElement> list)) {
 			list.Add(element);
+		}
+		else {
+			list = new List<LinkedElement> {
+				element
+			};
+			linkedMap.Add(element.LinkedType, list);
 		}
 	}
 }

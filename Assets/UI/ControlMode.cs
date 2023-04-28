@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using TankGame.Events;
 using UnityEngine.UI;
+using TMPro;
 
 namespace TankGame.UI {
 
 	public class ControlMode : MonoBehaviour {
 
 		//private Image localImage;
-		private Text localText;
+		[SerializeField]
+		private TextMeshProUGUI localText;
 
 		private void Awake () {
 			//localImage = GetComponent<Image>();
-			localText = GetComponentInChildren<Text>();
+			localText = GetComponentInChildren<TextMeshProUGUI>();
 		}
 
 		private void Start () {

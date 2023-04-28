@@ -17,19 +17,19 @@ namespace TankGame.UI {
 
 		private ProgressBar searchProgress;
 
-		protected override void Awake () {
-			base.Awake();
-
+		protected void Start () {
 			EventBus.Subscribe<InteractionEvent<GenericInteraction>>(OnSearchComplete);
 		}
 
 		private void Update () {
-			Vector3 worldPos = linkedInv.transform.position;
-			worldPos.y += 2;
+			if (linkedInv is not null) {
+				Vector3 worldPos = linkedInv.transform.position;
+				worldPos.y += 2;
 
-			Vector2 uiPos = Camera.main.WorldToScreenPoint(worldPos);
+				Vector2 uiPos = Camera.main.WorldToScreenPoint(worldPos);
 
-			UITransform.position = uiPos;
+				UITransform.position = uiPos;
+			}
 		}
 
 		public void Initialize (SupplyCache link) {
