@@ -18,6 +18,7 @@ namespace TankGame.Items {
 		[SerializeField]
 		private int searchWorkRequired = 15;
 
+		[SerializeField]
 		private int searchWorkDone = 0;
 
 		public float SearchProgress {
@@ -51,7 +52,7 @@ namespace TankGame.Items {
 
 		private void Start () {
 			foreach (string name in startingItems) {
-				ItemObject obj = Items.Construct(name);
+				ItemObject obj = Items.Construct(name, transform);
 
 				slots[0] = obj;
 				itemList.Add(obj);
@@ -73,10 +74,15 @@ namespace TankGame.Items {
 			return list;
 		}
 
+		public ItemObject GetAtSlot (int index) {
+			return slots[index];
+		}
+
 		public override List<AbstractInteractionFactory> GetInteractions () {
-			List<AbstractInteractionFactory> output = new List<AbstractInteractionFactory>();
-			output.Add(new GenericInteractionFactory("Search", TrySearch));
-			
+			List<AbstractInteractionFactory> output = new List<AbstractInteractionFactory> {
+				new GenericInteractionFactory("Search", TrySearch)
+			};
+
 			output.AddRange(base.GetInteractions());
 
 			return output;

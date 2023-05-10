@@ -14,7 +14,8 @@ namespace TankGame.UI {
 
 		public void Set (float value) {
 			Progress = Mathf.Clamp(value, 0, 100);
-			movingBar.position = new Vector3(100 - Progress, 0, 0);
+			movingBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Progress);
+			movingBar.anchoredPosition = new Vector3(Progress / 2, 0, 0);
 		}
 	}
 }

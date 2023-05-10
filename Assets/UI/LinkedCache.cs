@@ -1,41 +1,67 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TankGame.Events;
 using UnityEngine;
 
 public class LinkedCache : MonoBehaviour {
 
-	private static Dictionary<Type, List<LinkedElement>> linkedMap = new Dictionary<Type, List<LinkedElement>>();
+	private Dictionary<Type, List<LinkedElement>> linkedMap;
+
+	//private Queue<LinkedElement> linkRequestQueue;
+
+	private static LinkedCache instance;
+
+	private void Awake () {
+		instance = this;
+		linkedMap = new Dictionary<Type, List<LinkedElement>>();
+		//linkRequestQueue = new Queue<LinkedElement>();
+	}
 
 	private void Start () {
-		EventBus.Subscribe<InitializationEvent.InitUI>(InitializeUI);
+		//EventBus.Subscribe<InitializationEvent.InitUI>(InitializeUI);
 	}
+
+	/*private void Update () {
+		if (linkedMap is not null && linkRequestQueue.TryDequeue(out LinkedElement uiElement)) {
+			List<LinkedElement> elements = GetTypeCache(uiElement.LinkedType);
+			elements.Add(uiElement);
+		}
+	}*/
 
 	private void InitializeUI (InitializationEvent.InitUI evnt) {
 		LinkedElement[] foundElements = GetComponentsInChildren<LinkedElement>();
 
 		for (int i = 0; i < foundElements.Length; i++) {
-			if (linkedMap.TryGetValue(foundElements[i].LinkedType, out List<LinkedElement> list)) {
-				list.Add(foundElements[i]);
-			}
-			else {
-				List<LinkedElement> elementList = new List<LinkedElement>();
-				linkedMap.Add(foundElements[i].LinkedType, elementList);
+			List<LinkedElement> list = instance.GetTypeCache(foundElements[i].LinkedType);
 
-				elementList.Add(foundElements[i]);
-			}
+			list.Add(foundElements[i]);
 		}
 	}
 
-	public static LinkedElement<T> FindLinkedElement<T> (T requestedObject) where T : MonoBehaviour {
-		if (linkedMap.TryGetValue(typeof(T), out List<LinkedElement> list)) {
-			foreach (LinkedElement element in list) {
-				LinkedElement<T> linkedElement = element.GetAsType<T>();
+	public static bool Contains<T> (T worldObject) where T : MonoBehaviour {
+		List<LinkedElement> list = instance.GetTypeCache(typeof(T));
 
-				if (ReferenceEquals(linkedElement.GetLinked(), requestedObject)) {
-					return linkedElement;
-				}
+		foreach (LinkedElement element in list) {
+			LinkedElement<T> linkedElement = element as LinkedElement<T>;
+
+			if (ReferenceEquals(linkedElement.GetLinked(), worldObject)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static LinkedElement<T> FindLinkedElement<T> (T requestedObject) where T : MonoBehaviour {
+		List<LinkedElement> list = instance.GetTypeCache(typeof(T));
+
+		foreach (LinkedElement element in list) {
+			LinkedElement<T> linkedElement = element as LinkedElement<T>;
+
+			if (ReferenceEquals(linkedElement.GetLinked(), requestedObject)) {
+				return linkedElement;
 			}
 		}
 
@@ -43,26 +69,38 @@ public class LinkedCache : MonoBehaviour {
 		return null;
 	}
 
-	public static void OnElementDestroy (LinkedElement element) {
-		if (linkedMap.TryGetValue(element.LinkedType, out List<LinkedElement> list)) {
-			foreach (LinkedElement elmnt in list) {
-				if (ReferenceEquals(element, elmnt)) {
-					list.Remove(elmnt);
-					return;
-				}
-			}
+	private List<LinkedElement> GetTypeCache (Type type) {
+		if (linkedMap.TryGetValue(type, out List<LinkedElement> list)) {
+			return list;
+		}
+		else {
+			list = new List<LinkedElement>();
+			linkedMap.Add(type, list);
+			return list;
 		}
 	}
 
+	public static void OnElementDestroy (LinkedElement element) {
+		List<LinkedElement> list = instance.GetTypeCache(element.LinkedType);
+
+		foreach (LinkedElement elmnt in list) {
+			if (ReferenceEquals(element, elmnt)) {
+				list.Remove(elmnt);
+				return;
+			}
+		}
+
+		Debug.LogWarning("Error caching linked element, element already found");
+	}
+
 	public static void OnElementInstantiate (LinkedElement element) {
-		if (linkedMap.TryGetValue(element.LinkedType, out List<LinkedElement> list)) {
+		List<LinkedElement> list = instance.GetTypeCache(element.LinkedType);
+
+		if (!list.Contains(element)) {
 			list.Add(element);
+			return;
 		}
-		else {
-			list = new List<LinkedElement> {
-				element
-			};
-			linkedMap.Add(element.LinkedType, list);
-		}
+
+		Debug.LogError("Error caching linked element, element already found");
 	}
 }

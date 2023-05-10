@@ -42,18 +42,20 @@ namespace TankGame.Items {
 			return null;
 		}
 
-		public static ItemObject Construct(string name, int stackAmount) {
+		public static ItemObject Construct(string name, int stackAmount, Transform owner) {
 			if (instance.registeredItems.TryGetValue(name, out Item item)) {
 				ItemObject itemObject = Instantiate(instance.itemPrefab, instance.transform).GetComponent<ItemObject>();
 				itemObject.Initialize(item);
+				itemObject.transform.SetParent(owner);
+				itemObject.transform.localPosition = Vector3.zero;
 				return itemObject;
 			}
 
 			return null;
 		}
 
-		public static ItemObject Construct (string name) {
-			return Construct(name, 0);
+		public static ItemObject Construct (string name, Transform owner) {
+			return Construct(name, 1, owner);
 		}
 
 		private delegate T ItemConstructor<T>(string name);

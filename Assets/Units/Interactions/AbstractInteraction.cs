@@ -12,29 +12,36 @@ namespace TankGame.Units.Interactions {
 
 		private InteractionFunction func;
 
+		private IResult currentResult = IResult.Start;
+
 		protected AbstractInteraction (InteractionFunction _destination, Character _character, string _name, IInteractable _parent) : base(typeof(T), _name, _parent, _character) {
 			func = _destination;
 		}
 
 		public override InteractionContext Act (InteractionManager actor) {
-			InteractionContext<T> context = PostEvent(new InteractionContext<T>((T)this, IPhase.Pre, IResult.Start));
+			//Fire Pre Events
+			InteractionContext<T> context = PostEvent(new InteractionContext<T>((T)this, IPhase.Pre, currentResult), actor);
 
-			Parent.GetManager().Post(context);
-
+			//Check if the interaction is being cancelled
 			if (context.Result.Equals(IResult.Cancel)) {
 				context.Phase = IPhase.Post;
-				PostEvent(context);
+				PostEvent(context, actor);
 				return context;
 			}
 
 			context = func.Invoke((T)this);
 
-			PostEvent(context);
+			currentResult = context.Result;
 
-			return actor.Post(context);
+			PostEvent(context, actor);
+
+			return context;
 		}
 
-		private InteractionContext<T> PostEvent (InteractionContext<T> context) {
+		//Will fire local manager event, then local actor, then global event bus event
+		private InteractionContext<T> PostEvent (InteractionContext<T> context, InteractionManager actor) {
+			Parent.GetManager().Post(context);
+			actor.Post(context);
 			EventBus.Post(new InteractionEvent<T>(context));
 			return context;
 		}

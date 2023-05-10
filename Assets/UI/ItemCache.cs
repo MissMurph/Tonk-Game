@@ -13,7 +13,7 @@ namespace TankGame.UI {
 
 		private SupplyCache linkedInv;
 
-		private Dictionary<int, InventorySlot> slots = new Dictionary<int, InventorySlot>();
+		private InventorySlot[] slots;
 
 		private ProgressBar searchProgress;
 
@@ -35,6 +35,8 @@ namespace TankGame.UI {
 		public void Initialize (SupplyCache link) {
 			linkedInv = link;
 
+			slots = new InventorySlot[linkedInv.slotCount];
+
 			int totalSize = linkedInv.slotCount * 50;
 			int halfway = totalSize / 2;
 
@@ -43,24 +45,33 @@ namespace TankGame.UI {
 			GameObject progressBar = Instantiate(UIPrefabs.ProgressBar, transform);
 			searchProgress = progressBar.GetComponent<ProgressBar>();
 			searchProgress.Set(0);
-			searchProgress.gameObject.SetActive(false);
+			searchProgress.gameObject.SetActive(true);
 
 			for (int i = 0; i < linkedInv.slotCount; i++) {
-				GameObject slot = Instantiate(UIPrefabs.WorldPrefabs.CacheElement, transform);
+				GameObject slotObj = Instantiate(UIPrefabs.CharacterPrefabs.InventorySlot, transform);
+				RectTransform slotTransform = slotObj.GetComponent<RectTransform>();
+				InventorySlot slotComp = slotObj.GetComponent<InventorySlot>();
 
-				RectTransform slotTransform = slot.GetComponent<RectTransform>();
+				ItemObject occupyingItem = linkedInv.GetAtSlot(i);
+
+				if (occupyingItem != null) {
+					GameObject itemIconObj = Instantiate(UIPrefabs.CharacterPrefabs.ItemIcon, slotTransform);
+					ItemIcon iconComp = itemIconObj.GetComponent<ItemIcon>();
+					iconComp.Initialize(occupyingItem, slotComp);
+					slotComp.OccupyingItem = iconComp;
+				}
 
 				int x = ((i * 50) + 5) - halfway;
 
 				slotTransform.localPosition = new Vector3(x, 0, 0);
 
-				slots.Add(i, slot.GetComponent<InventorySlot>());
-				if (linkedInv.SearchProgress < 1) slot.SetActive(false);
+				slots[i] = slotComp;
+				if (linkedInv.SearchProgress < 1) slotObj.SetActive(false);
 			}
 		}
 
 		private void OnSearchComplete (InteractionEvent<GenericInteraction> _event) {
-			if (ReferenceEquals(_event.Interaction.Parent.GetObject(), linkedInv.gameObject)) {
+			if (_event.Interaction.Name.Equals("Search") && ReferenceEquals(_event.Interaction.Parent, linkedInv)) {
 				//We need to reveal the progress bar when starting to search
 				if (_event.Result.Equals(IResult.Start)) {
 					searchProgress.gameObject.SetActive(true);
@@ -72,7 +83,7 @@ namespace TankGame.UI {
 				}
 
 				if (_event.Result.Equals(IResult.Success)) {
-					foreach (InventorySlot slot in slots.Values) {
+					foreach (InventorySlot slot in slots) {
 						slot.gameObject.SetActive(true);
 					}
 
@@ -97,7 +108,16 @@ namespace TankGame.UI {
 		}
 
 		public override bool TryTakeItem (ItemIcon item) {
-			throw new System.NotImplementedException();
+			for (int i = 0; i < slots.Length; i++) {
+				if (ReferenceEquals(slots[i].OccupyingItem, item)) {
+					slots[i].OccupyingItem = null;
+
+					return true;
+				}
+			}
+
+			Debug.LogWarning("Item not found in ItemCache to remove!");
+			return false;
 		}
 	}
 }
