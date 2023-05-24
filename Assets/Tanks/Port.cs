@@ -12,11 +12,11 @@ namespace TankGame.Tanks {
 
 		private Tank parentTank;
 
-		private InteractionManager manager;
+		private Source manager;
 
 		private void Awake() {
 			parentTank = GetComponentInParent<Tank>();
-			manager = GetComponent<InteractionManager>();
+			manager = GetComponent<Source>();
 		}
 
 		public List<AbstractInteractionFactory> GetInteractions() {
@@ -55,7 +55,7 @@ namespace TankGame.Tanks {
 			return new GenericInteraction(UsePort, character, name, this);
 		}
 
-		public InteractionManager GetManager() {
+		public Source GetManager() {
 			return manager;
 		}
 	}

@@ -9,7 +9,7 @@ namespace TankGame.Units.Ai {
 
     public class Embarking : Interacting {
 
-        private InteractionManager source;
+        private Source source;
         private string interactionName;
 
         public override void Enter (Character actor) {

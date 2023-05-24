@@ -33,7 +33,7 @@ namespace TankGame.Units {
 
 		public bool executingCommand = false;
 
-		public InteractionManager IntManager { get; private set; }
+		public Source IntManager { get; private set; }
 
 		private Coroutine movementCoroutine;
 
@@ -49,7 +49,7 @@ namespace TankGame.Units {
 		public Transform targetTracker;
 
 		private void Awake() {
-			IntManager = GetComponent<InteractionManager>();
+			IntManager = GetComponent<Source>();
 			StateMachine = GetComponent<StateMachine>();
 			//Health = 100;
 		}

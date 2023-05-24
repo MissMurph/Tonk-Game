@@ -14,10 +14,10 @@ namespace TankGame.Items {
         [SerializeField]
         protected StackEntry[] stackEntries;
 
-        protected InteractionManager manager;
+        protected Source manager;
 
         protected virtual void Awake () {
-            manager = GetComponent<InteractionManager>();
+            manager = GetComponent<Source>();
 
             foreach (StackEntry entry in stackEntries) {
                 stackDictionary.TryAdd(Items.GetItem(entry.itemName), entry.stackLimit);
@@ -55,7 +55,7 @@ namespace TankGame.Items {
             return output;
         }
 
-		public InteractionManager GetManager() {
+		public Source GetManager() {
             return manager;
 		}
 

@@ -11,9 +11,9 @@ namespace TankGame.Units.Interactions {
     public interface IInteractable {
         GameObject GetObject();
 
-        List<AbstractInteractionFactory> GetInteractions ();
+        void Collect (Scraper scraper);
 
-        InteractionManager GetManager();
+        Source GetManager();
 
         List<PreRequisite> GetPreRequisites () {
             return new List<PreRequisite>();

@@ -26,11 +26,11 @@ namespace TankGame.Tanks {
 		[SerializeField]
         private Port[] embarkPorts;
 
-        private InteractionManager manager;
+        private Source manager;
 
         private void Awake() {
             input = GetComponent<PlayerInput>();
-            manager = GetComponent<InteractionManager>();
+            manager = GetComponent<Source>();
 
             foreach (Station station in GetComponentsInChildren<Station>()) {
                 stations.Add((Stations)Enum.Parse(typeof(Stations), station.gameObject.name), station);
@@ -140,7 +140,7 @@ namespace TankGame.Tanks {
             callback(new PathResult(outPut, true, request.callback));
         }
 
-		public InteractionManager GetManager() {
+		public Source GetManager() {
             return manager;
 		}
 

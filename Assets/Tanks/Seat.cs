@@ -26,11 +26,11 @@ namespace TankGame.Tanks {
 		[OdinSerialize]
 		public Character Occupant { get; private set; }
 
-		private InteractionManager manager;
+		private Source manager;
 
 		private void Awake() {
 			if (parent is null) parent = transform.parent.TryGetComponent(out ITraversable traversable) ? traversable : null;
-			manager = GetComponent<InteractionManager>();
+			manager = GetComponent<Source>();
 
 			foreach (Character character in GetComponentsInChildren<Character>()) {
 				character.Traversable = this;
@@ -86,7 +86,7 @@ namespace TankGame.Tanks {
 			callback(new PathResult(outPut, true, request.callback));
 		}
 
-		public InteractionManager GetManager() {
+		public Source GetManager() {
 			return manager;
 		}
 	}

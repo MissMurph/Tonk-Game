@@ -10,10 +10,10 @@ namespace TankGame.Tanks.Systems {
 		[SerializeField]
 		public int Health { get; private set; } = 100;
 
-		protected InteractionManager manager;
+		protected Source manager;
 
 		protected virtual void Awake () {
-			manager = GetComponent<InteractionManager>();
+			manager = GetComponent<Source>();
 		}
 
 		public virtual List<AbstractInteractionFactory> GetInteractions() {
@@ -24,7 +24,7 @@ namespace TankGame.Tanks.Systems {
 			return gameObject;
 		}
 
-		public InteractionManager GetManager () {
+		public Source GetManager () {
 			return manager;
 		}
 	}

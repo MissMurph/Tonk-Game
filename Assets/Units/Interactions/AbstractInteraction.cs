@@ -18,7 +18,7 @@ namespace TankGame.Units.Interactions {
 			func = _destination;
 		}
 
-		public override InteractionContext Act (InteractionManager actor) {
+		public override InteractionContext Act (Source actor) {
 			//Fire Pre Events
 			InteractionContext<T> context = PostEvent(new InteractionContext<T>((T)this, IPhase.Pre, currentResult), actor);
 
@@ -39,7 +39,7 @@ namespace TankGame.Units.Interactions {
 		}
 
 		//Will fire local manager event, then local actor, then global event bus event
-		private InteractionContext<T> PostEvent (InteractionContext<T> context, InteractionManager actor) {
+		private InteractionContext<T> PostEvent (InteractionContext<T> context, Source actor) {
 			Parent.GetManager().Post(context);
 			actor.Post(context);
 			EventBus.Post(new InteractionEvent<T>(context));
@@ -61,7 +61,7 @@ namespace TankGame.Units.Interactions {
 			ActingCharacter = _character;
 		}
 
-		public abstract InteractionContext Act (InteractionManager actor);
+		public abstract InteractionContext Act (Source actor);
 	}
 
 	/*	CONTEXT	*/
