@@ -101,7 +101,7 @@ namespace TankGame.Players.Input {
 						//s.ExecuteCommand(new Interact(interactableRay.collider.gameObject.GetComponentInParent<IInteractable>()));
 
 						Character c = s.GetObject().GetComponent<Character>();
-						AbstractInteraction interaction = interactableRay.collider.transform.GetComponent<Source>().RequestInteraction(c);
+						Interaction interaction = interactableRay.collider.transform.GetComponent<Source>().RequestInteraction(c);
 
 						if (interaction != null) {
 							c.ExecuteCommand(new Interact(interaction));

@@ -91,7 +91,7 @@ namespace TankGame.Items {
 
 		/*	Interaction Requisition	*/
 
-		protected override AbstractInteraction TryEnterItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryEnterItem (ItemObject item, Character character, string name) {
 			if (searchWorkDone < searchWorkRequired) {
 				Debug.LogWarning("Cache not searched! Cannot transfer items until Search is complete!");
 				return null;
@@ -105,7 +105,7 @@ namespace TankGame.Items {
 			return null;
 		}
 
-		protected override AbstractInteraction TryTakeItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryTakeItem (ItemObject item, Character character, string name) {
 			if (searchWorkDone < searchWorkRequired) {
 				Debug.LogWarning("Cache not searched! Cannot transfer items until Search is complete!");
 				return null;

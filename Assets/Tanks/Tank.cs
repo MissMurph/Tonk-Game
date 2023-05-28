@@ -144,7 +144,7 @@ namespace TankGame.Tanks {
             return manager;
 		}
 
-		protected class Embark : AbstractInteraction<Embark> {
+		protected class Embark : Interaction<Embark> {
 
             internal Station Seat { get; private set; }
 

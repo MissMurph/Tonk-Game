@@ -32,7 +32,7 @@ namespace TankGame.Units.Interactions {
 			typedFactories = interactionScraper.Submitted;
 		}
 
-		public void MakeRequest<T> (Actor actor, string name, Action<InteractionResult<T>> callback) {
+		public void MakeRequest (Actor actor, string name, Action<Interactionlet> callback) {
 			Type interactionType = typeof(T);
 
 			if (typedFactories.TryGetValue(interactionType, out Dictionary<string, AbstractInteractionFactory> foundDict) 
@@ -103,21 +103,22 @@ namespace TankGame.Units.Interactions {
 	}
 
 	public class Scraper {
-		public Dictionary<Type, Dictionary<string, AbstractInteractionFactory>> Submitted { get; private set; } 
+		public Dictionary<string, Interaction> Submitted { get; private set; }
 
-		public Scraper () {
-			Submitted = new Dictionary<Type, Dictionary<string, AbstractInteractionFactory>>();
+		private Source parent;
+
+		public Scraper (Source _parent) {
+			Submitted = new Dictionary<string, Interaction>();
+			parent = _parent;
 		}
 
-		public void Submit (Type key, AbstractInteractionFactory factory) {
-			if (Submitted.TryGetValue(key, out Dictionary<string, AbstractInteractionFactory> dict)) {
-				dict.Add(factory.Name, factory);
-			}
+		public Interaction Submit (string key, Interaction factory) {
+			if (Submitted.TryGetValue(key, out Interaction found)) Debug.LogError(key + " interaction already submitted to " + parent.gameObject.name + "!");
 			else {
-				Dictionary<string, AbstractInteractionFactory> newDict = new Dictionary<string, AbstractInteractionFactory>();
-				newDict.Add(factory.Name, factory);
-				Submitted.Add(key, newDict);
+				Submitted.Add(key, factory);
 			}
+
+			return factory;
 		}
 	}
 }

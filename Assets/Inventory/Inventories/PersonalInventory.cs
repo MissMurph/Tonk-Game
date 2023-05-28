@@ -207,7 +207,7 @@ namespace TankGame.Items {
 
 		/*	Interaction Requisition	*/
 
-		protected override AbstractInteraction TryEnterItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryEnterItem (ItemObject item, Character character, string name) {
 			if (Count < slotCount) {
 				return new InvInteraction(item, character, EnterItem, this, name);
 			}
@@ -216,7 +216,7 @@ namespace TankGame.Items {
 			return null;
 		}
 
-		protected override AbstractInteraction TryTakeItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryTakeItem (ItemObject item, Character character, string name) {
 			if (GetStored().Contains(item)) {
 				return new InvInteraction(item, character, TakeItem, this, name);
 			}

@@ -14,9 +14,5 @@ namespace TankGame.Units.Interactions {
         void Collect (Scraper scraper);
 
         Source GetManager();
-
-        List<PreRequisite> GetPreRequisites () {
-            return new List<PreRequisite>();
-		}
     }
 }

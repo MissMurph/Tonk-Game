@@ -8,9 +8,9 @@ using UnityEngine.InputSystem;
 
 namespace TankGame.Units.Commands {
 
-	public class Interact : TargetedCommand<AbstractInteraction> {
+	public class Interact : TargetedCommand<Interaction> {
 
-		public Interact(AbstractInteraction target) : base(Commands.GetTree("interact"), target) {
+		public Interact(Interaction target) : base(Commands.GetTree("interact"), target) {
 			
 		}
 
@@ -30,8 +30,8 @@ namespace TankGame.Units.Commands {
 			foreach (Decision node in Nodes) {
 				node.Initialize(this, Target.Parent.GetObject().transform);
 
-				if (node.CurrentState is TargetedState<AbstractInteraction>) {
-					TargetedState<AbstractInteraction> state = node.CurrentState as TargetedState<AbstractInteraction>;
+				if (node.CurrentState is TargetedState<Interaction>) {
+					TargetedState<Interaction> state = node.CurrentState as TargetedState<Interaction>;
 					state.SetTarget(Target);
 				}
 			}

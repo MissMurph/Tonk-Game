@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace TankGame.Units.Ai {
 
-	public class Interacting : TargetedState<AbstractInteraction> {
+	public class Interacting : TargetedState<Interaction> {
 
-		public delegate AbstractInteraction Supplier(Character character, string name);
+		public delegate Interaction Supplier(Character character, string name);
 
 		private Supplier supplier;
 		private string name;
 
 		public Interacting () { }
 
-		public Interacting (AbstractInteraction interaction) {
+		public Interacting (Interaction interaction) {
 			Target = interaction;
 		}
 

@@ -174,7 +174,7 @@ namespace TankGame.Items {
 
 		/*	Interactions	*/
 
-		public AbstractInteraction TryEnterItemAtPos (ItemObject item, Character character, Vector2Int pos) {
+		public Interaction TryEnterItemAtPos (ItemObject item, Character character, Vector2Int pos) {
 			for (int x = 1; x < item.Item.Size.x; x++) {
 				for (int y = 1; y < item.Item.Size.y; y++) {
 					if (storageSpaces[pos.x + x, pos.y + y].Occupied) {
@@ -202,7 +202,7 @@ namespace TankGame.Items {
 			return new InteractionContext<TankInvInteraction>(interaction, IPhase.Post, IResult.Success);
 		}
 
-		protected override AbstractInteraction TryEnterItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryEnterItem (ItemObject item, Character character, string name) {
 			//By looping over and checking every single item, we can catch multiple itemObjs of the same Item
 			foreach (KeyValuePair<Vector2Int, ItemObject> entry in storedItems) {
 				if (entry.Value.Item.Equals(item.Item) && stackDictionary.TryGetValue(entry.Value.Item, out int stackLimit) && entry.Value.StackCount + item.StackCount <= stackLimit) {
@@ -221,7 +221,7 @@ namespace TankGame.Items {
 			return null;
 		}
 
-		protected override AbstractInteraction TryTakeItem (ItemObject item, Character character, string name) {
+		protected override Interaction TryTakeItem (ItemObject item, Character character, string name) {
 			foreach (KeyValuePair<Vector2Int, ItemObject> entry in storedItems) {
 				if (ReferenceEquals(item, entry.Value) || (entry.Value.Item.Equals(item.Item) && entry.Value.StackCount <= item.StackCount)) {
 					return new InvInteraction(item, character, TakeItem, this, name);
@@ -283,7 +283,7 @@ namespace TankGame.Items {
 		}
 
 		//Custom implementation of Interaction for parsing through 2D position data
-		public class TankInvInteraction : AbstractInteraction<TankInvInteraction> {
+		public class TankInvInteraction : Interaction<TankInvInteraction> {
 
 			internal ItemObject Item { get; private set; }
 			internal Vector2Int Position { get; private set; }

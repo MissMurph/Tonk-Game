@@ -31,14 +31,14 @@ namespace TankGame.Items {
         public abstract List<ItemObject> GetStored ();
 
 
-        protected abstract AbstractInteraction TryEnterItem (ItemObject item, Character character, string name);
-        protected abstract AbstractInteraction TryTakeItem (ItemObject item, Character character, string name);
+        protected abstract Interaction TryEnterItem (ItemObject item, Character character, string name);
+        protected abstract Interaction TryTakeItem (ItemObject item, Character character, string name);
 
-        public AbstractInteraction TryTakeItemUI (ItemObject item, Character character) {
+        public Interaction TryTakeItemUI (ItemObject item, Character character) {
             return TryTakeItem(item, character, "TakeItem");
         }
 
-        public AbstractInteraction TryEnterItemUI (ItemObject item, Character character) {
+        public Interaction TryEnterItemUI (ItemObject item, Character character) {
             return TryEnterItem(item, character, "EnterItem");
         }
 
@@ -59,7 +59,7 @@ namespace TankGame.Items {
             return manager;
 		}
 
-		public class InvInteraction : AbstractInteraction<InvInteraction> {
+		public class InvInteraction : Interaction<InvInteraction> {
 
             internal ItemObject Item { get; private set; }
 

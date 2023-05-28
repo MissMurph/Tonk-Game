@@ -7,7 +7,7 @@ namespace TankGame.Units.Interactions {
 	
 	public class InteractionFactory<T> : AbstractInteractionFactory {
 
-		public delegate AbstractInteraction ConstructionDel(T target, Character character, string name);
+		public delegate Interaction ConstructionDel(T target, Character character, string name);
 		public delegate List<T> TargetDel ();
 		public delegate T EvaluateDel (Character character);
 
@@ -15,11 +15,11 @@ namespace TankGame.Units.Interactions {
 		protected TargetDel TargetQuery { get; private set; }
 		protected EvaluateDel Evaluation { get; private set; }
 
-		public AbstractInteraction Construct (T target, Character character) {
+		public Interaction Construct (T target, Character character) {
 			return Constructor.Invoke(target, character, Name);
 		}
 
-		public override AbstractInteraction Construct (Character character) {
+		public override Interaction Construct (Character character) {
 			if (Evaluation != null) return Construct(Evaluation.Invoke(character), character);
 			return base.Construct(character);
 		}
@@ -52,7 +52,7 @@ namespace TankGame.Units.Interactions {
 			Name = _name;
 		}
 
-		public virtual AbstractInteraction Construct (Character character) {
+		public virtual Interaction Construct (Character character) {
 			Debug.LogWarning("No default option available! Choose your target manually");
 			return null;
 		}

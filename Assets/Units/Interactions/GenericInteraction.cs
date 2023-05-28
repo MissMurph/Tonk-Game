@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TankGame.Units.Interactions {
 
-	public class GenericInteraction : AbstractInteraction<GenericInteraction> {
+	public class GenericInteraction : Interaction<GenericInteraction> {
 		public GenericInteraction(InteractionFunction _destination, Character _character, string _name, IInteractable _parent) : base(_destination, _character, _name, _parent) {
 
 		}
@@ -21,7 +21,7 @@ namespace TankGame.Units.Interactions {
 			constructor = _constructor;
 		}
 
-		public override AbstractInteraction Construct(Character character) {
+		public override Interaction Construct(Character character) {
 			return constructor.Invoke(character, Name);
 		}
 	}

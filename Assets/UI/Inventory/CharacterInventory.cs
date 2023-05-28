@@ -118,13 +118,13 @@ namespace TankGame.UI {
 
 		public override bool TryEnterItem (ItemIcon item, InventorySlot slot) {
 			if (item.ParentSlot.ParentInventory.GetLinked().TryGetComponent(out Character character)) {
-				AbstractInteraction interaction = linkedInv.TryEnterItemUI(item.Item, character);
+				Interaction interaction = linkedInv.TryEnterItemUI(item.Item, character);
 				if (interaction != null) character.ExecuteCommand(new Interact(interaction));
 				return true;
 			}
 			else {
 				Character linkedChar = linkedInv.GetComponent<Character>();
-				AbstractInteraction interaction = item.ParentSlot.ParentInventory.GetLinked().TryTakeItemUI(item.Item, linkedChar);
+				Interaction interaction = item.ParentSlot.ParentInventory.GetLinked().TryTakeItemUI(item.Item, linkedChar);
 				if (interaction != null) linkedChar.ExecuteCommand(new Interact(interaction));
 				return true;
 			}

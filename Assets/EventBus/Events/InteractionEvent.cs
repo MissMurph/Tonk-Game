@@ -7,7 +7,7 @@ using TankGame.Units;
 
 namespace TankGame.Events {
 
-    public class InteractionEvent<T> : AbstractEvent where T : AbstractInteraction<T> {
+    public class InteractionEvent<T> : AbstractEvent where T : Interaction<T> {
 
         public IPhase Phase { get; private set; }
         public IResult Result { get; private set; }
