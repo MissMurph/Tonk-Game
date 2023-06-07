@@ -1,6 +1,7 @@
 using Sirenix.Serialization;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Capabilities;
 using TankGame.Events;
 using TankGame.Units;
 using TankGame.Units.Interactions;
@@ -14,7 +15,10 @@ namespace TankGame.Items {
 
 		private ItemObject[] slots;
 
-		private List<ItemObject> itemList = new List<ItemObject>();
+		private List<ItemObject> stored = new List<ItemObject>();
+
+		private Dictionary<Interactionlet, Reservation> addReservations;
+		private Dictionary<Interactionlet, Reservation> removeReservations;
 
 		public int Count {
 			get {
@@ -37,6 +41,8 @@ namespace TankGame.Items {
 			base.Awake();
 
 			slots = new ItemObject[slotCount];
+			addReservations = new Dictionary<Interactionlet, Reservation>();
+			removeReservations = new Dictionary<Interactionlet, Reservation>();
 		}
 
 		private void Start() {
@@ -44,11 +50,8 @@ namespace TankGame.Items {
 				ItemObject obj = Items.Construct(name, transform);
 
 				slots[0] = obj;
-				itemList.Add(obj);
+				stored.Add(obj);
 			}
-
-			manager.AddListener<InvInteraction>("TakeItem", ListenerTake);
-			manager.AddListener<InvInteraction>("EnterItem", ListenerEnter);
 		}
 
 		public override List<ItemObject> GetStored() {
@@ -64,7 +67,6 @@ namespace TankGame.Items {
 		}
 
 		public ItemObject GetAtSlot(int index) {
-
 			return slots[index];
 		}
 
@@ -80,149 +82,142 @@ namespace TankGame.Items {
 			return -1;
 		}
 
-		/*	Interaction Listeners	*/
+		private bool IsLegalToAdd (ItemObject item, int slotIndex) {
+			stackDictionary.TryGetValue(item.Item, out int limit);
 
-		//When an item is taken from another inventory we need to update the slot and set the parent of the ItemObject
-		private void ListenerTake (InteractionContext<InvInteraction> context) {
-			if (context.Phase.Equals(IPhase.Pre)) {
-				foreach (ItemObject obj in itemList) {
-					if (ReferenceEquals(obj.Item, context.Interaction.Item.Item) && stackDictionary.TryGetValue(context.Interaction.Item.Item, out int stackLimit) && obj.StackCount < stackLimit) {
-						return;
+			if (slots[slotIndex] == null && item.StackCount <= limit) return true;
+
+			if (slots[slotIndex].Item.Equals(item.Item)) {
+				int reservedStacking = 0;
+
+				foreach (KeyValuePair<Interactionlet, Reservation> entry in addReservations) {
+					if (entry.Value.slot == slotIndex && entry.Value.item.Equals(item.Item)) {
+						reservedStacking += entry.Value.stack;
 					}
 				}
 
-				for (int i = 0; i < slots.Length; i++) {
-					if (slots[i] == null) {
-						return;
-					}
-				}
-
-				//We do another check to verify inventory changes can be made since the initial check when Interaction was constructed
-				//If neither the above checks succeed we need to cancel the interaction
-				context.Cancel();
-			}
-
-			if (context.Phase.Equals(IPhase.Post) && context.Result.Equals(IResult.Success)) {
-				ItemObject item = context.Interaction.Item;
-
-				foreach (ItemObject obj in itemList) {
-					if (ReferenceEquals(obj.Item, item.Item) && stackDictionary.TryGetValue(item.Item, out int stackLimit) && obj.StackCount < stackLimit) {
-						item = obj.AddToStack(item);
-						return;
-					}
-				}
-
-				for (int i = 0; i < slots.Length; i++) {
-					if (slots[i] == null) {
-						slots[i] = item;
-						item.transform.SetParent(transform);
-						itemList.Add(item);
-						return;
-					}
+				if (slots[slotIndex].StackCount + item.StackCount + reservedStacking <= limit) {
+					return true;
 				}
 			}
+
+			return false;
 		}
 
-		//When another inventory receives an item from this one, we need to update the slot
-		private void ListenerEnter (InteractionContext<InvInteraction> context) {
-			if (context.Phase.Equals(IPhase.Pre)) {
-				for (int i = 0; i < slots.Length; i++) {
-					if (slots[i] == null) {
-						return;
+		/*	Requisition	*/
+
+		/**Read Data:
+		 * item:name			string name of desired item
+		 * item:amount			int amount of desired item
+		 * item:concrete		ItemObject of desired item
+		 * slot:number			int number of desired slot
+		 */
+		protected override IResult RequestAdd (Actor actor, Interactionlet packet) {
+			if (packet.Step.Equals(IStep.Request) && packet.Data.TryGetValue("item:concrete", out ICapability itemObj)) {
+				ItemObject concrete = (itemObj as ItemCapability).Get();
+
+				for (int i = 0; i < slotCount; i++) {
+					if (packet.Data.TryGetValue("slot:number", out ICapability slotNumber) && i != slotNumber.Int()) continue;
+
+					if (IsLegalToAdd(concrete, i)) {
+						addReservations.Add(packet, new Reservation { slot = i, item = concrete.Item, stack = concrete.StackCount});
+						return IResult.Success;
 					}
 				}
-
-				//We do another check to verify inventory changes can be made since the initial check when Interaction was constructed
-				//If neither the above checks succeed we need to cancel the interaction
-				context.Cancel();
 			}
 
-			if (context.Phase.Equals(IPhase.Post) && context.Result.Equals(IResult.Success)) {
-				ItemObject item = context.Interaction.Item;
+			return IResult.Fail;
+		}
 
-				for (int i = 0; i < slots.Length; i++) {
-					if (ReferenceEquals(slots[i], item)) {
+		protected override IResult RequestRemove (Actor actor, Interactionlet packet) {
+			if (packet.Step.Equals(IStep.Request) && packet.Data.TryGetValue("item:name", out ICapability name) && packet.Data.TryGetValue("item:amount", out ICapability amount)) {
+				foreach (ItemObject item in stored) {
+					if (item.Item.Name.Equals(name.String()) && item.StackCount >= amount.Int()) {
+						packet.Data.Add("item:concrete", new ItemCapability(item));
+						removeReservations.Add(packet, new Reservation { slot = GetItemIndex(item), item = item.Item, stack = amount.Int()});
+						return IResult.Success;
+					}
+				}
+			}
+
+			return IResult.Fail;
+		}
+
+		/*	Acting	*/
+
+		protected override IResult ActAdd (Actor actor, Interactionlet packet) {
+			//By comparing the Interactionlet against the reservation, we can implicitly confirm from the request stage that this interaction is possible and conditions
+			//haven't changed since the request was made
+			if (packet.Step.Equals(IStep.Act) && packet.Data.TryGetValue("item:concrete", out ICapability itemObj) && addReservations.ContainsKey(packet)) {
+				ItemObject concrete = (itemObj as ItemCapability).Get();
+
+				for (int i = 0; i < slotCount; i++) {
+					if (packet.Data.TryGetValue("slot:number", out ICapability slotNumber) && i != slotNumber.Int()) continue;
+
+					if (slots[i] is null) {
+						slots[i] = concrete;
+						concrete.transform.SetParent(transform);
+						stored.Add(concrete);
+					}
+					else {
+						slots[i].AddToStack(concrete);
+					}
+
+					addReservations.Remove(packet);
+					return IResult.Success;
+				}
+			}
+
+			return IResult.Fail;
+		}
+
+		protected override IResult ActRemove (Actor actor, Interactionlet packet) {
+			if (packet.Step.Equals(IStep.Act) && packet.Data.TryGetValue("item:concrete", out ICapability itemObj) && addReservations.ContainsKey(packet)) {
+
+				for (int i = 0; i < slotCount; i++) {
+					if (packet.Data.TryGetValue("slot:number", out ICapability slotNumber) && i != slotNumber.Int()) continue;
+
+					removeReservations.TryGetValue(packet, out Reservation reservation);
+
+					if (slots[i].StackCount > reservation.stack) {
+						ItemObject newObj = slots[i].TakeFromStack(reservation.stack);
+						packet.Data["item:concrete"] = new ItemCapability(newObj);
+						removeReservations.Remove(packet);
+						
+					}
+					else {
+						packet.Data["item:concrete"] = new ItemCapability(slots[i]);
 						slots[i] = null;
-						itemList.Remove(item);
-						return;
+						stored.Remove(slots[i]);
 					}
+
+					removeReservations.Remove(packet);
+					return IResult.Success;
 				}
+			}
+
+			return IResult.Fail;
+		}
+
+		/*	Listening	*/
+
+		//This is listening for if we're adding one of our items to another
+		protected override void ListenAdd (Interactionlet packet) {
+			if (packet.Step.Equals(IStep.Act) && packet.Result.Equals(IResult.Success) && packet.Data.TryGetValue("item:concrete", out ICapability itemObj)) {
+				ItemObject concrete = (itemObj as ItemCapability).Get();
+
 			}
 		}
 
-		/*	Interaction Acting Functions	*/
-
-		//Interaction Function for taking an item from this inventory
-		private InteractionContext<InvInteraction> TakeItem (InvInteraction interaction) {
-			ItemObject item = interaction.Item;
-
-			for (int i = 0; i < slots.Length; i++) {
-				if (ReferenceEquals(slots[i], item)) {
-					slots[i] = null;
-					itemList.Remove(item);
-					return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Success);
-				}
-				//If we cannot locate the same reference, we'll need to find an ItemObject that can legally supply the same item Type & Requested Stack Amount
-				else if (slots[i].Item.Equals(item.Item) && slots[i].StackCount >= item.StackCount) {
-					ItemObject result = slots[i].TakeFromStack(item.StackCount);
-
-					if (result.Equals(slots[i])) {
-						slots[i] = null;
-						itemList.Remove(result);
-						return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Success);
-					}
-					else if (result != null) {
-						return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Success);
-					}
-				}
-			}
-
-			return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Fail);
+		//This is listening if we're removing an item from another inventory
+		protected override void ListenRemove (Interactionlet packet) {
+			throw new System.NotImplementedException();
 		}
 
-		//Interaction Function for entering an item into this inventory
-		private InteractionContext<InvInteraction> EnterItem (InvInteraction interaction) {
-			ItemObject item = interaction.Item;
-
-			foreach (ItemObject obj in itemList) {
-				if (ReferenceEquals(obj.Item, item.Item) && stackDictionary.TryGetValue(item.Item, out int stackLimit) && obj.StackCount + item.StackCount <= stackLimit) {
-					obj.AddToStack(item);
-					//EventBus.Post(new InventoryEvent.ItemAdded(this, item));
-					return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Success);
-				}
-			}
-
-			for (int i = 0; i < slots.Length; i++) {
-				if (slots[i] == null) {
-					slots[i] = item;
-					item.transform.SetParent(transform);
-					itemList.Add(item);
-					//EventBus.Post(new InventoryEvent.ItemAdded(this, item));
-					return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Success);
-				}
-			}
-
-			return new InteractionContext<InvInteraction>(interaction, IPhase.Post, IResult.Fail);
-		}
-
-		/*	Interaction Requisition	*/
-
-		protected override Interaction TryEnterItem (ItemObject item, Character character, string name) {
-			if (Count < slotCount) {
-				return new InvInteraction(item, character, EnterItem, this, name);
-			}
-
-			Debug.LogWarning("Cannot enter requested item! Not enough space in inventory! Interaction request declined");
-			return null;
-		}
-
-		protected override Interaction TryTakeItem (ItemObject item, Character character, string name) {
-			if (GetStored().Contains(item)) {
-				return new InvInteraction(item, character, TakeItem, this, name);
-			}
-
-			Debug.LogWarning("Cannot take requested item! Not in inventory! Interaction request declined");
-			return null;
+		private struct Reservation {
+			internal int slot;
+			internal Item item;
+			internal int stack;
 		}
 	}
 }

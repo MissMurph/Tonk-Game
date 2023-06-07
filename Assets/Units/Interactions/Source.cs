@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TankGame.Capabilities;
 using TankGame.Events;
 using TankGame.Units.Ai;
 using UnityEngine;
@@ -10,35 +11,57 @@ namespace TankGame.Units.Interactions {
 
 	public class Source : MonoBehaviour {
 
-		private Dictionary<IInteractable, List<AbstractInteractionFactory>> interactablesMap = new Dictionary<IInteractable, List<AbstractInteractionFactory>>();
-		private Dictionary<string, AbstractInteractionFactory> interactionsMap = new Dictionary<string, AbstractInteractionFactory>();
+		private Dictionary<string, Interaction> registered;
 
-		private Dictionary<string, UnityEventBase> listenerMap = new Dictionary<string, UnityEventBase>();
-
-		private List<Transform> inRangeTransforms = new List<Transform>();
+		private Dictionary<string, UnityEventBase> listenerMap;
 
 		private Dictionary<string, PreRequisite> addedPreRequisites = new Dictionary<string, PreRequisite>();
 
-		private Dictionary<Type, Dictionary<string, AbstractInteractionFactory>> typedFactories;
+		private Character character;
 
 		protected virtual void Awake () {
 			IInteractable[] interactables = GetComponents<IInteractable>();
-			Scraper interactionScraper = new Scraper();
+			character = GetComponent<Character>();
+			Collector interactionScraper = new Collector(gameObject, ISide.Source);
 
 			foreach (IInteractable interactable in interactables) {
-				interactable.Collect(interactionScraper);
+				interactable.OnCollection(interactionScraper);
 			}
 
-			typedFactories = interactionScraper.Submitted;
+			registered = interactionScraper.Interactions;
+			listenerMap = interactionScraper.Listeners;
 		}
 
-		public void MakeRequest (Actor actor, string name, Action<Interactionlet> callback) {
-			Type interactionType = typeof(T);
+		public void Request (Actor.Request request) {
+			if (registered.TryGetValue(request.Key, out Interaction found)) {
+				Interactionlet packet = new Interactionlet(found, request.Data);
 
-			if (typedFactories.TryGetValue(interactionType, out Dictionary<string, AbstractInteractionFactory> foundDict) 
-				&& foundDict.TryGetValue(name, out AbstractInteractionFactory foundFac)) {
-				callback(new InteractionResult<T>());
+				packet.Phase = IPhase.Pre;
+				packet.Result = IResult.Continue;
+
+				InteractionEvent _event = Post(packet);
+
+				if (!_event.Result.Equals(IResult.Cancel)) {
+					packet.Result = found.Construct(request.Actor, packet);
+				}
+				else packet.Result = IResult.Cancel;
+
+				
+				request.Callback(packet);
+				Post(packet);
 			}
+		}
+
+		public void Act (Interactionlet packet, Actor actor, Action<Interactionlet> callback) {
+			packet.Step = IStep.Act;
+			packet.Phase = IPhase.Pre;
+			packet.Result = packet.Interaction.Act(actor, packet);
+		}
+
+		private InteractionEvent Post (Interactionlet result) {
+			InteractionEvent _event = new InteractionEvent(result, character, ISide.Actor);
+			EventBus.Post(_event);
+			return _event;
 		}
 
 		public List<PreRequisite> GetPreRequisites () {
@@ -63,62 +86,33 @@ namespace TankGame.Units.Interactions {
 				addedPreRequisites.Remove(key);
 			}
 		}
-
-		//interaction trigger
-		private void OnTriggerEnter2D (Collider2D collision) {
-			Transform parentTransform = collision.transform.root;
-
-			inRangeTransforms.Add(collision.transform);
-		}
-
-		private void OnTriggerExit2D (Collider2D collision) {
-			if (inRangeTransforms.Contains(collision.transform)) {
-				inRangeTransforms.Remove(collision.transform);
-			}
-		}
-
-		public bool IsInRange (Transform transform) {
-			return inRangeTransforms.Contains(transform);
-		}
-
-		public List<Transform> TransformsInRange () {
-			return new List<Transform>(inRangeTransforms);
-		}
 	}
 
-	public struct InteractionResult<T> {
-		public T Interaction { get; private set; }
-		public Source Source { get; private set; }
-		public Actor Actor { get; private set; }
-		public IPhase Phase { get; private set; }
-		public IResult Result { get; private set; }
+	public class Interactionlet {
 
-		public InteractionResult(T _interaction, Source _source, Actor _actor, IPhase _phase, IResult _result) {
+		public IPhase Phase { get; set; }
+		public IStep Step { get; set; }
+		public IResult Result { get; set; }
+		public string Name { get { return Interaction.Name; } }
+
+		internal Interaction Interaction;
+
+		public Dictionary<string, ICapability> Data { get; private set; }
+
+		public Source Source { get { return Interaction.Parent.GetManager(); } }
+		public IInteractable Component { get { return Interaction.Parent; } }
+
+		internal Interactionlet (Interaction _interaction, params ICapability[] data) {
 			Interaction = _interaction;
-			Source = _source;
-			Actor = _actor;
-			Phase = _phase;
-			Result = _result;
-		}
-	}
+			Data = new Dictionary<string, ICapability>();
 
-	public class Scraper {
-		public Dictionary<string, Interaction> Submitted { get; private set; }
-
-		private Source parent;
-
-		public Scraper (Source _parent) {
-			Submitted = new Dictionary<string, Interaction>();
-			parent = _parent;
-		}
-
-		public Interaction Submit (string key, Interaction factory) {
-			if (Submitted.TryGetValue(key, out Interaction found)) Debug.LogError(key + " interaction already submitted to " + parent.gameObject.name + "!");
-			else {
-				Submitted.Add(key, factory);
+			foreach (ICapability capability in data) {
+				Data.TryAdd(capability.Name, capability);
 			}
+		}
 
-			return factory;
+		public void Cancel () {
+			Result = IResult.Cancel;
 		}
 	}
 }

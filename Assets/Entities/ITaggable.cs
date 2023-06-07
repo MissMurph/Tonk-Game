@@ -1,18 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ITaggable : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace TankGame.Entities {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public interface ITaggable {
+		void Register (Entity entity);
+		abstract Type Type { get; }
+		
+	}
+
+	public interface ITaggable<T> where T : ITaggable {
+		T Get ();
+		Type Type { get { return typeof(T); } }
+	}
 }

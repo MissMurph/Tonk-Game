@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityCache : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+namespace TankGame.Entities {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	public class EntityCache : MonoBehaviour {
+
+		private Dictionary<Transform, Entity> registered;
+
+		private void Awake () {
+			registered = new Dictionary<Transform, Entity>();
+		}
+	}
 }

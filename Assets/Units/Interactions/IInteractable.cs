@@ -11,7 +11,7 @@ namespace TankGame.Units.Interactions {
     public interface IInteractable {
         GameObject GetObject();
 
-        void Collect (Scraper scraper);
+        void OnCollection (Collector collector);
 
         Source GetManager();
     }

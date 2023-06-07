@@ -31,41 +31,34 @@ namespace TankGame.Items {
         public abstract List<ItemObject> GetStored ();
 
 
-        protected abstract Interaction TryEnterItem (ItemObject item, Character character, string name);
-        protected abstract Interaction TryTakeItem (ItemObject item, Character character, string name);
+        protected abstract IResult RequestAdd (Actor actor, Interactionlet packet);
+        protected abstract IResult RequestRemove (Actor actor, Interactionlet packet);
+        protected abstract IResult ActAdd (Actor actor, Interactionlet packet);
+        protected abstract IResult ActRemove (Actor actor, Interactionlet packet);
+        protected abstract void ListenAdd (Interactionlet packet);
+        protected abstract void ListenRemove (Interactionlet packet);
 
-        public Interaction TryTakeItemUI (ItemObject item, Character character) {
-            return TryTakeItem(item, character, "TakeItem");
+        /*public Interaction TryTakeItemUI (ItemObject item, Character character) {
+            return RequestRemove(item, character, "TakeItem");
         }
 
         public Interaction TryEnterItemUI (ItemObject item, Character character) {
-            return TryEnterItem(item, character, "EnterItem");
-        }
+            return RequestAdd(item, character, "EnterItem");
+        }*/
 
         public GameObject GetObject () {
             return gameObject;
-        }
-
-        public virtual List<AbstractInteractionFactory> GetInteractions () {
-            List<AbstractInteractionFactory> output = new List<AbstractInteractionFactory> {
-                new InteractionFactory<ItemObject>("EnterItem", TryEnterItem, () => new List<ItemObject>()),
-                new InteractionFactory<ItemObject>("TakeItem", TryTakeItem, GetStored)
-            };
-
-            return output;
         }
 
 		public Source GetManager() {
             return manager;
 		}
 
-		public class InvInteraction : Interaction<InvInteraction> {
-
-            internal ItemObject Item { get; private set; }
-
-            internal InvInteraction (ItemObject item, Character character, InteractionFunction destination, IInteractable parent, string name) : base(destination, character, name, parent) {
-                Item = item;
-            }
+		public void OnCollection (Collector collector) {
+            collector.Submit("add", ActAdd, RequestAdd, this);
+            collector.Submit("remove", ActRemove, RequestRemove, this);
+            collector.AttachListener("add", ListenAdd);
+            collector.AttachListener("remove", ListenRemove);
         }
     }
 

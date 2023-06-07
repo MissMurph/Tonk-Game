@@ -202,7 +202,7 @@ namespace TankGame.Items {
 			return new InteractionContext<TankInvInteraction>(interaction, IPhase.Post, IResult.Success);
 		}
 
-		protected override Interaction TryEnterItem (ItemObject item, Character character, string name) {
+		protected override Interaction RequestAdd (ItemObject item, Character character, string name) {
 			//By looping over and checking every single item, we can catch multiple itemObjs of the same Item
 			foreach (KeyValuePair<Vector2Int, ItemObject> entry in storedItems) {
 				if (entry.Value.Item.Equals(item.Item) && stackDictionary.TryGetValue(entry.Value.Item, out int stackLimit) && entry.Value.StackCount + item.StackCount <= stackLimit) {
@@ -221,7 +221,7 @@ namespace TankGame.Items {
 			return null;
 		}
 
-		protected override Interaction TryTakeItem (ItemObject item, Character character, string name) {
+		protected override Interaction RequestRemove (ItemObject item, Character character, string name) {
 			foreach (KeyValuePair<Vector2Int, ItemObject> entry in storedItems) {
 				if (ReferenceEquals(item, entry.Value) || (entry.Value.Item.Equals(item.Item) && entry.Value.StackCount <= item.StackCount)) {
 					return new InvInteraction(item, character, TakeItem, this, name);
