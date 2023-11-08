@@ -4,7 +4,7 @@ namespace TankGame.Items {
 
 	public class ItemObject : MonoBehaviour {
 
-		public AbstractItem Item { get; private set; }
+		public Item Item { get; private set; }
 
 		public int StackCount { get; private set; }
 
@@ -14,11 +14,11 @@ namespace TankGame.Items {
 			}
 		}
 
-		public void Initialize(AbstractItem _item) {
+		public void Initialize(Item _item) {
 			Initialize(_item, 0);
 		}
 
-		public void Initialize (AbstractItem _item, int _stackCount) {
+		public void Initialize (Item _item, int _stackCount) {
 			Item = _item;
 			StackCount = _stackCount;
 		}
@@ -38,7 +38,7 @@ namespace TankGame.Items {
 			if (amount < StackCount) {
 				StackCount -= amount;
 
-				ItemObject newObj = Items.Construct(Item.Name, amount);
+				ItemObject newObj = Items.Construct(Item.Name, amount, transform.parent);
 
 				return newObj;
 			}

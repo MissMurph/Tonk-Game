@@ -18,7 +18,7 @@ public abstract class LinkedElement : MonoBehaviour {
 
 	public Type LinkedType { get; internal set; }
 	public string LinkedName { get; internal set; }
-	public RectTransform RectTransform { 
+	public RectTransform UITransform { 
 		get {
 			return (RectTransform)transform;
 		}

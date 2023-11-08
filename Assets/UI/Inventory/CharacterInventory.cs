@@ -57,8 +57,8 @@ namespace TankGame.UI {
 				slots[i] = slotComp;
 			}
 
-			EventBus.AddListener<InteractionEvent<InvInteraction>>(EnterItem);
-			EventBus.AddListener<InteractionEvent<InvInteraction>>(TakeItem);
+			EventBus.Subscribe<InteractionEvent<InvInteraction>>(EnterItem);
+			EventBus.Subscribe<InteractionEvent<InvInteraction>>(TakeItem);
 		}
 
 		private void EnterItem (InteractionEvent<InvInteraction> _event) {
@@ -110,10 +110,10 @@ namespace TankGame.UI {
 			icon.transform.SetParent(slot.transform);
 			icon.transform.SetAsLastSibling();
 
-			icon.RectTransform.anchorMin = Vector2.zero;
-			icon.RectTransform.anchorMax = Vector2.one;
-			icon.RectTransform.sizeDelta = Vector2.zero;
-			icon.RectTransform.localPosition = Vector3.zero;
+			icon.UITransform.anchorMin = Vector2.zero;
+			icon.UITransform.anchorMax = Vector2.one;
+			icon.UITransform.sizeDelta = Vector2.zero;
+			icon.UITransform.localPosition = Vector3.zero;
 		}
 
 		public override bool TryEnterItem (ItemIcon item, InventorySlot slot) {

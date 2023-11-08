@@ -1,3 +1,4 @@
+using Sirenix.Serialization;
 using System.Collections;
 using System.Collections.Generic;
 using TankGame.Events;
@@ -40,7 +41,7 @@ namespace TankGame.Items {
 
 		private void Start() {
 			foreach (string name in startingItems) {
-				ItemObject obj = Items.Construct(name);
+				ItemObject obj = Items.Construct(name, transform);
 
 				slots[0] = obj;
 				itemList.Add(obj);
@@ -125,8 +126,8 @@ namespace TankGame.Items {
 		//When another inventory receives an item from this one, we need to update the slot
 		private void ListenerEnter (InteractionContext<InvInteraction> context) {
 			if (context.Phase.Equals(IPhase.Pre)) {
-				foreach (ItemObject obj in itemList) {
-					if (ReferenceEquals(obj.Item, context.Interaction.Item.Item)) {
+				for (int i = 0; i < slots.Length; i++) {
+					if (slots[i] == null) {
 						return;
 					}
 				}

@@ -19,7 +19,7 @@ namespace TankGame.UI {
 				pages.Add(CreatePage(characters[i]));
 			}
 
-			EventBus.AddListener<PlayerEvent.Selection>(OnSelect);
+			EventBus.Subscribe<PlayerEvent.Selection>(OnSelect);
 			//EventBus.AddListener<InventoryEvent.ItemTransfered>(OnItemTransfered);
 		}
 

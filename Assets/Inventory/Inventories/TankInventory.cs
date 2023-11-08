@@ -61,7 +61,7 @@ namespace TankGame.Items {
 			storedItems.Remove(position);
 		}
 
-		public bool ContainsItem (AbstractItem item, out ItemObject outObj) {
+		public bool ContainsItem (Item item, out ItemObject outObj) {
 			foreach (ItemObject itemObj in storedItems.Values) {
 				if (itemObj.Item.Name.Equals(item.Name)) {
 					outObj = itemObj;
