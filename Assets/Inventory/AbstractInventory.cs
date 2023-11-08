@@ -9,7 +9,7 @@ namespace TankGame.Items {
 
         //protected List<ItemObject> storedItems = new List<ItemObject>();
 
-        protected Dictionary<AbstractItem, int> stackDictionary = new Dictionary<AbstractItem, int>();
+        protected Dictionary<Item, int> stackDictionary = new Dictionary<Item, int>();
 
         [SerializeField]
         protected StackEntry[] stackEntries;

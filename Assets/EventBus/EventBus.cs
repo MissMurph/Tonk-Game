@@ -27,7 +27,7 @@ namespace TankGame.Events {
 			return postedEvent;
 		}
 
-		public static void AddListener<T>(UnityAction<T> func) where T : AbstractEvent {
+		public static void Subscribe<T>(UnityAction<T> func) where T : AbstractEvent {
 			Type type = typeof(T);
 
 			if (instance.map.TryGetValue(type, out UnityEventBase value)) {
@@ -38,6 +38,15 @@ namespace TankGame.Events {
 				UnityEvent<T> unityEvent = new UnityEvent<T>();
 				unityEvent.AddListener(func);
 				instance.map.Add(type, unityEvent);
+			}
+		}
+
+		public static void Unsubscribe<T> (UnityAction<T> func) where T : AbstractEvent {
+			Type type = typeof(T);
+
+			if (instance.map.TryGetValue(type, out UnityEventBase value)) {
+				UnityEvent<T> superType = (UnityEvent<T>)value;
+				superType.RemoveListener(func);
 			}
 		}
 	}

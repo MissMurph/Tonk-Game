@@ -94,7 +94,7 @@ MonoBehaviour:
   stackEntries: []
   slotCount: 4
   startingItems:
-  - test
+  - Generic Item
 --- !u!212 &980698760530667078
 SpriteRenderer:
   m_ObjectHideFlags: 0

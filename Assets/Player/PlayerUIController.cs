@@ -34,7 +34,7 @@ namespace TankGame.Players.Input {
 		private Vector2 mousePos;
 
 		void Start() {
-			EventBus.AddListener<PlayerEvent.ControlSwitch>(OnControlSwitch);
+			EventBus.Subscribe<PlayerEvent.ControlSwitch>(OnControlSwitch);
 		}
 
 		void Update() {

@@ -38,9 +38,9 @@ namespace TankGame.UI {
 		}
 
 		private void Start() {
-			EventBus.AddListener<InteractionEvent<InvInteraction>>(EnterItem);
-			EventBus.AddListener<InteractionEvent<InvInteraction>>(TakeItem);
-			EventBus.AddListener<InteractionEvent<TankInventory.TankInvInteraction>>(TankEnterItem);
+			EventBus.Subscribe<InteractionEvent<InvInteraction>>(EnterItem);
+			EventBus.Subscribe<InteractionEvent<InvInteraction>>(TakeItem);
+			EventBus.Subscribe<InteractionEvent<TankInventory.TankInvInteraction>>(TankEnterItem);
 
 			for (int x = 0; x < linkedInv.Size.x; x++) {
 				for (int y = 0; y < linkedInv.Size.y; y++) {
@@ -119,10 +119,10 @@ namespace TankGame.UI {
 				icon.transform.SetParent(transform);
 				icon.transform.SetAsLastSibling();
 
-				icon.RectTransform.anchorMin = new Vector2(((float)pos.x) / linkedInv.Size.x, ((float)pos.y) / linkedInv.Size.y);
-				icon.RectTransform.anchorMax = new Vector2((((float)pos.x) + item.Item.Size.x) / linkedInv.Size.x, (((float)pos.y) + item.Item.Size.y) / linkedInv.Size.y);
-				icon.RectTransform.sizeDelta = Vector2.zero;
-				icon.RectTransform.localPosition = Vector3.zero;
+				icon.UITransform.anchorMin = new Vector2(((float)pos.x) / linkedInv.Size.x, ((float)pos.y) / linkedInv.Size.y);
+				icon.UITransform.anchorMax = new Vector2((((float)pos.x) + item.Item.Size.x) / linkedInv.Size.x, (((float)pos.y) + item.Item.Size.y) / linkedInv.Size.y);
+				icon.UITransform.sizeDelta = Vector2.zero;
+				icon.UITransform.localPosition = Vector3.zero;
 			}
 		}
 
@@ -152,9 +152,9 @@ namespace TankGame.UI {
 				icon.transform.SetParent(transform);
 				icon.transform.SetAsLastSibling();
 
-				icon.RectTransform.anchorMin = new Vector2(pos.x / linkedInv.Size.x, pos.y / linkedInv.Size.y);
-				icon.RectTransform.anchorMin = new Vector2(pos.x + item.Item.Size.x / linkedInv.Size.x, pos.y + item.Item.Size.y / linkedInv.Size.y);
-				icon.RectTransform.anchoredPosition = Vector2.zero;
+				icon.UITransform.anchorMin = new Vector2(pos.x / linkedInv.Size.x, pos.y / linkedInv.Size.y);
+				icon.UITransform.anchorMin = new Vector2(pos.x + item.Item.Size.x / linkedInv.Size.x, pos.y + item.Item.Size.y / linkedInv.Size.y);
+				icon.UITransform.anchoredPosition = Vector2.zero;
 			}
 		}
 

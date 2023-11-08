@@ -33,7 +33,7 @@ namespace TankGame.UI {
 				
 			}
 			else {
-				RectTransform.anchoredPosition = Vector2.zero;
+				UITransform.anchoredPosition = Vector2.zero;
 			}
 		}
 
@@ -64,10 +64,10 @@ namespace TankGame.UI {
 			}
 
 			transform.SetParent(ParentSlot.transform);
-			RectTransform.anchorMin = Vector2.zero;
-			RectTransform.anchorMax = Vector2.one;
-			RectTransform.sizeDelta = Vector2.zero;
-			RectTransform.localPosition = Vector3.zero;
+			UITransform.anchorMin = Vector2.zero;
+			UITransform.anchorMax = Vector2.one;
+			UITransform.sizeDelta = Vector2.zero;
+			UITransform.localPosition = Vector3.zero;
 			selected = false;
 		}
 
